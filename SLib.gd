@@ -34,6 +34,8 @@ func LoadFile(Location):
 		var data = file.get_var()
 		file.close()
 		return data
+	else:
+		SendError("LoadFile", "Can't load from " + Location + ", file not exists!")
 
 func BackupFile(Location, Suffix = "Backup"):
 	if FileAccess.file_exists(Location):
