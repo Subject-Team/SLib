@@ -1,6 +1,19 @@
 # Subject-Library
  SLib (Subject Library) is a Godot library that provides Godot capabilities in a simpler way.
 
+### What is SLib?
+SLib is a set of ready and standard code that makes you unnecessary to write many long and frequently used codes.
+
+### Why use?
+- SLib need very small space in your application (now less than 2KB)
+- SLib installation is very easy
+- With SLib you can make unreadable codes readable quickly
+- You will not need to write duplicate sections
+- You can execute multiple lines of code with one line
+- It replaces incomprehensible parts with useful and comprehensible expressions
+- It gives you standard ways to do certain thing
+- Optimizes your app export for any platform
+
 ### How To Install
 For start using SLib:
 
