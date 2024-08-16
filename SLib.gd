@@ -60,7 +60,7 @@ func SendAlert(Alert, Title = "Alert!"):
 func SaveLog(Log):
 	SaveFile(Log_FileLcation, Log)
 
-func Open(URI):
+func OSDefaultOpen(URI):
 	OS.shell_open(URI)
 
 func FullPath(Path):
