@@ -37,12 +37,12 @@ func LoadFile(Location):
 		file.close()
 		return data
 
-func BackupFile(Location, Suffix = "-Backup"):
+func BackupFile(Location, Suffix = "Backup"):
 	if FileAccess.file_exists(Location):
 		var file = FileAccess.open(Location,FileAccess.READ)
 		var data = file.get_var()
 		var Spliter = Location.split(".",false)
-		var Backup_Location = Spliter[0] + Suffix + "." + Spliter[1]
+		var Backup_Location = Spliter[0] + "-" + Suffix + "." + Spliter[1]
 		var backup = FileAccess.open(Backup_Location,FileAccess.WRITE)
 		backup.store_var(data)
 		file.close()
