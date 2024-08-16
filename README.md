@@ -34,5 +34,21 @@ Now you can use SLib functions in this format: SLib.FunctionName(Parameters)
 - OSDefaultOpen()
 - FullPath()
 
+### How To Use
+#### GoToScene(SceneName, Folder = "Scene")
+  
+  You can use this function to transition between scenes, this increases code readability and helps you understanding whick scene in the target.
+  
+  **1- Standard format:**
+  
+  	If you save your .tscn files in the "res://Scene/" path, just put the target file name:
+   
+  	```
+	SLib.GoToScene(Game)
+	```
+ 
+  	The code above works exactly like the code below:
+    
+
 ### Last Version
 V1.0.0 Alpha (Pre-release) - [Last Alpha](https://github.com/Subject-Team/Subject-Library/releases/tag/AlphaReleases)
