@@ -87,7 +87,7 @@ SLib.SetProjectSetting("application/config/windows_native_icon", "res://icon.ico
 
 This function returns the variable stored in the desired property, its use is as follows:
 ````
-MyVar
+MyVar = GetPrjectSetting("application/config/windows_native_icon") 
 
 ### Last Version
 V1.0.0 Alpha (Pre-release) - [Last Alpha](https://github.com/Subject-Team/Subject-Library/releases/tag/AlphaReleases)
