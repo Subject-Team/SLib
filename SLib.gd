@@ -2,10 +2,8 @@ extends Control
 
 const Log_FileLcation = "user://Log.ject"
 
-func GoToScene(SceneName, Standard = true, Folder = "--NotSelected--"):
-	if Standard == true:
-		get_tree().change_scene_to_file("res://Scene/" + SceneName + ".tscn")
-	elif Folder == "--NotSelected--":
+func GoToScene(SceneName, Folder = "Scene"):
+	if Folder == "/root":
 		get_tree().change_scene_to_file("res://" + SceneName + ".tscn")
 	else:
 		get_tree().change_scene_to_file("res://" + Folder + "/" + SceneName + ".tscn")
