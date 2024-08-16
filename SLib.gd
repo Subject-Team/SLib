@@ -39,14 +39,19 @@ func LoadFile(Location):
 
 func BackupFile(Location, Suffix = "Backup"):
 	if FileAccess.file_exists(Location):
-		var file = FileAccess.open(Location,FileAccess.READ)
-		var data = file.get_var()
-		var Spliter = Location.split(".",false)
-		var Backup_Location = Spliter[0] + "-" + Suffix + "." + Spliter[1]
-		var backup = FileAccess.open(Backup_Location,FileAccess.WRITE)
-		backup.store_var(data)
-		file.close()
-		backup.close()
+		if Suffix != "":
+			var file = FileAccess.open(Location,FileAccess.READ)
+			var data = file.get_var()
+			var Spliter = Location.split(".",false)
+			var Backup_Location = Spliter[0] + "-" + Suffix + "." + Spliter[1]
+			var backup = FileAccess.open(Backup_Location,FileAccess.WRITE)
+			backup.store_var(data)
+			file.close()
+			backup.close()
+		else:
+			SendError("BackupFile", "Need Suffix option")
+	else:
+		SendError("BackupFile", "Can't load from " + Location + ", file not exists!")
 
 func SendError(From, Error = "Error"):
 	push_error('"' + Error + '" From "' + From + '"')
