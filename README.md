@@ -200,9 +200,10 @@ returned path will vary depending on the operating system and user preferences. 
 see what those paths convert to.
 
 > [!IMPORTANT]
-> FillPath() with res:// will not work in an exported project. Instead, prepend the executable's base 
+> FullPath() with res:// will not work in an exported project. Instead, prepend the executable's base 
 directory to the path when running from an exported project: ```OS.get_executable_path().get_base_dir().path_join
 ("Sample.txt") #for res://Sample.txt```
+> This will be corrected soon. 
 
 ### Versions
 V1.0.0 Alpha (Pre-release) - [Last Alpha](https://github.com/Subject-Team/Subject-Library/releases/tag/AlphaReleases)
