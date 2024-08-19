@@ -202,7 +202,8 @@ see what those paths convert to.
 > [!IMPORTANT]
 > FullPath() with res:// will not work in an exported project. Instead, prepend the executable's base 
 directory to the path when running from an exported project: ```OS.get_executable_path().get_base_dir().path_join
-("Sample.txt") #for res://Sample.txt```[br] 
+("Sample.txt") #for res://Sample.txt```
+> 
 > This will be corrected soon. 
 
 ### Versions
