@@ -202,11 +202,5 @@ Returns the absolute, native OS path corresponding to the localized path (starti
 returned path will vary depending on the operating system and user preferences. See [File paths in Godot projects](https://docs.godotengine.org/en/4.2/tutorials/io/data_paths.html) to 
 see what those paths convert to.
 
-> [!NOTE]
-> **The problem is solved**
-> FullPath() with res:// will not work in an exported project. Instead, prepend the executable's base 
-directory to the path when running from an exported project: ```OS.get_executable_path().get_base_dir().path_join
-("Sample.txt") #for res://Sample.txt```
-
 ### Versions
 V1.0.0 Alpha (Pre-release) - [Last Alpha](https://github.com/Subject-Team/Subject-Library/releases/tag/AlphaReleases)
