@@ -5,7 +5,7 @@
 SLib is a set of ready and standard code that makes you unnecessary to write many long and frequently used codes.
 
 ### Why use?
-- SLib need very small space in your application (now less than 2KB)
+- SLib need very small space in your application (now less than 5KB)
 - SLib installation is very easy
 - With SLib you can make unreadable codes readable quickly
 - You will not need to write duplicate sections
@@ -44,7 +44,7 @@ Now you can use SLib functions in this format: SLib.FunctionName(Parameters)
 - SendWarning()
 - SendAlert()
 - SaveLog()
-- OSDefaultOpen()
+- OSOpen()
 - FullPath()
 
 ### How To Use
@@ -88,12 +88,12 @@ get_tree.change_scene_to_file("res://My Scenes/Game.tscn")
 > You can also call nested folders, for example: "Scenes/Old Files"
 
 #### SetProjectSetting
-    SLib.SetProjectSetting(Path: Sting, Variable)
+    SLib.SetProjectSetting(Path: Sting, Value)
 This function changes the project settings, for this it needs two parameters:
 
 1- **Path:** can use Ctrl+Shift+C on property of project settings window
 
-2- **Variable:** this parameter set to selected property
+2- **Value:** this parameter set to selected property
 ````
 SLib.SetProjectSetting("application/config/windows_native_icon", "res://icon.ico")
 ````
@@ -152,12 +152,12 @@ custom suffix, "-Backup" append to file name.
 > ```SLib.gd:57 @ SendError(): "Need Suffix option" From "BackupFile"```
 
 #### SendError
-    SLib.SendError(From: String, Error: String = "Error")
+    SLib.SendError(Error: String = "Error", From: String = "null")
 Sends a custom error to the console that can be viewed in the engine debugger, error like this:
 ```SLib.gd:57 @ SendError(): -->Error<-- From -->From<--```
 
 #### SendWarning
-    SLib.SendWarning(From: String, Warning: String = "Warning")
+    SLib.SendWarning(Warning: String = "Warning", From: String = "null")
 Sends a custom warning to the console that can be viewed in the engine debugger like this:
 ```SLib.gd:60 @ SendWarning(): -->Warning<-- From -->From<--```
 
@@ -172,8 +172,11 @@ Save log parameter in log file, log file save in ```user://Log.ject```.
 > [!TIP]
 > You can see log data with ```print(LoadFile("user://Log.ject"))```.
 
-#### OSDefaultOpen
-    SLib.OSDefalutOpen(URI: String)
+> [!NOTE]
+> You can change the log file path in ```SLib.gd```.
+
+#### OSOpen
+    SLib.OSOpen(URI: String)
 Requests the OS to open a resource with the most appropriate program. For example:
 
 - "C:\\Users\name\Downloads" on Windows opens the file explorer at the user's Downloads folder.
@@ -183,7 +186,7 @@ Requests the OS to open a resource with the most appropriate program. For exampl
 - "mailto:example@example.com" opens the default email client with the "To" field set to example@example.com. See RFC 2368 - The mailto URL scheme for a list of fields that can be added.
 
 > [!IMPORTANT]
-> File URI only works with globalize path, Use SLib.FullPath(path) to convert a res:// or user:// path 
+> File URI only works with globalized path, Use SLib.FullPath(path) to convert a res:// or user:// path 
 > into a system path for use with this method.
 
 > [!NOTE]
@@ -199,12 +202,11 @@ Returns the absolute, native OS path corresponding to the localized path (starti
 returned path will vary depending on the operating system and user preferences. See [File paths in Godot projects](https://docs.godotengine.org/en/4.2/tutorials/io/data_paths.html) to 
 see what those paths convert to.
 
-> [!IMPORTANT]
+> [!NOTE]
+> **The problem is solved**
 > FullPath() with res:// will not work in an exported project. Instead, prepend the executable's base 
 directory to the path when running from an exported project: ```OS.get_executable_path().get_base_dir().path_join
 ("Sample.txt") #for res://Sample.txt```
-> 
-> This will be corrected soon. 
 
 ### Versions
 V1.0.0 Alpha (Pre-release) - [Last Alpha](https://github.com/Subject-Team/Subject-Library/releases/tag/AlphaReleases)
