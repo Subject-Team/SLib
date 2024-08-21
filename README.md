@@ -50,7 +50,7 @@ Now you can use SLib functions in this format: SLib.FunctionName(Parameters)
 ### How To Use
 #### GoToScene
     SLib.GoToScene(SceneName: String, Folder: String = "Scene")
-You can use this function to transition between scenes, this increases code readability and helps you understanding whick scene in the target.
+You can use this function to transition between scenes, this increases code readability and helps you understand which scene in the target.
 
 **1- Standard format (Recommended):**
 
