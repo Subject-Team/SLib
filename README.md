@@ -183,7 +183,7 @@ Requests the OS to open a resource with the most appropriate program. For exampl
 
 - "https://godotengine.org" opens the default web browser on the official Godot website.
 
-- "mailto:example@example.com" opens the default email client with the "To" field set to example@example.com. See RFC 2368 - The mailto URL scheme for a list of fields that can be added.
+- "mailto:example@example.com" opens the default email client with the "To" field set to example@example.com.
 
 > [!IMPORTANT]
 > File URI only works with globalized path, Use SLib.FullPath(path) to convert a res:// or user:// path 
