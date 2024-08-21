@@ -97,6 +97,7 @@ This function changes the project settings, for this it needs two parameters:
 ````
 SLib.SetProjectSetting("application/config/windows_native_icon", "res://icon.ico")
 ````
+This can also be used to erase custom project settings. To do this change the setting value to null.
 
 #### GetProjectSetting
     SLib.GetPrjectSetting(Path: Sting)
@@ -111,7 +112,15 @@ This function reloads the current scene, this is just a shortcut to increase cod
 
 #### Exit
     SLib.Exit(ExitCode: int = 0)
-This function closes the program and also uses the optional exit code, added for code readability.
+Quits the application at the end of the current iteration. Argument exit_code can optionally be given (defaulting to 0) to customize the exit status code.
+
+By convention, an exit code of 0 indicates success whereas a non-zero exit code indicates an error.
+
+For portability reasons, the exit code should be set between 0 and 125 (inclusive).
+
+> [!NOTE] 
+> On iOS this method doesn't work. Instead, as recommended by the iOS Human Interface Guidelines, the user is 
+expected to close apps via the Home button.
 
 #### Wait
     await SLib.Wait(WaitTime: float)
@@ -209,4 +218,6 @@ directory to the path when running from an exported project: ```OS.get_executabl
 ("Sample.txt") #for res://Sample.txt```
 
 ### Versions
-V1.0.0 Alpha (Pre-release) - [Last Alpha](https://github.com/Subject-Team/Subject-Library/releases/tag/AlphaReleases)
+[V1.0.1 - Stable](https://github.com/Subject-Team/SLib/releases/tag/1.0.1-S)
+
+[V1.0.0 - Stable](https://github.com/Subject-Team/SLib/releases/tag/1.0.0-S)
