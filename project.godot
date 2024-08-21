@@ -23,6 +23,10 @@ config/windows_native_icon="res://icon.ico"
 
 window/size/mode=1
 
+[filesystem]
+
+import/blender/enabled=false
+
 [rendering]
 
 renderer/rendering_method="gl_compatibility"

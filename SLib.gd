@@ -69,4 +69,13 @@ func OSDefaultOpen(URI):
 	OS.shell_open(URI)
 
 func FullPath(Path):
-	return ProjectSettings.globalize_path(Path)
+	if Path[0] == "u":
+		return ProjectSettings.globalize_path(Path)
+	else:
+		var path = Path
+		if OS.has_feature("editor"):
+			path = ProjectSettings.globalize_path(Path)
+		else:
+			path = path.erase(0,6)
+			path = OS.get_executable_path().get_base_dir().path_join(path)
+		return path
