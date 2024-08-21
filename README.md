@@ -173,7 +173,7 @@ Save log parameter in log file, log file save in ```user://Log.ject```.
 > You can see log data with ```print(LoadFile("user://Log.ject"))```.
 
 > [!NOTE]
-> You can change the log file path in ```SLib.gd```.
+> You can change the log file path with ```SLib.Log_FileLcation```.
 
 #### OSOpen
     SLib.OSOpen(URI: String)
