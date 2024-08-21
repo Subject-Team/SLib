@@ -5,7 +5,7 @@
 SLib is a set of ready and standard code that makes you unnecessary to write many long and frequently used codes.
 
 ### Why use?
-- SLib need very small space in your application (now less than 5KB)
+- SLib need very small space in your application (now less than 10KB)
 - SLib installation is very easy
 - With SLib you can make unreadable codes readable quickly
 - You will not need to write duplicate sections
