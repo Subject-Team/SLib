@@ -182,7 +182,7 @@ Save log parameter in log file, log file save in ```user://Log.ject```.
 > You can see log data with ```print(LoadFile("user://Log.ject"))```.
 
 > [!NOTE]
-> You can change the log file path in ```SLib.gd```.
+> You can change the log file path with ```SLib.Log_FileLcation```.
 
 #### OSOpen
     SLib.OSOpen(URI: String)
@@ -192,7 +192,7 @@ Requests the OS to open a resource with the most appropriate program. For exampl
 
 - "https://godotengine.org" opens the default web browser on the official Godot website.
 
-- "mailto:example@example.com" opens the default email client with the "To" field set to example@example.com. See RFC 2368 - The mailto URL scheme for a list of fields that can be added.
+- "mailto:example@example.com" opens the default email client with the "To" field set to example@example.com.
 
 > [!IMPORTANT]
 > File URI only works with globalized path, Use SLib.FullPath(path) to convert a res:// or user:// path 
@@ -210,12 +210,6 @@ Requests the OS to open a resource with the most appropriate program. For exampl
 Returns the absolute, native OS path corresponding to the localized path (starting with res:// or user://). The 
 returned path will vary depending on the operating system and user preferences. See [File paths in Godot projects](https://docs.godotengine.org/en/4.2/tutorials/io/data_paths.html) to 
 see what those paths convert to.
-
-> [!NOTE]
-> **The problem is solved**
-> FullPath() with res:// will not work in an exported project. Instead, prepend the executable's base 
-directory to the path when running from an exported project: ```OS.get_executable_path().get_base_dir().path_join
-("Sample.txt") #for res://Sample.txt```
 
 ### Versions
 [V1.0.1 - Stable](https://github.com/Subject-Team/SLib/releases/tag/1.0.1-S)
