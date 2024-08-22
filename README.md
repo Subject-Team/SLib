@@ -46,6 +46,7 @@ Now you can use SLib functions in this format: SLib.FunctionName(Parameters)
 - SaveLog()
 - OSOpen()
 - FullPath()
+- MergeUnique()
 
 ### How To Use
 #### GoToScene
@@ -211,11 +212,25 @@ Returns the absolute, native OS path corresponding to the localized path (starti
 returned path will vary depending on the operating system and user preferences. See [File paths in Godot projects](https://docs.godotengine.org/en/4.2/tutorials/io/data_paths.html) to 
 see what those paths convert to.
 
+#### MergeUnique
+    SLib.MergeUnique(Array1: Array, Array2: Array, FullUnique: bool = false)
+It combines two arrays and only adds items from the second array to the first array if the first array does not already contain them.
+As default, if the first array contains duplicate values to begin with, then the resulting array will not contain only unique values.
+
+(By [snipercup](https://github.com/snipercup))
+
 ### Contribute
 If you want to contribute to this project and extend the library, please fork the repository and submit a pull request. Or you can open an issue to discuss what you want to change.
-For help, see the [project's wiki](https://github.com/Subject-Team/SLib/wiki), or from Use the [Q&A page](https://github.com/Subject-Team/SLib/discussions/categories/q-a).
+For help, see the [project's wiki](https://github.com/Subject-Team/SLib/wiki), or use the [Q&A page](https://github.com/Subject-Team/SLib/discussions/categories/q-a).
+
+### Thanks
+[snipercup](https://github.com/snipercup) for:
+- Add MergeUnique function
+- Declaration FullUnique parameter for MergeUnique function
 
 ### Versions
+[V1.0.2 - Stable](https://github.com/Subject-Team/SLib/releases/tag/1.0.2-S)
+
 [V1.0.1 - Stable](https://github.com/Subject-Team/SLib/releases/tag/1.0.1-S)
 
 [V1.0.0 - Stable](https://github.com/Subject-Team/SLib/releases/tag/1.0.0-S)
