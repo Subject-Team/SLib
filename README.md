@@ -211,6 +211,10 @@ Returns the absolute, native OS path corresponding to the localized path (starti
 returned path will vary depending on the operating system and user preferences. See [File paths in Godot projects](https://docs.godotengine.org/en/4.2/tutorials/io/data_paths.html) to 
 see what those paths convert to.
 
+### Contribute
+If you want to contribute to this project and extend the library, please fork the repository and submit a pull request. Or you can open an issue to discuss what you want to change.
+For help, see the [project's wiki](https://github.com/Subject-Team/SLib/wiki), or from Use the [Q&A page](https://github.com/Subject-Team/SLib/discussions/categories/q-a).
+
 ### Versions
 [V1.0.1 - Stable](https://github.com/Subject-Team/SLib/releases/tag/1.0.1-S)
 
