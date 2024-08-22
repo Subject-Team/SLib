@@ -233,7 +233,6 @@ see what those paths convert to.
 It combines two arrays and only adds items from the second array to the first array if the first array does not already contain them.
 As default, if the first array contains duplicate values to begin with, then the resulting array will not contain only unique values.
 
-(By [snipercup](https://github.com/snipercup))
 
 ### Contribute
 If you want to contribute to this project and extend the library, please fork the repository and submit a pull request. Or you can open an issue to discuss what you want to change.
