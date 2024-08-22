@@ -204,7 +204,7 @@ func FullPath(Path: String):
 			path = OS.get_executable_path().get_base_dir().path_join(path)
 		return path
 
-## Merges two arrays and returns a new array with unique values.
+## It combines two arrays and only adds items from the second array to the first array if the first array does not already contain them.
 ## [br][br]
 ## Example:
 ## [codeblock]
@@ -212,9 +212,20 @@ func FullPath(Path: String):
 ## var myarray2: Array = [3,4,5,6]
 ## var merged_array: Array = SLib.MergeUnique(myarray1,myarray2)
 ## [/codeblock]
-func MergeUnique(Array1: Array, Array2: Array):
-	var MergedArray = Array1.duplicate(true)
-	for Item in Array2:
-		if not MergedArray.has(Item):
-			MergedArray.append(Item)
-	return MergedArray
+## NOTE: Removing duplicate values ​​in the first array is determined by the FullUnique parameter, set it to [code]true[/code] for optimize all array items.
+func MergeUnique(Array1: Array, Array2: Array, FullUnique: bool = false):
+	if FullUnique == false:
+		var MergedArray = Array1.duplicate(true)
+		for Item in Array2:
+			if not MergedArray.has(Item):
+				MergedArray.append(Item)
+		return MergedArray
+	else:
+		var MergedArray = []
+		for Array1Item in Array1:
+			if not MergedArray.has(Array1Item):
+				MergedArray.append(Array1Item)
+		for Array2Item in Array2:
+			if not MergedArray.has(Array2Item):
+				MergedArray.append(Array2Item)
+		return MergedArray
