@@ -1,4 +1,7 @@
 
+[1.0.2:](https://github.com/Subject-Team/SLib/releases/tag/1.0.2-S)
+- Add MergeUnique function.
+
 [1.0.1:](https://github.com/Subject-Team/SLib/releases/tag/1.0.1-S)
 - Rename OSDefaultOpen function to OSOpen.
 - Rename Variable parameter to Value in SetProjectSetting function.
