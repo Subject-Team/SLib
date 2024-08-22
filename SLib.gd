@@ -18,6 +18,7 @@ extends Node
 ## ● Customizable logging system[br]
 ## ● Similar URI using system[br]
 ## ● Fast path convertor[br]
+## ● Similar array unique merge
 
 ## Log file location for save logs, [code]user://...[/code] is recommended
 var Log_FileLcation = "user://Log.ject"
@@ -209,11 +210,11 @@ func FullPath(Path: String):
 ## [codeblock]
 ## var myarray1: Array = [1,2,3,4]
 ## var myarray2: Array = [3,4,5,6]
-## var merged_array: Array = SLib.merge_unique(myarray1,myarray2)
+## var merged_array: Array = SLib.MergeUnique(myarray1,myarray2)
 ## [/codeblock]
-func merge_unique(array1: Array, array2: Array) -> Array:
-	var merged_array = array1.duplicate(true)
-	for item in array2:
-		if not merged_array.has(item):
-			merged_array.append(item)
-	return merged_array
+func MergeUnique(Array1: Array, Array2: Array):
+	var MergedArray = Array1.duplicate(true)
+	for Item in Array2:
+		if not MergedArray.has(Item):
+			MergedArray.append(Item)
+	return MergedArray
