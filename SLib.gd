@@ -202,3 +202,18 @@ func FullPath(Path: String):
 			path = path.erase(0,6)
 			path = OS.get_executable_path().get_base_dir().path_join(path)
 		return path
+
+## Merges two arrays and returns a new array with unique values.
+## [br][br]
+## Example:
+## [codeblock]
+## var myarray1: Array = [1,2,3,4]
+## var myarray2: Array = [3,4,5,6]
+## var merged_array: Array = SLib.merge_unique(myarray1,myarray2)
+## [/codeblock]
+func merge_unique(array1: Array, array2: Array) -> Array:
+	var merged_array = array1.duplicate(true)
+	for item in array2:
+		if not merged_array.has(item):
+			merged_array.append(item)
+	return merged_array
