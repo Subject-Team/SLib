@@ -51,6 +51,7 @@ Now you can use SLib functions in this format: SLib.FunctionName(Parameters)
 ### How To Use
 #### GoToScene
     SLib.GoToScene(SceneName: String, Folder: String = "Scene")
+
 You can use this function to transition between scenes, this increases code readability and helps you understand which scene in the target.
 
 **1- Standard format (Recommended):**
@@ -90,6 +91,7 @@ get_tree.change_scene_to_file("res://My Scenes/Game.tscn")
 
 #### SetProjectSetting
     SLib.SetProjectSetting(Path: Sting, Value)
+
 This function changes the project settings, for this it needs two parameters:
 
 1- **Path:** can use Ctrl+Shift+C on property of project settings window
@@ -102,6 +104,7 @@ This can also be used to erase custom project settings. To do this change the se
 
 #### GetProjectSetting
     SLib.GetPrjectSetting(Path: Sting)
+
 This function returns the variable stored in the desired property, its use is as follows:
 ````
 MyVar = SLib.GetPrjectSetting("application/config/windows_native_icon") 
@@ -109,10 +112,12 @@ MyVar = SLib.GetPrjectSetting("application/config/windows_native_icon")
 
 #### Reload
     SLib.Reload()
+
 This function reloads the current scene, this is just a shortcut to increase code readability.
 
 #### Exit
     SLib.Exit(ExitCode: int = 0)
+
 Quits the application at the end of the current iteration. Argument exit_code can optionally be given (defaulting to 0) to customize the exit status code.
 
 By convention, an exit code of 0 indicates success whereas a non-zero exit code indicates an error.
@@ -125,12 +130,14 @@ expected to close apps via the Home button.
 
 #### Wait
     await SLib.Wait(WaitTime: float)
+
 This function creates a break in the program that puts a space between the code befor and after it. (on seconds)
 > [!IMPORTANT]
 > You must write ```await``` at the beginning of this line for it to work! 
 
 #### SaveFile
     SLib.SaveFile(Location: String, Variable = null)
+
 This function will save a file with a customized path, this is very useful because the file saving process will be 
 readable and fast.
 > [!TIP]
@@ -144,6 +151,7 @@ readable and fast.
 
 #### LoadFile
     Slib.LoadFile(Location: String)
+
 This function returns the content stored in the file, you can use it for all file created by your godot application.
 > [!NOTE]
 > If the file doesn't exist, it will send an error to the console like this:
@@ -151,6 +159,7 @@ This function returns the content stored in the file, you can use it for all fil
 
 #### BackupFile
     SLib.BackupFile(Location: String, Suffix: String = "Backup")
+
 Backup function create a new file with "/main file name/-/Suffix/" in main file location, if you doesn't select a 
 custom suffix, "-Backup" append to file name.
 > [!NOTE]
@@ -163,20 +172,24 @@ custom suffix, "-Backup" append to file name.
 
 #### SendError
     SLib.SendError(Error: String = "Error", From: String = "null")
+
 Sends a custom error to the console that can be viewed in the engine debugger, error like this:
 ```SLib.gd:57 @ SendError(): -->Error<-- From -->From<--```
 
 #### SendWarning
     SLib.SendWarning(Warning: String = "Warning", From: String = "null")
+
 Sends a custom warning to the console that can be viewed in the engine debugger like this:
 ```SLib.gd:60 @ SendWarning(): -->Warning<-- From -->From<--```
 
 #### SendAlert
     SLib.SendAlert(Alert: String, Title: String = "Alert!")
+
 Displays a modal dialog box using the host OS' facilities with alert text and title.
 
 #### SaveLog
     SLib.SaveLog(Log)
+
 Save log parameter in log file, log file save in ```user://Log.ject```.
 
 > [!TIP]
@@ -187,6 +200,7 @@ Save log parameter in log file, log file save in ```user://Log.ject```.
 
 #### OSOpen
     SLib.OSOpen(URI: String)
+
 Requests the OS to open a resource with the most appropriate program. For example:
 
 - "C:\\Users\name\Downloads" on Windows opens the file explorer at the user's Downloads folder.
@@ -208,12 +222,14 @@ Requests the OS to open a resource with the most appropriate program. For exampl
 
 #### FullPath
     SLib.FullPath(Path: String)
+
 Returns the absolute, native OS path corresponding to the localized path (starting with res:// or user://). The 
 returned path will vary depending on the operating system and user preferences. See [File paths in Godot projects](https://docs.godotengine.org/en/4.2/tutorials/io/data_paths.html) to 
 see what those paths convert to.
 
 #### MergeUnique
     SLib.MergeUnique(Array1: Array, Array2: Array, FullUnique: bool = false)
+
 It combines two arrays and only adds items from the second array to the first array if the first array does not already contain them.
 As default, if the first array contains duplicate values to begin with, then the resulting array will not contain only unique values.
 
