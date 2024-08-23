@@ -1,8 +1,16 @@
 # Subject-Library
- SLib (Subject Library) is a Godot library that provides Godot capabilities in a simpler way.
+Useful Codes For GDScript
 
-### What is SLib?
-SLib is a set of ready and standard code that makes you unnecessary to write many long and frequently used codes.
+### Overview
+SLib is a Godot library designed to simplify and enhance your development experience. It provides a set of ready-to-use, standard codes that eliminate the need to write repetitive and lengthy scripts. SLib is lightweight, easy to install, and helps make your code more readable and maintainable.
+
+## Key Features
+
+- **Lightweight**: Requires minimal space in your application (less than 100KB).
+- **Easy Installation**: Simple setup process to get you started quickly.
+- **Code Readability**: Transforms complex and unreadable code into clear and understandable expressions.
+- **Efficiency**: Reduces the need for duplicate code and allows execution of multiple lines with a single command.
+- **Standardization**: Provides standard methods for common tasks, optimizing your app for any platform.
 
 ### Why use?
 - SLib need very small space in your application (now less than 10KB)
@@ -15,20 +23,15 @@ SLib is a set of ready and standard code that makes you unnecessary to write man
 - Optimizes your app export for any platform
 
 ### How To Install
-For start using SLib:
+To start using SLib, follow these steps:
 
-1- Save SLib.gd in root directory of your project
+1. **Save the SLib Script**: Download `SLib.gd` and save it in the root directory of your project. [Download releases](https://github.com/Subject-Team/SLib/releases)
+2. **Auto Load Setup**: Go to Project Settings > Auto Load, and add `res://SLib.gd` with the name `SLib`.
 
-2- Go to Project Setting/Auto Load and add "res://SLib.gd" with "SLib" Name
-
-3- Add this code in top of all GDScript files:
+Now you can use SLib functions in your scripts like this:
 ```
-var SLib
-
-func _ready():
-	SLib = get_node("/root/SLib")
+SLib.FunctionName(parameters)
 ```
-Now you can use SLib functions in this format: SLib.FunctionName(Parameters)
 
 ### Available Functions
 - GoToScene()
@@ -47,6 +50,8 @@ Now you can use SLib functions in this format: SLib.FunctionName(Parameters)
 - OSOpen()
 - FullPath()
 - MergeUnique()
+- FindChildOfClass()
+- expDecay()
 
 ### How To Use
 #### GoToScene
@@ -155,7 +160,7 @@ readable and fast.
 This function returns the content stored in the file, you can use it for all file created by your godot application.
 > [!NOTE]
 > If the file doesn't exist, it will send an error to the console like this:
-> ```SLib.gd:57 @ SendError(): "Can't load from -->file_location<--, file not exists!" From "LoadFile"```
+> ```SLib.gd:x @ SendError(): "Can't load from -->file_location<--, file not exists!" From "LoadFile"```
 
 #### BackupFile
     SLib.BackupFile(Location: String, Suffix: String = "Backup")
@@ -164,23 +169,23 @@ Backup function create a new file with "/main file name/-/Suffix/" in main file 
 custom suffix, "-Backup" append to file name.
 > [!NOTE]
 > If the file doesn't exist, it will send an error to the console like this:
-> ```SLib.gd:57 @ SendError(): "Can't load from -->file_location<--, file not exists!" From "BackupFile"```
+> ```SLib.gd:x @ SendError(): "Can't load from -->file_location<--, file not exists!" From "BackupFile"```
 
 > [!NOTE]
 > If Suffix set to "", it will send an error to the console like this:
-> ```SLib.gd:57 @ SendError(): "Need Suffix option" From "BackupFile"```
+> ```SLib.gd:x @ SendError(): "Need Suffix option" From "BackupFile"```
 
 #### SendError
     SLib.SendError(Error: String = "Error", From: String = "null")
 
 Sends a custom error to the console that can be viewed in the engine debugger, error like this:
-```SLib.gd:57 @ SendError(): -->Error<-- From -->From<--```
+```SLib.gd:x @ SendError(): -->Error<-- From -->From<--```
 
 #### SendWarning
     SLib.SendWarning(Warning: String = "Warning", From: String = "null")
 
 Sends a custom warning to the console that can be viewed in the engine debugger like this:
-```SLib.gd:60 @ SendWarning(): -->Warning<-- From -->From<--```
+```SLib.gd:x @ SendWarning(): -->Warning<-- From -->From<--```
 
 #### SendAlert
     SLib.SendAlert(Alert: String, Title: String = "Alert!")
@@ -233,6 +238,26 @@ see what those paths convert to.
 It combines two arrays and only adds items from the second array to the first array if the first array does not already contain them.
 As default, if the first array contains duplicate values to begin with, then the resulting array will not contain only unique values.
 
+#### FindChildOfClass
+    SLib.FindChildOfClass(TargetNode: Node, TypeName: StringName, Descendants: bool = false)
+Finds the first child of a given class, does not find class_name declarations.
+
+#### expDecay
+    SLib.expDecay(A: float, B: float, Decay: float, Delta: float)
+Time based smooth interpolation, **not framedependant** like ````a = lerp(a, b, delta)````
+
+> [!TIP]
+> Set [i]Decay[/i] to 1-25 for a good range of values
+
+## Documentation
+
+For detailed documentation and examples, visit our [GitHub repository](https://github.com/Subject-Team/SLib).
+
+## Community and Support
+
+Join our community to share your experiences, ask questions, and get support from other SLib users. Check out our [GitHub repository](https://github.com/Subject-Team/SLib) for the latest updates and contributions.
+
+[Godot forum page](https://forum.godotengine.org/t/slib-library-for-useful-codes/77760/1)
 
 ### Contribute
 If you want to contribute to this project and extend the library, please fork the repository and submit a pull request. Or you can open an issue to discuss what you want to change.
@@ -242,6 +267,12 @@ For help, see the [project's wiki guide](https://github.com/Subject-Team/SLib/wi
 [snipercup](https://github.com/snipercup) for:
 - Add MergeUnique function
 - Declaration FullUnique parameter for MergeUnique function
+
+[gertkeno](https://forum.godotengine.org/u/gertkeno/summary) for:
+- Add FindChildOfClass function
+- Add expDecay function
+- [Bug report](https://github.com/Subject-Team/SLib/issues/5)
+- [Correction documentation](https://github.com/Subject-Team/SLib/issues/6)
 
 ### Versions
 [V1.0.2 - Stable](https://github.com/Subject-Team/SLib/releases/tag/1.0.2-S)

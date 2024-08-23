@@ -1,11 +1,11 @@
 class_name SLib
 extends Node
-# Press F1 and search for SLib for documentation
+# Press F1 and search for SLib to see documentation
 
 ## SLib (Subject Library) is a Godot library that provides Godot capabilities in a simpler way.
 ##
 ## SLib is a set of ready and standard code that makes you unnecessary to write many long and frequently used codes.[br][br]
-##Available ability in this library now:[br]
+## Available ability in this library now:[br]
 ## ● Fast, safe and similar change scene[br]
 ## ● Easy project setting modify and use with code[br]
 ## ● Optimized reload scene system[br]
@@ -18,10 +18,12 @@ extends Node
 ## ● Customizable logging system[br]
 ## ● Similar URI using system[br]
 ## ● Fast path convertor[br]
-## ● Similar array unique merge
+## ● Similar array unique merge[br]
+## ● Find the first child of a given class[br]
+## ● Time based smooth interpolation[br]
 
 ## Log file location for save logs, [code]user://...[/code] is recommended
-var Log_FileLcation = "user://Log.ject"
+var Log_FileLcation: String = "user://Log.ject"
 
 ## You can use this function to transition between scenes, this increases code readability and helps you understand which scene in the target.
 ## [br][br]
@@ -57,7 +59,7 @@ var Log_FileLcation = "user://Log.ject"
 ## [/codeblock]
 ## NOTE:
 ## You can also call nested folders, for example: [code]Scenes/Old Files[/code]
-func GoToScene(SceneName: String, Folder: String = "Scene"):
+func GoToScene(SceneName: String, Folder: String = "Scene") -> void:
 	if Folder == "/root":
 		get_tree().change_scene_to_file("res://" + SceneName + ".tscn")
 	else:
@@ -68,7 +70,7 @@ func GoToScene(SceneName: String, Folder: String = "Scene"):
 ## ● Path: can use [kbd]Ctrl+Shift+C[/kbd] on property of project settings window
 ## [br]
 ## ● Value: this parameter set to selected property
-func SetProjectSetting(Path: String, Value):
+func SetProjectSetting(Path: String, Value) -> void:
 	ProjectSettings.set_setting(Path, Value)
 
 ## This function returns the variable stored in the desired property, its use is as follows:
@@ -79,18 +81,18 @@ func GetProjectSetting(Path: String):
 	return ProjectSettings.get_setting(Path)
 
 ## This function reloads the current scene, this is just a shortcut to increase code readability.
-func Reload():
+func Reload() -> void:
 	get_tree().reload_current_scene()
 
 ## This function closes the program and also uses the optional exit code, added for code readability.
-func Exit(ExitCode: int = 0):
+func Exit(ExitCode: int = 0) -> void:
 	get_tree().quit(ExitCode)
 
 ## This function creates a break in the program that puts a space between the code befor and after it. (on seconds)
 ## [br][br]
 ## NOTE:
 ## You must write [code]await[/code] at the beginning of this line for it to work!
-func Wait(WaitTime: float):
+func Wait(WaitTime: float) -> void:
 	await get_tree().create_timer(WaitTime).timeout
 
 ## This function will save a file with a customized path, this is very useful because the file saving process will be readable and fast.
@@ -103,7 +105,7 @@ func Wait(WaitTime: float):
 ## [br][br]
 ## NOTE:
 ## You should type a format for your file, you can select any format but default format not open in other programs!
-func SaveFile(Location: String, Variable = null):
+func SaveFile(Location: String, Variable = null) -> void:
 	var file = FileAccess.open(Location,FileAccess.WRITE)
 	file.store_var(Variable)
 	file.close()
@@ -128,7 +130,7 @@ func LoadFile(Location: String):
 ## [br][br]
 ## NOTE:
 ## If Suffix set to [code]""[/code], it will send an error to the console like this: [code]SLib.gd:x @ SendError(): "Need Suffix option" From "BackupFile"[/code]
-func BackupFile(Location: String, Suffix: String = "Backup"):
+func BackupFile(Location: String, Suffix: String = "Backup") -> void:
 	if FileAccess.file_exists(Location):
 		if Suffix != "":
 			var file = FileAccess.open(Location,FileAccess.READ)
@@ -145,21 +147,21 @@ func BackupFile(Location: String, Suffix: String = "Backup"):
 		SendError("Can't load from " + Location + ", file not exists!", "BackupFile")
 
 ## Sends a custom error to the console that can be viewed in the engine debugger, error like this: [code]SLib.gd:x @ SendError(): -->Error<-- From -->From<--[/code]
-func SendError(Error: String = "Error", From: String = "null"):
+func SendError(Error: String = "Error", From: String = "null") -> void:
 	if From != "null":
 		push_error('"' + Error + '" From "' + From + '"')
 	else:
 		push_error(Error)
 
 ## Sends a custom warning to the console that can be viewed in the engine debugger like this: [code]SLib.gd:x @ SendWarning(): -->Warning<-- From -->From<--[/code]
-func SendWarning(Warning: String = "Warning", From: String = "null"):
+func SendWarning(Warning: String = "Warning", From: String = "null") -> void:
 	if From != "null":
 		push_warning('"' + Warning + '" From "' + From + '"')
 	else:
 		push_warning(Warning)
 
 ## Displays a modal dialog box using the host OS' facilities with alert text and title.
-func SendAlert(Alert: String, Title: String = "Alert!"):
+func SendAlert(Alert: String, Title: String = "Alert!") -> void:
 	OS.alert(Alert, Title)
 
 ## Save log parameter in log file, log file save in [code]user://Log.ject[/code] as default.
@@ -169,7 +171,7 @@ func SendAlert(Alert: String, Title: String = "Alert!"):
 ## [br][br]
 ## NOTE:
 ## You can change the log file path with [code]SLib.Log_FileLcation[/code].
-func SaveLog(Log):
+func SaveLog(Log) -> void:
 	SaveFile(Log_FileLcation, Log)
 
 ## Requests the OS to open a resource with the most appropriate program. For example:
@@ -188,11 +190,11 @@ func SaveLog(Log):
 ## [br][br]
 ## NOTE:
 ## This method is implemented on Android, iOS, Web, Linux, macOS and Windows.
-func OSOpen(URI: String):
+func OSOpen(URI: String) -> void:
 	OS.shell_open(URI)
 
 ## Returns the absolute, native OS path corresponding to the localized path (starting with [code]res://[/code] or [code]user://[/code]). The returned path will vary depending on the operating system and user preferences. See [url=https://docs.godotengine.org/en/4.2/tutorials/io/data_paths.html]File paths in Godot projects[/url] to see what those paths convert to.
-func FullPath(Path: String):
+func FullPath(Path: String) -> String:
 	if Path[0] == "u":
 		return ProjectSettings.globalize_path(Path)
 	else:
@@ -213,7 +215,7 @@ func FullPath(Path: String):
 ## var merged_array: Array = SLib.MergeUnique(myarray1,myarray2)
 ## [/codeblock]
 ## NOTE: Removing duplicate values ​​in the first array is determined by the FullUnique parameter, set it to [code]true[/code] for optimize all array items.
-func MergeUnique(Array1: Array, Array2: Array, FullUnique: bool = false):
+func MergeUnique(Array1: Array, Array2: Array, FullUnique: bool = false) -> Array:
 	if FullUnique == false:
 		var MergedArray = Array1.duplicate(true)
 		for Item in Array2:
@@ -229,3 +231,19 @@ func MergeUnique(Array1: Array, Array2: Array, FullUnique: bool = false):
 			if not MergedArray.has(Array2Item):
 				MergedArray.append(Array2Item)
 		return MergedArray
+
+## Finds the first child of a given class, does not find class_name declarations
+func FindChildOfClass(TargetNode: Node, TypeName: StringName, Descendants: bool = false) -> Node:
+	for Child in TargetNode.get_children():
+		if Child.is_class(TypeName):
+			return Child
+		elif Descendants:
+			var Found: Node = FindChildOfClass(Child, TypeName, Descendants)
+			if Found:
+				return Found
+	return null
+
+## Time based smooth interpolation, [b]not framedependant[/b] like [code]a = lerp(a, b, delta)[/code][br][br]
+## NOTE: Set [i]Decay[/i] to 1-25 for a good range of values
+func expDecay(A: float, B: float, Decay: float, Delta: float) -> float:
+	return B + (A - B) * exp(-Decay * Delta)
