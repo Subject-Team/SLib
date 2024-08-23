@@ -1,8 +1,16 @@
 # Subject-Library
- SLib (Subject Library) is a Godot library that provides Godot capabilities in a simpler way.
+Useful Codes For GDScript
 
-### What is SLib?
-SLib is a set of ready and standard code that makes you unnecessary to write many long and frequently used codes.
+### Overview
+SLib is a Godot library designed to simplify and enhance your development experience. It provides a set of ready-to-use, standard codes that eliminate the need to write repetitive and lengthy scripts. SLib is lightweight, easy to install, and helps make your code more readable and maintainable.
+
+## Key Features
+
+- **Lightweight**: Requires minimal space in your application (less than 100KB).
+- **Easy Installation**: Simple setup process to get you started quickly.
+- **Code Readability**: Transforms complex and unreadable code into clear and understandable expressions.
+- **Efficiency**: Reduces the need for duplicate code and allows execution of multiple lines with a single command.
+- **Standardization**: Provides standard methods for common tasks, optimizing your app for any platform.
 
 ### Why use?
 - SLib need very small space in your application (now less than 10KB)
@@ -15,13 +23,15 @@ SLib is a set of ready and standard code that makes you unnecessary to write man
 - Optimizes your app export for any platform
 
 ### How To Install
-For start using SLib:
+To start using SLib, follow these steps:
 
-1- Save SLib.gd in root directory of your project
+1. **Save the SLib Script**: Download `SLib.gd` and save it in the root directory of your project. [Download releases](https://github.com/Subject-Team/SLib/releases)
+2. **Auto Load Setup**: Go to Project Settings > Auto Load, and add `res://SLib.gd` with the name `SLib`.
 
-2- Go to Project Setting/Auto Load and add "res://SLib.gd" with "SLib" Name
-
-Now you can use SLib functions in this format: SLib.FunctionName(Parameters)
+Now you can use SLib functions in your scripts like this:
+```
+SLib.FunctionName(parameters)
+```
 
 ### Available Functions
 - GoToScene()
@@ -238,6 +248,16 @@ Time based smooth interpolation, **not framedependant** like ````a = lerp(a, b, 
 
 > [!TIP]
 > Set [i]Decay[/i] to 1-25 for a good range of values
+
+## Documentation
+
+For detailed documentation and examples, visit our [GitHub repository](https://github.com/Subject-Team/SLib).
+
+## Community and Support
+
+Join our community to share your experiences, ask questions, and get support from other SLib users. Check out our [GitHub repository](https://github.com/Subject-Team/SLib) for the latest updates and contributions.
+
+[Godot forum page](https://forum.godotengine.org/t/slib-library-for-useful-codes/77760/1)
 
 ### Contribute
 If you want to contribute to this project and extend the library, please fork the repository and submit a pull request. Or you can open an issue to discuss what you want to change.
