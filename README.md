@@ -40,6 +40,8 @@ Now you can use SLib functions in this format: SLib.FunctionName(Parameters)
 - OSOpen()
 - FullPath()
 - MergeUnique()
+- FindChildOfClass()
+- expDecay()
 
 ### How To Use
 #### GoToScene
@@ -226,7 +228,16 @@ see what those paths convert to.
 It combines two arrays and only adds items from the second array to the first array if the first array does not already contain them.
 As default, if the first array contains duplicate values to begin with, then the resulting array will not contain only unique values.
 
-(By [snipercup](https://github.com/snipercup))
+#### FindChildOfClass
+    SLib.FindChildOfClass(TargetNode: Node, TypeName: StringName, Descendants: bool = false)
+Finds the first child of a given class, does not find class_name declarations.
+
+#### expDecay
+    SLib.expDecay(A: float, B: float, Decay: float, Delta: float)
+Time based smooth interpolation, **not framedependant** like ````a = lerp(a, b, delta)````
+
+> [!TIP]
+> Set [i]Decay[/i] to 1-25 for a good range of values
 
 ### Contribute
 If you want to contribute to this project and extend the library, please fork the repository and submit a pull request. Or you can open an issue to discuss what you want to change.
@@ -236,6 +247,12 @@ For help, see the [project's wiki guide](https://github.com/Subject-Team/SLib/wi
 [snipercup](https://github.com/snipercup) for:
 - Add MergeUnique function
 - Declaration FullUnique parameter for MergeUnique function
+
+[gertkeno](https://forum.godotengine.org/u/gertkeno/summary) for:
+- Add FindChildOfClass function
+- Add expDecay function
+- [Bug report](https://github.com/Subject-Team/SLib/issues/5)
+- [Correction documentation](https://github.com/Subject-Team/SLib/issues/6)
 
 ### Versions
 [V1.0.2 - Stable](https://github.com/Subject-Team/SLib/releases/tag/1.0.2-S)
