@@ -113,7 +113,7 @@ func SaveFile(Location: String, Variable = null) -> void:
 ## This function returns the content stored in the file, you can use it for all file created by your godot application.
 ## [br][br]
 ## NOTE:
-## If the file doesn't exist, it will send an error to the console like this: [code]SLib.gd:57 @ SendError(): "Can't load from -->file_location<--, file not exists!" From "LoadFile"[/code]
+## If the file doesn't exist, it will send an error to the console like this: [code]SLib.gd:x @ SendError(): "Can't load from -->file_location<--, file not exists!" From "LoadFile"[/code]
 func LoadFile(Location: String):
 	if FileAccess.file_exists(Location):
 		var file = FileAccess.open(Location,FileAccess.READ)
@@ -126,10 +126,10 @@ func LoadFile(Location: String):
 ## Backup function create a new file with [code]main file name-Suffix[/code] in main file location, if you doesn't select a custom suffix, [code]-Backup[/code] append to file name.
 ## [br][br]
 ## NOTE:
-## If the file doesn't exist, it will send an error to the console like this: [code]SLib.gd:57 @ SendError(): "Can't load from -->file_location<--, file not exists!" From "BackupFile"[/code]
+## If the file doesn't exist, it will send an error to the console like this: [code]SLib.gd:x @ SendError(): "Can't load from -->file_location<--, file not exists!" From "BackupFile"[/code]
 ## [br][br]
 ## NOTE:
-## If Suffix set to [code]""[/code], it will send an error to the console like this: [code]SLib.gd:57 @ SendError(): "Need Suffix option" From "BackupFile"[/code]
+## If Suffix set to [code]""[/code], it will send an error to the console like this: [code]SLib.gd:x @ SendError(): "Need Suffix option" From "BackupFile"[/code]
 func BackupFile(Location: String, Suffix: String = "Backup") -> void:
 	if FileAccess.file_exists(Location):
 		if Suffix != "":
@@ -146,14 +146,14 @@ func BackupFile(Location: String, Suffix: String = "Backup") -> void:
 	else:
 		SendError("Can't load from " + Location + ", file not exists!", "BackupFile")
 
-## Sends a custom error to the console that can be viewed in the engine debugger, error like this: [code]SLib.gd:57 @ SendError(): -->Error<-- From -->From<--[/code]
+## Sends a custom error to the console that can be viewed in the engine debugger, error like this: [code]SLib.gd:x @ SendError(): -->Error<-- From -->From<--[/code]
 func SendError(Error: String = "Error", From: String = "null") -> void:
 	if From != "null":
 		push_error('"' + Error + '" From "' + From + '"')
 	else:
 		push_error(Error)
 
-## Sends a custom warning to the console that can be viewed in the engine debugger like this: [code]SLib.gd:60 @ SendWarning(): -->Warning<-- From -->From<--[/code]
+## Sends a custom warning to the console that can be viewed in the engine debugger like this: [code]SLib.gd:x @ SendWarning(): -->Warning<-- From -->From<--[/code]
 func SendWarning(Warning: String = "Warning", From: String = "null") -> void:
 	if From != "null":
 		push_warning('"' + Warning + '" From "' + From + '"')

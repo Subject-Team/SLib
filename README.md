@@ -150,7 +150,7 @@ readable and fast.
 This function returns the content stored in the file, you can use it for all file created by your godot application.
 > [!NOTE]
 > If the file doesn't exist, it will send an error to the console like this:
-> ```SLib.gd:57 @ SendError(): "Can't load from -->file_location<--, file not exists!" From "LoadFile"```
+> ```SLib.gd:x @ SendError(): "Can't load from -->file_location<--, file not exists!" From "LoadFile"```
 
 #### BackupFile
     SLib.BackupFile(Location: String, Suffix: String = "Backup")
@@ -159,23 +159,23 @@ Backup function create a new file with "/main file name/-/Suffix/" in main file 
 custom suffix, "-Backup" append to file name.
 > [!NOTE]
 > If the file doesn't exist, it will send an error to the console like this:
-> ```SLib.gd:57 @ SendError(): "Can't load from -->file_location<--, file not exists!" From "BackupFile"```
+> ```SLib.gd:x @ SendError(): "Can't load from -->file_location<--, file not exists!" From "BackupFile"```
 
 > [!NOTE]
 > If Suffix set to "", it will send an error to the console like this:
-> ```SLib.gd:57 @ SendError(): "Need Suffix option" From "BackupFile"```
+> ```SLib.gd:x @ SendError(): "Need Suffix option" From "BackupFile"```
 
 #### SendError
     SLib.SendError(Error: String = "Error", From: String = "null")
 
 Sends a custom error to the console that can be viewed in the engine debugger, error like this:
-```SLib.gd:57 @ SendError(): -->Error<-- From -->From<--```
+```SLib.gd:x @ SendError(): -->Error<-- From -->From<--```
 
 #### SendWarning
     SLib.SendWarning(Warning: String = "Warning", From: String = "null")
 
 Sends a custom warning to the console that can be viewed in the engine debugger like this:
-```SLib.gd:60 @ SendWarning(): -->Warning<-- From -->From<--```
+```SLib.gd:x @ SendWarning(): -->Warning<-- From -->From<--```
 
 #### SendAlert
     SLib.SendAlert(Alert: String, Title: String = "Alert!")
