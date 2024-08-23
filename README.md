@@ -21,13 +21,6 @@ For start using SLib:
 
 2- Go to Project Setting/Auto Load and add "res://SLib.gd" with "SLib" Name
 
-3- Add this code in top of all GDScript files:
-```
-var SLib
-
-func _ready():
-	SLib = get_node("/root/SLib")
-```
 Now you can use SLib functions in this format: SLib.FunctionName(Parameters)
 
 ### Available Functions
