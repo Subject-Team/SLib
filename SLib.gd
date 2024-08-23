@@ -5,7 +5,7 @@ extends Node
 ## SLib (Subject Library) is a Godot library that provides Godot capabilities in a simpler way.
 ##
 ## SLib is a set of ready and standard code that makes you unnecessary to write many long and frequently used codes.[br][br]
-##Available ability in this library now:[br]
+## Available ability in this library now:[br]
 ## ● Fast, safe and similar change scene[br]
 ## ● Easy project setting modify and use with code[br]
 ## ● Optimized reload scene system[br]
@@ -18,7 +18,9 @@ extends Node
 ## ● Customizable logging system[br]
 ## ● Similar URI using system[br]
 ## ● Fast path convertor[br]
-## ● Similar array unique merge
+## ● Similar array unique merge[br]
+## ● Find the first child of a given class[br]
+## ● Time based smooth interpolation[br]
 
 ## Log file location for save logs, [code]user://...[/code] is recommended
 var Log_FileLcation = "user://Log.ject"
@@ -229,3 +231,19 @@ func MergeUnique(Array1: Array, Array2: Array, FullUnique: bool = false):
 			if not MergedArray.has(Array2Item):
 				MergedArray.append(Array2Item)
 		return MergedArray
+
+## finds the first child of a given class, does not find class_name declarations
+func FindChildOfClass(TargetNode: Node, TypeName: StringName, Descendants: bool = false) -> Node:
+	for Child in TargetNode.get_children():
+		if Child.is_class(TypeName):
+			return Child
+		elif Descendants:
+			var Found: Node = FindChildOfClass(Child, TypeName, Descendants)
+			if Found:
+				return Found
+	return null
+
+## time based smooth interpolation, [b]not framedependant[/b] like [code]a = lerp(a, b, delta)[/code][br][br]
+## NOTE: Set [i]Decay[/i] to 1-25 for a good range of values
+func expDecay(A, B, Decay: float, Delta: float):
+	return B + (A - B) * exp(-Decay * Delta)
