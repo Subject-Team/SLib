@@ -232,6 +232,7 @@ func MergeUnique(Array1: Array, Array2: Array, FullUnique: bool = false) -> Arra
 				MergedArray.append(Array2Item)
 		return MergedArray
 
+## @experimental
 ## Finds the first child of a given class, does not find class_name declarations
 func FindChildOfClass(TargetNode: Node, TypeName: StringName, Descendants: bool = false) -> Node:
 	for Child in TargetNode.get_children():
@@ -243,6 +244,7 @@ func FindChildOfClass(TargetNode: Node, TypeName: StringName, Descendants: bool 
 				return Found
 	return null
 
+## @experimental
 ## Time based smooth interpolation, [b]not framedependant[/b] like [code]a = lerp(a, b, delta)[/code][br][br]
 ## NOTE: Set [i]Decay[/i] to 1-25 for a good range of values
 func expDecay(A: float, B: float, Decay: float, Delta: float) -> float:
