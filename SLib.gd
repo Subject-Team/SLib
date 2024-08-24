@@ -22,6 +22,8 @@ extends Node
 ## ● Find the first child of a given class[br]
 ## ● Time based smooth interpolation[br]
 ## ● Standard and fast pause set[br]
+## ● Tween controller[br]
+## ● Pause changer[br]
 ## [br]
 ## NOTE: Use [code]SLibSettings.gd[/code] for change default parameters.
 
@@ -273,6 +275,7 @@ func expDecay(A: float, B: float, Decay: float, Delta: float) -> float:
 ## If you need fast change, only use [code]PauseChange()[/code]. When need to set pause, use [code]ChagePause(true)[/code] or [code]ChagePause(false)[/code].
 ## [br][br]
 ## NOTE: If you set a not-boolean parameter, it will send an error to the console: [code]SLib.gd:x @ SendError(): ChangePause(): Only use boolean parameters![/code]
+
 func PauseChange(Pause = null):
 	if Pause == null:
 		get_tree().paused = !get_tree().paused

@@ -1,5 +1,5 @@
 class_name SLibSetting
-extends Node
+extends EditorPlugin
 # Press F1 and search for SLibSetting to see documentation
 
 ## SLib settings and parametrs
