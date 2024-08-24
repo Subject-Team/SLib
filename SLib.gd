@@ -21,9 +21,9 @@ extends Node
 ## ● Similar array unique merge[br]
 ## ● Find the first child of a given class[br]
 ## ● Time based smooth interpolation[br]
-
-## Log file location for save logs, [code]user://...[/code] is recommended
-var Log_FileLcation: String = "user://Log.ject"
+## ● Standard and fast pause set[br]
+## [br]
+## NOTE: Use [code]SLibSettings.gd[/code] for change default parameters.
 
 ## You can use this function to transition between scenes, this increases code readability and helps you understand which scene in the target.
 ## [br][br]
@@ -59,7 +59,9 @@ var Log_FileLcation: String = "user://Log.ject"
 ## [/codeblock]
 ## NOTE:
 ## You can also call nested folders, for example: [code]Scenes/Old Files[/code]
-func GoToScene(SceneName: String, Folder: String = "Scene") -> void:
+func GoToScene(SceneName: String, Folder: String = "--UseDefault--") -> void:
+	if Folder == "--UseDefault--":
+		Folder = SLibSettings.Default_ScenesFolder
 	if Folder == "/root":
 		get_tree().change_scene_to_file("res://" + SceneName + ".tscn")
 	else:
@@ -113,7 +115,7 @@ func SaveFile(Location: String, Variable = null) -> void:
 ## This function returns the content stored in the file, you can use it for all file created by your godot application.
 ## [br][br]
 ## NOTE:
-## If the file doesn't exist, it will send an error to the console like this: [code]SLib.gd:x @ SendError(): "Can't load from -->file_location<--, file not exists!" From "LoadFile"[/code]
+## If the file doesn't exist, it will send an error to the console like this: [code]SLib.gd:x @ SendError(): LoadFile(): Can't load from -->file_location<--, file not exists![/code]
 func LoadFile(Location: String):
 	if FileAccess.file_exists(Location):
 		var file = FileAccess.open(Location,FileAccess.READ)
@@ -121,47 +123,43 @@ func LoadFile(Location: String):
 		file.close()
 		return data
 	else:
-		SendError("Can't load from " + Location + ", file not exists!", "LoadFile")
+		SendError("Can't load from " + Location + ", file not exists!", "LoadFile()")
 
 ## Backup function create a new file with [code]main file name-Suffix[/code] in main file location, if you doesn't select a custom suffix, [code]-Backup[/code] append to file name.
 ## [br][br]
 ## NOTE:
-## If the file doesn't exist, it will send an error to the console like this: [code]SLib.gd:x @ SendError(): "Can't load from -->file_location<--, file not exists!" From "BackupFile"[/code]
+## If the file doesn't exist, it will send an error to the console like this: [code]SLib.gd:x @ SendError(): BackupFile(): Can't load from -->file_location<--, file not exists![/code]
 ## [br][br]
-## NOTE:
-## If Suffix set to [code]""[/code], it will send an error to the console like this: [code]SLib.gd:x @ SendError(): "Need Suffix option" From "BackupFile"[/code]
-func BackupFile(Location: String, Suffix: String = "Backup") -> void:
+func BackupFile(Location: String, Suffix: String = "--UseDefault--") -> void:
+	if Suffix == "--UseDefault--":
+		Suffix = SLibSettings.Default_BackupSuffix
 	if FileAccess.file_exists(Location):
-		if Suffix != "":
-			var file = FileAccess.open(Location,FileAccess.READ)
-			var data = file.get_var()
-			var Spliter = Location.split(".",false)
-			var Backup_Location = Spliter[0] + "-" + Suffix + "." + Spliter[1]
-			var backup = FileAccess.open(Backup_Location,FileAccess.WRITE)
-			backup.store_var(data)
-			file.close()
-			backup.close()
-		else:
-			SendError("Need Suffix option", "BackupFile")
+		var file = FileAccess.open(Location,FileAccess.READ)
+		var data = file.get_var()
+		var Backup_Location = Location.get_basename() + "-" + Suffix + "." + Location.get_extension()
+		var backup = FileAccess.open(Backup_Location,FileAccess.WRITE)
+		backup.store_var(data)
+		file.close()
+		backup.close()
 	else:
-		SendError("Can't load from " + Location + ", file not exists!", "BackupFile")
+		SendError("Can't load from " + Location + ", file not exists!", "BackupFile()")
 
-## Sends a custom error to the console that can be viewed in the engine debugger, error like this: [code]SLib.gd:x @ SendError(): -->Error<-- From -->From<--[/code]
-func SendError(Error: String = "Error", From: String = "null") -> void:
-	if From != "null":
-		push_error('"' + Error + '" From "' + From + '"')
-	else:
-		push_error(Error)
+## Sends a custom error to the console that can be viewed in the engine debugger, error like this: [code]SLib.gd:x @ SendError(): ->From<-: ->Error<-[/code]
+func SendError(Error: String = "--UseDefault--", From: String = "Debugger") -> void:
+	if Error == "--UseDefault--":
+		Error = SLibSettings.Default_Error
+	push_error(From + ": " + Error)
 
-## Sends a custom warning to the console that can be viewed in the engine debugger like this: [code]SLib.gd:x @ SendWarning(): -->Warning<-- From -->From<--[/code]
-func SendWarning(Warning: String = "Warning", From: String = "null") -> void:
-	if From != "null":
-		push_warning('"' + Warning + '" From "' + From + '"')
-	else:
-		push_warning(Warning)
+## Sends a custom warning to the console that can be viewed in the engine debugger like this: [code]SLib.gd:x @ SendWarning(): ->From<-: ->Warning<-[/code]
+func SendWarning(Warning: String = "--UseDefault--", From: String = "Debugger") -> void:
+	if Warning == "--UseDefault--":
+		Warning = SLibSettings.Default_Warning
+	push_warning(From + ": " + Warning)
 
 ## Displays a modal dialog box using the host OS' facilities with alert text and title.
-func SendAlert(Alert: String, Title: String = "Alert!") -> void:
+func SendAlert(Alert: String, Title: String = "--UseDefault--") -> void:
+	if Title == "--UseDefault--":
+		Title = SLibSettings.Default_AlertTitle
 	OS.alert(Alert, Title)
 
 ## Save log parameter in log file, log file save in [code]user://Log.ject[/code] as default.
@@ -172,7 +170,11 @@ func SendAlert(Alert: String, Title: String = "Alert!") -> void:
 ## NOTE:
 ## You can change the log file path with [code]SLib.Log_FileLcation[/code].
 func SaveLog(Log) -> void:
-	SaveFile(Log_FileLcation, Log)
+	SaveFile(SLibSettings.FileLcation_Log, Log)
+
+## Return saved log
+func GetLog():
+	return LoadFile(SLibSettings.FileLcation_Log)
 
 ## Requests the OS to open a resource with the most appropriate program. For example:
 ## [br][br]
@@ -215,33 +217,44 @@ func FullPath(Path: String) -> String:
 ## var merged_array: Array = SLib.MergeUnique(myarray1,myarray2)
 ## [/codeblock]
 ## NOTE: Removing duplicate values ​​in the first array is determined by the FullUnique parameter, set it to [code]true[/code] for optimize all array items.
-func MergeUnique(Array1: Array, Array2: Array, FullUnique: bool = false) -> Array:
-	if FullUnique == false:
-		var MergedArray = Array1.duplicate(true)
-		for Item in Array2:
-			if not MergedArray.has(Item):
-				MergedArray.append(Item)
-		return MergedArray
+func MergeUnique(Array1: Array, Array2: Array, FullUnique = null) -> Array:
+	if FullUnique == null:
+		FullUnique = SLibSettings.Default_FullUnique
+	if typeof(FullUnique) == 1:
+		if FullUnique == false:
+			var MergedArray = Array1.duplicate(true)
+			for Item in Array2:
+				if not MergedArray.has(Item):
+					MergedArray.append(Item)
+			return MergedArray
+		else:
+			var MergedArray = []
+			for Array1Item in Array1:
+				if not MergedArray.has(Array1Item):
+					MergedArray.append(Array1Item)
+			for Array2Item in Array2:
+				if not MergedArray.has(Array2Item):
+					MergedArray.append(Array2Item)
+			return MergedArray
 	else:
-		var MergedArray = []
-		for Array1Item in Array1:
-			if not MergedArray.has(Array1Item):
-				MergedArray.append(Array1Item)
-		for Array2Item in Array2:
-			if not MergedArray.has(Array2Item):
-				MergedArray.append(Array2Item)
-		return MergedArray
+		SendError("Only use boolean for FullUnique!", "MergeUnique()")
+	return []
 
 ## @experimental
 ## Finds the first child of a given class, does not find class_name declarations
-func FindChildOfClass(TargetNode: Node, TypeName: StringName, Descendants: bool = false) -> Node:
-	for Child in TargetNode.get_children():
-		if Child.is_class(TypeName):
-			return Child
-		elif Descendants:
-			var Found: Node = FindChildOfClass(Child, TypeName, Descendants)
-			if Found:
-				return Found
+func FindChildOfClass(TargetNode: Node, TypeName: StringName, Descendants = null) -> Node:
+	if Descendants == null:
+		Descendants = SLibSettings.Default_Descendants
+	if typeof(Descendants) == 1:
+		for Child in TargetNode.get_children():
+			if Child.is_class(TypeName):
+				return Child
+			elif Descendants:
+				var Found: Node = FindChildOfClass(Child, TypeName, Descendants)
+				if Found:
+					return Found
+	else:
+		SendError("Only use boolean for Descendants!", "FindChildOfClass()")
 	return null
 
 ## @experimental
@@ -249,3 +262,21 @@ func FindChildOfClass(TargetNode: Node, TypeName: StringName, Descendants: bool 
 ## NOTE: Set [i]Decay[/i] to 1-25 for a good range of values
 func expDecay(A: float, B: float, Decay: float, Delta: float) -> float:
 	return B + (A - B) * exp(-Decay * Delta)
+
+## @experimental
+## Auto Change get_tree().paused, if true, the SceneTree is paused. Doing so will have the following behavior:
+## [br][br]
+## - 2D and 3D physics will be stopped. This includes signals and collision detection.
+## [br][br]
+## - Node._process(), Node._physics_process() and Node._input() will not be called anymore in nodes.
+## [br][br]
+## If you need fast change, only use [code]PauseChange()[/code]. When need to set pause, use [code]ChagePause(true)[/code] or [code]ChagePause(false)[/code].
+## [br][br]
+## NOTE: If you set a not-boolean parameter, it will send an error to the console: [code]SLib.gd:x @ SendError(): ChangePause(): Only use boolean parameters![/code]
+func PauseChange(Pause = null):
+	if Pause == null:
+		get_tree().paused = !get_tree().paused
+	elif typeof(Pause) == 1:
+		get_tree().paused = Pause
+	else:
+		SendError("Only use boolean parameters!", "PauseChange()")
