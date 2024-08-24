@@ -172,7 +172,7 @@ func SendAlert(Alert: String, Title: String = "--UseDefault--") -> void:
 func SaveLog(Log) -> void:
 	SaveFile(SLibSettings.FileLcation_Log, Log)
 
-## Return saved log
+## Return saved log.
 func GetLog():
 	return LoadFile(SLibSettings.FileLcation_Log)
 
@@ -280,3 +280,18 @@ func PauseChange(Pause = null):
 		get_tree().paused = Pause
 	else:
 		SendError("Only use boolean parameters!", "PauseChange()")
+
+func Appear(object) -> void:
+	object.show() 
+	create_tween().tween_property(object, "modulate", Color.WHITE, 1.0)
+
+func Disappear(object) -> void:
+	var tween = create_tween()
+	tween.tween_property(object, "modulate", Color.TRANSPARENT, 1.0)
+	tween.finished.connect(func(): object.hide())
+
+func ReverseDict(Dict: Dictionary):
+	var Reverse: Dictionary = {}
+	for Key in Dict.keys():
+		Reverse[Dict[Key]] = Key
+	return Reverse
