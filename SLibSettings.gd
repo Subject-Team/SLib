@@ -6,8 +6,6 @@ extends EditorPlugin
 ##
 ## Access and edit SLib user side settings and parameters
 
-## FullUnique parameter for [method SLib.MergeUnique]
-const Default_FullUnique: bool = false
 ## @experimental
 ## Descendants parameter for [method SLib.FindChildOfClass]
 const Default_Descendants: bool = false
