@@ -18,11 +18,6 @@ boot_splash/bg_color=Color(1, 1, 1, 1)
 boot_splash/image="res://icon.png"
 config/icon="res://icon.png"
 
-[autoload]
-
-SLibSettings="*res://SLibSettings.gd"
-SLibCodeChanger="*res://SLibCodeChanger.gd"
-
 [display]
 
 window/size/mode=1
