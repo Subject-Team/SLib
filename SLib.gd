@@ -217,30 +217,25 @@ func FullPath(Path: String) -> String:
 ## var myarray1: Array = [1,2,3,4]
 ## var myarray2: Array = [3,4,5,6]
 ## var merged_array: Array = SLib.MergeUnique(myarray1,myarray2)
+## print(merged_array) # prints [1,2,3,4,5,6]
 ## [/codeblock]
-## NOTE: Removing duplicate values ​​in the first array is determined by the FullUnique parameter, set it to [code]true[/code] for optimize all array items.
-func MergeUnique(Array1: Array, Array2: Array, FullUnique = null) -> Array:
-	if FullUnique == null:
-		FullUnique = SLibSettings.Default_FullUnique
-	if typeof(FullUnique) == 1:
-		if FullUnique == false:
-			var MergedArray = Array1.duplicate(true)
-			for Item in Array2:
-				if not MergedArray.has(Item):
-					MergedArray.append(Item)
-			return MergedArray
-		else:
-			var MergedArray = []
-			for Array1Item in Array1:
-				if not MergedArray.has(Array1Item):
-					MergedArray.append(Array1Item)
-			for Array2Item in Array2:
-				if not MergedArray.has(Array2Item):
-					MergedArray.append(Array2Item)
-			return MergedArray
+## NOTE: If FullUnique is [code]true[/code], the resulting array will not have any duplicate values. If FullUnique is [code]false[/code], the resulting array will have duplicate values if Array1 had duplicates to begin with.
+func MergeUnique(Array1: Array, Array2: Array, FullUnique: bool = false) -> Array:
+	if FullUnique == false:
+		var MergedArray = Array1.duplicate(true)
+		for Item in Array2:
+			if not MergedArray.has(Item):
+				MergedArray.append(Item)
+		return MergedArray
 	else:
-		SendError("Only use boolean for FullUnique!", "MergeUnique()")
-	return []
+		var MergedArray = []
+		for Array1Item in Array1:
+			if not MergedArray.has(Array1Item):
+				MergedArray.append(Array1Item)
+		for Array2Item in Array2:
+			if not MergedArray.has(Array2Item):
+				MergedArray.append(Array2Item)
+		return MergedArray
 
 ## @experimental
 ## Finds the first child of a given class, does not find class_name declarations
