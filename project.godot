@@ -21,10 +21,15 @@ config/icon="res://icon.png"
 [autoload]
 
 SLibSettings="*res://SLibSettings.gd"
+SLibCodeChanger="*res://SLibCodeChanger.gd"
 
 [display]
 
 window/size/mode=1
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/wakatime/plugin.cfg")
 
 [filesystem]
 

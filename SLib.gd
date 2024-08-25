@@ -1,4 +1,4 @@
-class_name SLib
+class_name SLibMain
 extends Node
 # Press F1 and search for SLib to see documentation
 
