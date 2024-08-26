@@ -275,7 +275,6 @@ func expDecay(A: float, B: float, Decay: float, Delta: float) -> float:
 ## If you need fast change, only use [code]PauseChange()[/code]. When need to set pause, use [code]ChagePause(true)[/code] or [code]ChagePause(false)[/code].
 ## [br][br]
 ## NOTE: If you set a not-boolean parameter, it will send an error to the console: [code]SLib.gd:x @ SendError(): ChangePause(): Only use boolean parameters![/code]
-
 func PauseChange(Pause = null):
 	if Pause == null:
 		get_tree().paused = !get_tree().paused
@@ -284,15 +283,19 @@ func PauseChange(Pause = null):
 	else:
 		SendError("Only use boolean parameters!", "PauseChange()")
 
+## This function shows an object and creates an animation to change its color.
 func Appear(object) -> void:
 	object.show() 
 	create_tween().tween_property(object, "modulate", Color.WHITE, 1.0)
 
+## This function creates an animation to make an object disappear by changing its color to transparent.
 func Disappear(object) -> void:
 	var tween = create_tween()
 	tween.tween_property(object, "modulate", Color.TRANSPARENT, 1.0)
 	tween.finished.connect(func(): object.hide())
 
+## @experimental
+## Reverses the key-value pairs in a given dictionary.
 func ReverseDict(Dict: Dictionary):
 	var Reverse: Dictionary = {}
 	for Key in Dict.keys():
