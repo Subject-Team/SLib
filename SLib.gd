@@ -27,6 +27,31 @@ extends Node
 ## [br]
 ## NOTE: Use [code]SLibSettings.gd[/code] for change default parameters.
 
+## The name of the file that will store all settings from this plugin.
+const SAVE_FILE_NAME: String = "res://addons/SLib/SLib.config"
+
+var settings: Dictionary = {
+	"Descendants": false,
+	"AlertTitle": "Alert!",
+	"Error": "Error",
+	"Warning": "Warning",
+	"BackupSuffix": "Backup",
+	"ScenesFolder": "Scene"
+	}
+
+func _enter_tree():
+	set_project_settings()
+	settings = ProjectSettings.get("SLib/Defaults")
+	SendAlert("Test")
+
+func set_project_settings() -> void:
+	if FileAccess.file_exists(SAVE_FILE_NAME):
+		var file = FileAccess.open(SAVE_FILE_NAME,FileAccess.READ)
+		settings = file.get_var()
+		file.close()
+	print(settings)
+	ProjectSettings.set("SLib/Defaults", settings)
+
 ## You can use this function to transition between scenes, this increases code readability and helps you understand which scene in the target.
 ## [br][br]
 ## [b]1- Standard format (Recommended):[/b]
@@ -63,7 +88,8 @@ extends Node
 ## You can also call nested folders, for example: [code]Scenes/Old Files[/code]
 func GoToScene(SceneName: String, Folder: String = "--UseDefault--") -> void:
 	if Folder == "--UseDefault--":
-		Folder = SLibSettings.Default_ScenesFolder
+		Folder = settings["ScenesFolder"]
+		print(Folder)
 	if Folder == "/root":
 		get_tree().change_scene_to_file("res://" + SceneName + ".tscn")
 	else:
@@ -161,7 +187,7 @@ func SendWarning(Warning: String = "--UseDefault--", From: String = "Debugger") 
 ## Displays a modal dialog box using the host OS' facilities with alert text and title.
 func SendAlert(Alert: String, Title: String = "--UseDefault--") -> void:
 	if Title == "--UseDefault--":
-		Title = SLibSettings.Default_AlertTitle
+		Title = settings["AlertTitle"]
 	OS.alert(Alert, Title)
 
 ## Save log parameter in log file, log file save in [code]user://Log.ject[/code] as default.

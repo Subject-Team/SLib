@@ -8,6 +8,24 @@
 
 config_version=5
 
+Descendants=false
+AlertTitle="Alert!"
+Error="Error"
+Warning="Warning"
+BackupSuffix="Backup"
+ScenesFolder="Scene"
+
+[SLib]
+
+Defaults={
+"AlertTitle": "Alert!!!!!",
+"BackupSuffix": "Backup",
+"Descendants": false,
+"Error": "Error",
+"ScenesFolder": "Scene",
+"Warning": "Warning"
+}
+
 [application]
 
 config/name="Subject Library"
@@ -28,7 +46,7 @@ window/size/mode=1
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/wakatime/plugin.cfg")
+enabled=PackedStringArray("res://addons/SLib/plugin.cfg", "res://addons/wakatime/plugin.cfg")
 
 [filesystem]
 
