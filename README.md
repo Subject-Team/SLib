@@ -62,6 +62,9 @@ SLib.FunctionName(parameters)
 ## How To Use
 Install project, press F1 and search `SLib` or `SLibSetting` to see docs.
 
+## Automation
+See [Automation wiki page](https://github.com/Subject-Team/SLib/wiki/Automation) for automation SLib.
+
 ## Documentation
 
 For detailed documentation and examples, visit our [GitHub repository](https://github.com/Subject-Team/SLib).
