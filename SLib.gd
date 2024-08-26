@@ -197,7 +197,9 @@ func GetLog():
 func OSOpen(URI: String) -> void:
 	OS.shell_open(URI)
 
-## Returns the absolute, native OS path corresponding to the localized path (starting with [code]res://[/code] or [code]user://[/code]). The returned path will vary depending on the operating system and user preferences. See [url=https://docs.godotengine.org/en/4.2/tutorials/io/data_paths.html]File paths in Godot projects[/url] to see what those paths convert to.
+## Returns the absolute, native OS path corresponding to the localized path (starting with [code]res://[/code] or [code]user://[/code]).
+## The returned path will vary depending on the operating system and user preferences.
+## See [url=https://docs.godotengine.org/en/4.2/tutorials/io/data_paths.html]File paths in Godot projects[/url] to see what those paths convert to.
 func FullPath(Path: String) -> String:
 	if Path[0] == "u":
 		return ProjectSettings.globalize_path(Path)
