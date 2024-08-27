@@ -4,10 +4,10 @@
 - Add expDecay function.
 - Write types.
 - Error and Warning functions update.
-- Create SLibSettings.
 - Add Appear function.
 - Add Disapear function.
 - Add PauseChange function.
+- Create SLibConfig plugin.
 
 [1.0.2:](https://github.com/Subject-Team/SLib/releases/tag/1.0.2-S)
 - Add MergeUnique function.

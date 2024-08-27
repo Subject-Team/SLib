@@ -25,14 +25,30 @@ SLib is a Godot library designed to simplify and enhance your development experi
 ## How To Install
 To start using SLib, follow these steps:
 
-1. **Save the SLib Script**: Download `SLibFull.zip` and extract it in the root directory of your project. [Download releases](https://github.com/Subject-Team/SLib/releases)
-2. **Check extraction**: If files save in ``res://SLib/SLib.gd`` and ``res://SLib/SLibSettings.gd`` extraction is correct.
-3. **Auto Load Setup**: Go to Project Settings > Auto Load, and add `res://SLib/SLib.gd` with the name `SLib` and `res://SLib/SLibSettings.gd` with the name `SLibSettings`.
+### Step1: Install SLib Main Script 
+1. **Get SLib Main Script**: Download and copy `SLib.gd` in your project directory. [Download from releases](https://github.com/Subject-Team/SLib/releases)
+2. **AutoLoad Setup**: Go to `Project Settings > Auto Load`, and add `res://SLib.gd` with the name `SLib` in project autoload.
 
-Now you can use SLib functions in your scripts like this:
+### Step2: Install SLibConfig Plugin
+1. **Get SLibConfig**: Download `SLibConfig.zip` from [releases](https://github.com/Subject-Team/SLib/releases).
+2. **Import Plugin**: Open your project, go to `AssetLib`, click on `Import...` and import `SLibConfig.zip` file.
+3. **Activate Plugin**: Go to `Project > Project Settings > Plugins` and set `SLibConfig` status to enable.
+
+### Step3: Activate Automation
+See [here](https://github.com/Subject-Team/SLib/wiki/Automation) for set up automation.
+
+### Step3: Finishing Installation
+1. **Reload Project**: To apply changes use `Project > Reload Current Project`.
+2. **Check Plugin**: Go to `Project > Project Settings > General` and search `SLib/`, if you have settings in `SLib/` plugin installed.
+3. **Check Script**: Open a GDScript file and paste this code in the file and wait a few moments, if you do not receive an error, the installation is complete, and you can erase the code:
+```gdscript
+func _ready():
+    SLib.MergeUnique([2],[3])
 ```
-SLib.FunctionName(parameters)
-```
+4. **Check Automation**: Write `Save "Test" in "res://Test.save"` and press enter or right-arrow, if code changed to `SLib.SaveFile("res://Test.save", "Test")` automation setup is correct.
+
+### Finish
+Congratulations, now you can use all the features of SLib!
 
 ## Available Functions
 - Appear()
@@ -60,7 +76,7 @@ SLib.FunctionName(parameters)
 - expDecay()
 
 ## How To Use
-Install project, press F1 and search `SLib` or `SLibSetting` to see docs.
+Install project, press F1 and search `SLib` to see docs.
 
 ## Automation
 See [Automation wiki page](https://github.com/Subject-Team/SLib/wiki/Automation) for automation SLib.
@@ -82,7 +98,8 @@ For help, see the [project's wiki guide](https://github.com/Subject-Team/SLib/wi
 ## Thanks
 [snipercup](https://github.com/snipercup) for:
 - Add MergeUnique function
-- Declaration FullUnique parameter for MergeUnique function
+- Remove FullUnique parameter from MergeUnique
+- SLib config advice
 
 [gertkeno](https://forum.godotengine.org/u/gertkeno/summary) for:
 - Add FindChildOfClass function
@@ -99,6 +116,8 @@ For help, see the [project's wiki guide](https://github.com/Subject-Team/SLib/wi
 - Add ReverseDict function
 
 ## Versions
+[V1.0.3 - Stable](https://github.com/Subject-Team/SLib/releases/tag/1.0.3-S)
+
 [V1.0.3 - Beta2](https://github.com/Subject-Team/SLib/releases/tag/1.0.3-B2)
 
 [V1.0.3 - Beta1](https://github.com/Subject-Team/SLib/releases/tag/1.0.3-B1)
