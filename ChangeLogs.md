@@ -1,4 +1,7 @@
 
+1.0.4 (not published)
+- Add CustomSort function.
+
 [1.0.3](https://github.com/Subject-Team/SLib/releases/tag/1.0.3-B2)
 - Add FindChildOfClass function.
 - Add expDecay function.

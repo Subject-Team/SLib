@@ -15,3 +15,4 @@ addons/SLib/SLibDefaults.cfg
 .godot/editor/editor_layout.cfg
 .godot/editor/script_editor_cache.cfg
 *.cfg
+.godot/editor/
