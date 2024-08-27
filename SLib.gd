@@ -42,6 +42,9 @@ var FileLocations: Dictionary = {
 	"Log": "user://App.log"
 }
 
+## Global variable for [method SLibMain.CustomSort]
+var UserPattern: Array
+
 func _enter_tree():
 	Defaults = ProjectSettings.get("SLib/Defaults")
 	FileLocations = ProjectSettings.get("SLib/FileLocations")
@@ -294,3 +297,20 @@ func ReverseDict(Dict: Dictionary):
 	for Key in Dict.keys():
 		Reverse[Dict[Key]] = Key
 	return Reverse
+
+## Sorts the array based on the sorter, eg:
+## [codeblock]
+## var Scrambled = ["5", "A", "10", "K", "J", "Q", "3"]
+## var Pattern = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
+##
+## var Sorted = SLib.CustomSort(Scrambled, Pattern) #-> ["A", "3", "5", "10", "J", "Q", "K"] 
+## [/codeblock]
+func CustomSort(ScrambledArray : Array, Pattern: Array) -> Array:
+	UserPattern = Pattern
+	ScrambledArray.sort_custom(_sorter)
+	return ScrambledArray
+
+func _sorter(a, b):
+	if UserPattern.find(a) < UserPattern.find(b):
+		return true
+	return false

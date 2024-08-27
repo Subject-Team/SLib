@@ -11,3 +11,6 @@ SLib.tscn
 .godot/editor/filesystem_cache8
 .godot/editor/script_editor_cache.cfg
 addons/SLib/SLibDefaults.cfg
+/.godot/editor
+.godot/editor/editor_layout.cfg
+.godot/editor/script_editor_cache.cfg
