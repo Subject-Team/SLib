@@ -6,3 +6,8 @@ wakatime_logo.jpg
 .godot/editor/script_editor_cache.cfg
 SLibConfig.zip
 *.cfg
+SLib.tscn
+/.godot/editor
+.godot/editor/filesystem_cache8
+.godot/editor/script_editor_cache.cfg
+addons/SLib/SLibDefaults.cfg

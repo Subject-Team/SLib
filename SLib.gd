@@ -181,11 +181,11 @@ func SendAlert(Alert: String, Title: String = Defaults["AlertTitle"]) -> void:
 ## NOTE:
 ## You can change the log file path with [code]SLib.Log_FileLcation[/code].
 func SaveLog(Log) -> void:
-	SaveFile(SLibSettings.FileLcation_Log, Log)
+	SaveFile(FileLocations["Log"], Log)
 
 ## Return saved log.
 func GetLog():
-	return LoadFile(SLibSettings.FileLcation_Log)
+	return LoadFile(FileLocations["Log"])
 
 ## Requests the OS to open a resource with the most appropriate program. For example:
 ## [br][br]
