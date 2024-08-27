@@ -1,22 +1,13 @@
 # Godot 4+ specific ignores
-SLibFull.zip
-wakatime_logo.jpg
 *.import
-/addons/wakatime
-.godot/editor/script_editor_cache.cfg
-SLibConfig.zip
 *.cfg
-SLib.tscn
-/.godot/editor
-.godot/editor/filesystem_cache8
-.godot/editor/script_editor_cache.cfg
-addons/SLib/SLibDefaults.cfg
-/.godot/editor
-.godot/editor/editor_layout.cfg
-.godot/editor/script_editor_cache.cfg
-*.cfg
-.godot/editor/
-.godot/editor/script_editor_cache.cfg
+*.tscn
 /.godot
-/.godot/editor
-*.cfg
+
+# Exports
+*.zip
+
+# Personal plugins
+wakatime_logo.jpg
+/addons/wakatime
+
