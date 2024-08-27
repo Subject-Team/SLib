@@ -231,6 +231,7 @@ func FullPath(Path: String) -> String:
 ## var myarray1: Array = [1,2,3,4]
 ## var myarray2: Array = [3,4,5,6]
 ## var merged_array: Array = SLib.MergeUnique(myarray1,myarray2)
+## print(merged_array) # prints [1,2,3,4,5,6]
 ## [/codeblock]
 ## NOTE: Removing duplicate values ​​in the first array is determined by the FullUnique parameter, set it to [code]true[/code] for optimize all array items.
 func MergeUnique(Array1: Array, Array2: Array) -> Array:
