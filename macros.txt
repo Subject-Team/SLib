@@ -1,0 +1,56 @@
+[macro] Appear %arg%
+SLib.Appear(%arg%)
+[macro] Backup %arg%
+SLib.BackupFile(%arg%)
+[macro] Disappear %arg%
+SLib.Disappear(%arg%)
+[macro] Exit
+SLib.Exit()
+[macro] Close
+SLib.Exit()
+[macro] Find %arg2% Child in %arg1%
+SLib.FindChildOfClass(%arg1%, %arg2%)
+[macro] FPath %arg%
+SLib.FullPath(%arg%)
+[macro] GetLog
+SLib.GetLog()
+[macro] GetPS %arg%
+SLib.GetProjectSetting(%art%)
+[macro] GoScene %arg%
+SLib.GoToScene(%arg%)
+[macro] Load %arg%
+SLib.LoadFile(%arg%)
+[macro] Merge %arg1% and %arg2%
+SLib.MergeUnique(%arg1%, %arg2%)
+[macro] Open %arg%
+SLib.OSOpen(%arg%)
+[macro] Pause
+SLib.PauseChange(true)
+[macro] Unpause
+SLib.PauseChange(false)
+[macro] Pause = %arg%
+SLib.PauseChange(%arg%)
+[macro] Reload
+SLib.Reload()
+[macro] RDict %arg%
+SLib.ReverseDict(%arg%)
+[macro] Save %arg1% in %arg2%
+SLib.SaveFile(%arg2%, %arg1%)
+[macro] SaveLog %arg%
+SLib.SaveLog(%arg%)
+[macro] Alert %arg%
+SLib.SendAlert(%arg%)
+[macro] Error
+SLib.SendError()
+[macro] Error %arg%
+SLib.SendError(%arg%)
+[macro] Warning
+SLib.SendWarning()
+[macro] Warning %arg%
+SLib.SendWarning(%arg%)
+[macro] Set %arg2% for %arg1% PS
+SLib.SetProjectSetting(%arg1%, %arg2%)
+[macro] Wait %arg%
+await SLib.Wait(%arg%)
+[macro] expDecay %arg1% %arg2% %arg3% %arg4% 
+SLib.expDecay(%arg1%, %arg2%, %arg3%, %arg4%)
