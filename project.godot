@@ -8,13 +8,6 @@
 
 config_version=5
 
-Descendants=false
-AlertTitle="Alert!"
-Error="Error"
-Warning="Warning"
-BackupSuffix="Backup"
-ScenesFolder="Scene"
-
 [SLib]
 
 Defaults={

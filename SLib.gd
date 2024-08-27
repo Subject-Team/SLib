@@ -40,17 +40,8 @@ var settings: Dictionary = {
 	}
 
 func _enter_tree():
-	set_project_settings()
 	settings = ProjectSettings.get("SLib/Defaults")
 	SendAlert("Test")
-
-func set_project_settings() -> void:
-	if FileAccess.file_exists(SAVE_FILE_NAME):
-		var file = FileAccess.open(SAVE_FILE_NAME,FileAccess.READ)
-		settings = file.get_var()
-		file.close()
-	print(settings)
-	ProjectSettings.set("SLib/Defaults", settings)
 
 ## You can use this function to transition between scenes, this increases code readability and helps you understand which scene in the target.
 ## [br][br]

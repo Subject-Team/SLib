@@ -1,16 +1,5 @@
 # Godot 4+ specific ignores
-.godot/
-/.idea
-project.godot
-export_presets.cfg
-project.godot
-SLi921A.tmp
-project.godot
-/SLib
 SLibFull.zip
-
-project.godot
 wakatime_logo.jpg
 *.import
-project.godot
 /addons/wakatime

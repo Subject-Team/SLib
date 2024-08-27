@@ -27,6 +27,9 @@ func set_project_settings() -> void:
 		file.close()
 	print(settings)
 	ProjectSettings.set("SLib/Defaults", settings)
+	var file = FileAccess.open(SAVE_FILE_NAME,FileAccess.WRITE)
+	file.store_var(settings)
+	file.close()
 
 func remove_project_settings() -> void:
 	settings = ProjectSettings.get_setting("SLib/Defaults")
