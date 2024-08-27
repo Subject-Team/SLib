@@ -25,12 +25,10 @@ extends Node
 ## ● Tween controller[br]
 ## ● Pause changer[br]
 ## [br]
-## NOTE: Use [code]SLibSettings.gd[/code] for change default parameters.
+## NOTE: Use [code]Project > Project Settings > SLib[/code] for change defaults and file locations.
 
-## The name of the file that will store all settings from this plugin.
-const SAVE_FILE_NAME: String = "res://addons/SLib/SLib.config"
-
-var settings: Dictionary = {
+## Default values
+var Defaults: Dictionary = {
 	"Descendants": false,
 	"AlertTitle": "Alert!",
 	"Error": "Error",
@@ -39,9 +37,14 @@ var settings: Dictionary = {
 	"ScenesFolder": "Scene"
 	}
 
+## Library file locations
+var FileLocations: Dictionary = {
+	"Log": "user://App.log"
+}
+
 func _enter_tree():
-	settings = ProjectSettings.get("SLib/Defaults")
-	SendAlert("Test")
+	Defaults = ProjectSettings.get("SLib/Defaults")
+	FileLocations = ProjectSettings.get("SLib/FileLocations")
 
 ## You can use this function to transition between scenes, this increases code readability and helps you understand which scene in the target.
 ## [br][br]
@@ -77,10 +80,7 @@ func _enter_tree():
 ## [/codeblock]
 ## NOTE:
 ## You can also call nested folders, for example: [code]Scenes/Old Files[/code]
-func GoToScene(SceneName: String, Folder: String = "--UseDefault--") -> void:
-	if Folder == "--UseDefault--":
-		Folder = settings["ScenesFolder"]
-		print(Folder)
+func GoToScene(SceneName: String, Folder: String = Defaults["ScenesFolder"]) -> void:
 	if Folder == "/root":
 		get_tree().change_scene_to_file("res://" + SceneName + ".tscn")
 	else:
@@ -149,9 +149,7 @@ func LoadFile(Location: String):
 ## NOTE:
 ## If the file doesn't exist, it will send an error to the console like this: [code]SLib.gd:x @ SendError(): BackupFile(): Can't load from -->file_location<--, file not exists![/code]
 ## [br][br]
-func BackupFile(Location: String, Suffix: String = "--UseDefault--") -> void:
-	if Suffix == "--UseDefault--":
-		Suffix = SLibSettings.Default_BackupSuffix
+func BackupFile(Location: String, Suffix: String = Defaults["BackupSuffix"]) -> void:
 	if FileAccess.file_exists(Location):
 		var file = FileAccess.open(Location,FileAccess.READ)
 		var data = file.get_var()
@@ -164,21 +162,15 @@ func BackupFile(Location: String, Suffix: String = "--UseDefault--") -> void:
 		SendError("Can't load from " + Location + ", file not exists!", "BackupFile()")
 
 ## Sends a custom error to the console that can be viewed in the engine debugger, error like this: [code]SLib.gd:x @ SendError(): ->From<-: ->Error<-[/code]
-func SendError(Error: String = "--UseDefault--", From: String = "Debugger") -> void:
-	if Error == "--UseDefault--":
-		Error = SLibSettings.Default_Error
+func SendError(Error: String = Defaults["Error"], From: String = "Debugger") -> void:
 	push_error(From + ": " + Error)
 
 ## Sends a custom warning to the console that can be viewed in the engine debugger like this: [code]SLib.gd:x @ SendWarning(): ->From<-: ->Warning<-[/code]
-func SendWarning(Warning: String = "--UseDefault--", From: String = "Debugger") -> void:
-	if Warning == "--UseDefault--":
-		Warning = SLibSettings.Default_Warning
+func SendWarning(Warning: String = Defaults["Warning"], From: String = "Debugger") -> void:
 	push_warning(From + ": " + Warning)
 
 ## Displays a modal dialog box using the host OS' facilities with alert text and title.
-func SendAlert(Alert: String, Title: String = "--UseDefault--") -> void:
-	if Title == "--UseDefault--":
-		Title = settings["AlertTitle"]
+func SendAlert(Alert: String, Title: String = Defaults["AlertTitle"]) -> void:
 	OS.alert(Alert, Title)
 
 ## Save log parameter in log file, log file save in [code]user://Log.ject[/code] as default.
@@ -238,44 +230,26 @@ func FullPath(Path: String) -> String:
 ## var merged_array: Array = SLib.MergeUnique(myarray1,myarray2)
 ## [/codeblock]
 ## NOTE: Removing duplicate values ​​in the first array is determined by the FullUnique parameter, set it to [code]true[/code] for optimize all array items.
-func MergeUnique(Array1: Array, Array2: Array, FullUnique = null) -> Array:
-	if FullUnique == null:
-		FullUnique = SLibSettings.Default_FullUnique
-	if typeof(FullUnique) == 1:
-		if FullUnique == false:
-			var MergedArray = Array1.duplicate(true)
-			for Item in Array2:
-				if not MergedArray.has(Item):
-					MergedArray.append(Item)
-			return MergedArray
-		else:
-			var MergedArray = []
-			for Array1Item in Array1:
-				if not MergedArray.has(Array1Item):
-					MergedArray.append(Array1Item)
-			for Array2Item in Array2:
-				if not MergedArray.has(Array2Item):
-					MergedArray.append(Array2Item)
-			return MergedArray
-	else:
-		SendError("Only use boolean for FullUnique!", "MergeUnique()")
-	return []
+func MergeUnique(Array1: Array, Array2: Array) -> Array:
+	var MergedArray = []
+	for Array1Item in Array1:
+		if not MergedArray.has(Array1Item):
+			MergedArray.append(Array1Item)
+	for Array2Item in Array2:
+		if not MergedArray.has(Array2Item):
+			MergedArray.append(Array2Item)
+	return MergedArray
 
 ## @experimental
 ## Finds the first child of a given class, does not find class_name declarations
-func FindChildOfClass(TargetNode: Node, TypeName: StringName, Descendants = null) -> Node:
-	if Descendants == null:
-		Descendants = SLibSettings.Default_Descendants
-	if typeof(Descendants) == 1:
-		for Child in TargetNode.get_children():
-			if Child.is_class(TypeName):
-				return Child
-			elif Descendants:
-				var Found: Node = FindChildOfClass(Child, TypeName, Descendants)
-				if Found:
-					return Found
-	else:
-		SendError("Only use boolean for Descendants!", "FindChildOfClass()")
+func FindChildOfClass(TargetNode: Node, TypeName: StringName, Descendants: bool = Defaults["Descendants"]) -> Node:
+	for Child in TargetNode.get_children():
+		if Child.is_class(TypeName):
+			return Child
+		elif Descendants:
+			var Found: Node = FindChildOfClass(Child, TypeName, Descendants)
+			if Found:
+				return Found
 	return null
 
 ## @experimental

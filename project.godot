@@ -11,12 +11,15 @@ config_version=5
 [SLib]
 
 Defaults={
-"AlertTitle": "Alert!!!!!",
+"AlertTitle": "Alert!",
 "BackupSuffix": "Backup",
 "Descendants": false,
 "Error": "Error",
 "ScenesFolder": "Scene",
 "Warning": "Warning"
+}
+FileLocations={
+"Log": "user://App.log"
 }
 
 [application]
