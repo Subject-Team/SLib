@@ -3,3 +3,4 @@ SLibFull.zip
 wakatime_logo.jpg
 *.import
 /addons/wakatime
+.godot/editor/script_editor_cache.cfg
