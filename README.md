@@ -29,9 +29,9 @@ These features make SLib a powerful and efficient tool for Godot developers, sim
 
 ## [How To Install](https://github.com/Subject-Team/SLib/wiki/Installation-guid)
 
-## [Available Functions](https://github.com/Subject-Team/SLib/wiki/Capabilities)
+## [How To Use](https://github.com/Subject-Team/SLib/wiki/Learn-how-to-use-SLib)
 
-## [How To Use](https://github.com/Subject-Team/SLib/wiki/Capabilities)
+## [Detailed capabilities](https://github.com/Subject-Team/SLib/wiki/Detailed-capabilities)
 
 ## [Automation](https://github.com/Subject-Team/SLib/wiki/Automation)
 
