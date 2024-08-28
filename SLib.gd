@@ -23,7 +23,8 @@ extends Node
 ## ● Time based smooth interpolation[br]
 ## ● Standard and fast pause set[br]
 ## ● Tween controller[br]
-## ● Pause changer[br]
+## ● Dictionary reverser[br]
+## ● Global file locations space[br]
 ## [br]
 ## NOTE: Use [code]Project > Project Settings > SLib[/code] for change defaults and file locations.
 

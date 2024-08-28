@@ -18,7 +18,7 @@ var Defaults: Dictionary = {
 	"ScenesFolder": "Scene"
 	}
 
-## Library file locations
+## Global file locations
 var FileLocations: Dictionary = {
 	"Log": "user://App.log"
 }
