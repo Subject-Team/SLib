@@ -23,7 +23,8 @@ extends Node
 ## ● Time based smooth interpolation[br]
 ## ● Standard and fast pause set[br]
 ## ● Tween controller[br]
-## ● Pause changer[br]
+## ● Dictionary reverser[br]
+## ● Global file locations space[br]
 ## [br]
 ## NOTE: Use [code]Project > Project Settings > SLib[/code] for change defaults and file locations.
 
@@ -41,6 +42,9 @@ var Defaults: Dictionary = {
 var FileLocations: Dictionary = {
 	"Log": "user://App.log"
 }
+
+## Global variable for [method SLibMain.CustomSort]
+var UserPattern: Array
 
 func _enter_tree():
 	Defaults = ProjectSettings.get("SLib/Defaults")
@@ -228,6 +232,7 @@ func FullPath(Path: String) -> String:
 ## var myarray1: Array = [1,2,3,4]
 ## var myarray2: Array = [3,4,5,6]
 ## var merged_array: Array = SLib.MergeUnique(myarray1,myarray2)
+## print(merged_array) # prints [1,2,3,4,5,6]
 ## [/codeblock]
 ## NOTE: Removing duplicate values ​​in the first array is determined by the FullUnique parameter, set it to [code]true[/code] for optimize all array items.
 func MergeUnique(Array1: Array, Array2: Array) -> Array:
@@ -294,3 +299,24 @@ func ReverseDict(Dict: Dictionary):
 	for Key in Dict.keys():
 		Reverse[Dict[Key]] = Key
 	return Reverse
+
+## Sorts the array based on the sorter, eg:
+## [codeblock]
+## var Scrambled = ["5", "A", "10", "K", "J", "Q", "3"]
+## var Pattern = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
+##
+## var Sorted = SLib.CustomSort(Scrambled, Pattern) #-> ["A", "3", "5", "10", "J", "Q", "K"] 
+## [/codeblock]
+func CustomSort(ScrambledArray : Array, Pattern: Array) -> Array:
+	UserPattern = Pattern
+	ScrambledArray.sort_custom(_sorter)
+	return ScrambledArray
+
+func _sorter(a, b):
+	if UserPattern.find(a) < UserPattern.find(b):
+		return true
+	return false
+
+## Return global file locations by key.
+func GetPath(Key):
+	return FileLocations[Key]

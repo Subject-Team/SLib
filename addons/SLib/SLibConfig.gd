@@ -18,7 +18,7 @@ var Defaults: Dictionary = {
 	"ScenesFolder": "Scene"
 	}
 
-## Library file locations
+## Global file locations
 var FileLocations: Dictionary = {
 	"Log": "user://App.log"
 }
@@ -40,7 +40,9 @@ func set_project_settings() -> void:
 		FileLocations = file.get_var()
 		file.close()
 	ProjectSettings.set("SLib/Defaults", Defaults)
+	ProjectSettings.set_initial_value("SLib/Defaults", Defaults)
 	ProjectSettings.set("SLib/FileLocations", FileLocations)
+	ProjectSettings.set_initial_value("SLib/FileLocations", FileLocations)
 	var file = FileAccess.open(ConfigFiles["FileLocations"],FileAccess.WRITE)
 	file.store_var(FileLocations)
 	file.close()
