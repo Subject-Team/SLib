@@ -315,3 +315,7 @@ func _sorter(a, b):
 	if UserPattern.find(a) < UserPattern.find(b):
 		return true
 	return false
+
+## Return global file locations by key.
+func GetPath(Key):
+	return FileLocations[Key]

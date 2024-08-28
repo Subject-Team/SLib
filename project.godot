@@ -8,20 +8,6 @@
 
 config_version=5
 
-[SLib]
-
-Defaults={
-"AlertTitle": "Alert!",
-"BackupSuffix": "Backup",
-"Descendants": false,
-"Error": "Error",
-"ScenesFolder": "Scene",
-"Warning": "Warning"
-}
-FileLocations={
-"Log": "user://App.log"
-}
-
 [application]
 
 config/name="Subject Library"
@@ -31,10 +17,6 @@ config/features=PackedStringArray("4.2", "GL Compatibility")
 boot_splash/bg_color=Color(1, 1, 1, 1)
 boot_splash/image="res://icon.png"
 config/icon="res://icon.png"
-
-[autoload]
-
-SLibSettings="*res://SLibSettings.gd"
 
 [display]
 
