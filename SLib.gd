@@ -47,8 +47,17 @@ var FileLocations: Dictionary = {
 var UserPattern: Array
 
 func _enter_tree():
-	Defaults = ProjectSettings.get("SLib/Defaults")
-	FileLocations = ProjectSettings.get("SLib/FileLocations")
+	Defaults = ProjectSettings.get_setting("SLib/Defaults", {
+		"Descendants": false,
+		"AlertTitle": "Alert!",
+		"Error": "Error",
+		"Warning": "Warning",
+		"BackupSuffix": "Backup",
+		"ScenesFolder": "Scene"
+		})
+	FileLocations = ProjectSettings.get_setting("SLib/FileLocations", {
+		"Log": "user://App.log"
+	})
 
 ## You can use this function to transition between scenes, this increases code readability and helps you understand which scene in the target.
 ## [br][br]
