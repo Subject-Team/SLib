@@ -5,11 +5,17 @@ Useful Codes For GDScript
 SLib is a Godot library designed to simplify and enhance your development experience. It provides a set of ready-to-use, standard codes that eliminate the need to write repetitive and lengthy scripts. SLib is lightweight, easy to install, and helps make your code more readable and maintainable.
 
 ## [Key Features](https://github.com/Subject-Team/SLib/edit/1.0.4/README.md#key-features)
-- **Lightweight**: Requires minimal space in your application (less than 100KB).
-- **Easy Installation**: Simple setup process to get you started quickly.
-- **Code Readability**: Transforms complex and unreadable code into clear and understandable expressions.
-- **Efficiency**: Reduces the need for duplicate code and allows execution of multiple lines with a single command.
-- **Standardization**: Provides standard methods for common tasks, optimizing your app for any platform.
+- **Ease of Installation**: SLib is very easy to install. Simply save the SLib.gd file in the root directory of your project and add it to the AutoLoad settings in Godot1.
+- **Code Readability**: SLib helps make unreadable code readable quickly. It replaces complex and incomprehensible parts with useful and comprehensible expressions1.
+- **Efficiency**: You can execute multiple lines of code with a single line using SLib, which reduces the need to write duplicate sections1.
+- **Standardization**: SLib provides standard ways to perform certain tasks, ensuring consistency across your project1.
+- **Small Footprint**: The library requires very little space in your application, currently less than 100KB.
+- **Functionality**: SLib includes a variety of useful functions such as:
+  - `GoToScene()`: For transitioning between scenes.
+  - `SetProjectSetting()` and `GetProjectSetting()`: For managing project settings.
+  - `SaveFile()` and `LoadFile()`: For file operations.
+  - `SendError()`, `SendWarning()`, and `SendAlert()`: For error and alert handling1.
+These features make SLib a powerful and efficient tool for Godot developers, simplifying many common tasks and improving code quality.
 
 ## [Why use?](https://github.com/Subject-Team/SLib/edit/1.0.4/README.md#why-use)
 - SLib need very small space in your application (now less than 100KB)
