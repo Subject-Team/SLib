@@ -53,11 +53,13 @@ Congratulations, now you can use all the features of SLib!
 ## Available Functions
 - Appear()
 - BackupFile()
+- CustomSort()
 - Disappear()
 - Exit()
 - FindChildOfClass()
 - FullPath()
 - GetLog()
+- GetPath()
 - GetProjectSetting()
 - GoToScene()
 - LoadFile()
