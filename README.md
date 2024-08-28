@@ -53,11 +53,13 @@ Congratulations, now you can use all the features of SLib!
 ## Available Functions
 - Appear()
 - BackupFile()
+- CustomSort()
 - Disappear()
 - Exit()
 - FindChildOfClass()
 - FullPath()
 - GetLog()
+- GetPath()
 - GetProjectSetting()
 - GoToScene()
 - LoadFile()
@@ -76,14 +78,22 @@ Congratulations, now you can use all the features of SLib!
 - expDecay()
 
 ## How To Use
-Install project, press F1 and search `SLib` to see docs.
+
+See [Capabilities page](https://github.com/Subject-Team/SLib/wiki/Capabilities) for using SLib.
 
 ## Automation
+
 See [Automation wiki page](https://github.com/Subject-Team/SLib/wiki/Automation) for automation SLib.
 
 ## Documentation
 
-For detailed documentation and examples, visit our [GitHub repository](https://github.com/Subject-Team/SLib).
+**Godot Internal Documetation**: Install project, press F1 and search `SLib` to see docs.
+
+**GitHub Documentation**: For detailed documentation and examples, visit our [GitHub repository](https://github.com/Subject-Team/SLib).
+
+## Bug fix guid
+
+See the [bug fixes page](https://github.com/Subject-Team/SLib/wiki/Bug-fix-guide) on the project wiki
 
 ## Community and Support
 
