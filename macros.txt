@@ -2,11 +2,17 @@
 SLib.Appear(%arg%)
 [macro] Backup %arg%
 SLib.BackupFile(%arg%)
+[macro] Backup %arg% GFL
+SLib.BackupFile(SLib.GetPath(%arg%))
+[macro] Sort %arg1% by %arg2%
+SLib.CustomSort(%arg1%, %arg2%)
 [macro] Disappear %arg%
 SLib.Disappear(%arg%)
 [macro] Exit
 SLib.Exit()
 [macro] Close
+SLib.Exit()
+[macro] Quit
 SLib.Exit()
 [macro] Find %arg2% Child in %arg1%
 SLib.FindChildOfClass(%arg1%, %arg2%)
@@ -14,16 +20,24 @@ SLib.FindChildOfClass(%arg1%, %arg2%)
 SLib.FullPath(%arg%)
 [macro] GetLog
 SLib.GetLog()
+[macro] %arg% Location
+SLib.GetPath(%arg%)
 [macro] GetPS %arg%
 SLib.GetProjectSetting(%art%)
 [macro] GoScene %arg%
 SLib.GoToScene(%arg%)
+[macro] GoScene %arg1% in %arg2%
+SLib.GoToScene(%arg1%, %arg2%)
 [macro] Load %arg%
 SLib.LoadFile(%arg%)
+[macro] AdvanceLoad %arg%
+%arg% = SLib.LoadFile(SLib.GetPath(%arg%))
 [macro] Merge %arg1% and %arg2%
 SLib.MergeUnique(%arg1%, %arg2%)
 [macro] Open %arg%
 SLib.OSOpen(%arg%)
+[macro] Change Pause
+SLib.PauseChange()
 [macro] Pause
 SLib.PauseChange(true)
 [macro] Unpause
@@ -36,18 +50,28 @@ SLib.Reload()
 SLib.ReverseDict(%arg%)
 [macro] Save %arg1% in %arg2%
 SLib.SaveFile(%arg2%, %arg1%)
+[macro] Save %arg1% in %arg2% GFL
+SLib.SaveFile(SLib.GetPath(%arg2%), %arg1%)
+[macro] Save %arg%
+SLib.SaveFile(SLib.GetPath("%arg%"), %arg%)
 [macro] SaveLog %arg%
 SLib.SaveLog(%arg%)
 [macro] Alert %arg%
 SLib.SendAlert(%arg%)
+[macro] Alert %arg1% %arg2%
+SLib.SendAlert(%arg1%, %arg2%)
 [macro] Error
 SLib.SendError()
 [macro] Error %arg%
 SLib.SendError(%arg%)
+[macro] Error %arg1% from %arg2%
+SLib.SendError(%arg1%, %arg2%)
 [macro] Warning
 SLib.SendWarning()
 [macro] Warning %arg%
 SLib.SendWarning(%arg%)
+[macro] Warning %arg1% from %arg2%
+SLib.SendWarning(%arg1%, %arg2%)
 [macro] Set %arg2% for %arg1% PS
 SLib.SetProjectSetting(%arg1%, %arg2%)
 [macro] Wait %arg%

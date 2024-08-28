@@ -318,5 +318,5 @@ func _sorter(a, b):
 	return false
 
 ## Return global file locations by key.
-func GetPath(Key):
+func GetPath(Key: String) -> String:
 	return FileLocations[Key]
