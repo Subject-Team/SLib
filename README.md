@@ -1,10 +1,10 @@
 # Subject-Library
 Useful Codes For GDScript
 
-## [Overview](https://github.com/Subject-Team/SLib/edit/1.0.4/README.md#overview)
+## [Overview](https://github.com/Subject-Team/SLib#overview)
 SLib is a Godot library designed to simplify and enhance your development experience. It provides a set of ready-to-use, standard codes that eliminate the need to write repetitive and lengthy scripts. SLib is lightweight, easy to install, and helps make your code more readable and maintainable.
 
-## [Key Features](https://github.com/Subject-Team/SLib/edit/1.0.4/README.md#key-features)
+## [Key Features](https://github.com/Subject-Team/SLib#key-features)
 - **Ease of Installation**: SLib is very easy to install. Simply save the SLib.gd file in the root directory of your project and add it to the AutoLoad settings in Godot1.
 - **Code Readability**: SLib helps make unreadable code readable quickly. It replaces complex and incomprehensible parts with useful and comprehensible expressions1.
 - **Efficiency**: You can execute multiple lines of code with a single line using SLib, which reduces the need to write duplicate sections1.
@@ -17,7 +17,7 @@ SLib is a Godot library designed to simplify and enhance your development experi
   - `SendError()`, `SendWarning()`, and `SendAlert()`: For error and alert handling1.
 These features make SLib a powerful and efficient tool for Godot developers, simplifying many common tasks and improving code quality.
 
-## [Why use?](https://github.com/Subject-Team/SLib/edit/1.0.4/README.md#why-use)
+## [Why use?](https://github.com/Subject-Team/SLib#why-use)
 - SLib need very small space in your application (now less than 100KB)
 - SLib installation is very easy
 - With SLib you can make unreadable codes readable quickly
@@ -35,7 +35,7 @@ These features make SLib a powerful and efficient tool for Godot developers, sim
 
 ## [Automation](https://github.com/Subject-Team/SLib/wiki/Automation)
 
-## [Documentation](https://github.com/Subject-Team/SLib/edit/1.0.4/README.md#documentation)
+## [Documentation](https://github.com/Subject-Team/SLib#documentation)
 
 **Godot Documetation**: Install project, press F1 and search `SLib` to see docs.
 
@@ -45,7 +45,7 @@ These features make SLib a powerful and efficient tool for Godot developers, sim
 
 ## [Bug fix guid](https://github.com/Subject-Team/SLib/wiki/Bug-fix-guide)
 
-## [Community and Support](https://github.com/Subject-Team/SLib/edit/1.0.4/README.md#community-and-support)
+## [Community and Support](https://github.com/Subject-Team/SLib#community-and-support)
 
 Join our community to share your experiences, ask questions, and get support from other SLib users. 
 
@@ -61,7 +61,7 @@ Join our community to share your experiences, ask questions, and get support fro
   - [Issues](https://github.com/Subject-Team/SLib/issues)
 - [Godot forum topic](https://forum.godotengine.org/t/slib-library-for-useful-codes/77760/1)
 
-## [Contribute](https://github.com/Subject-Team/SLib/edit/1.0.4/README.md#contribute)
+## [Contribute](https://github.com/Subject-Team/SLib#contribute)
 If you want to contribute to this project and extend the library, please fork the repository and submit a pull request. Or you can open an issue to discuss what you want to change.
 For help, see the [project's wiki guide](https://github.com/Subject-Team/SLib/wiki/Contribute-guide) and [Types of contributions](https://github.com/Subject-Team/SLib/wiki/Types-of-contributions).
 
