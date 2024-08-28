@@ -41,6 +41,8 @@ These features make SLib a powerful and efficient tool for Godot developers, sim
 
 **GitHub Documentation**: For detailed documentation and examples, visit our [GitHub repository](https://github.com/Subject-Team/SLib).
 
+**GitHub Wiki**: See the documentation and online guides of the project in the [wiki](https://github.com/Subject-Team/SLib/wiki/Home).
+
 ## [Bug fix guid](https://github.com/Subject-Team/SLib/wiki/Bug-fix-guide)
 
 ## [Community and Support](https://github.com/Subject-Team/SLib/edit/1.0.4/README.md#community-and-support)
