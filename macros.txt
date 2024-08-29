@@ -1,80 +1,88 @@
-[macro] Appear %arg%
-SLib.Appear(%arg%)
-[macro] Backup %arg%
-SLib.BackupFile(%arg%)
-[macro] Backup %arg% GFL
-SLib.BackupFile(SLib.GetPath(%arg%))
-[macro] Sort %arg1% by %arg2%
-SLib.CustomSort(%arg1%, %arg2%)
-[macro] Disappear %arg%
-SLib.Disappear(%arg%)
-[macro] Exit
-SLib.Exit()
-[macro] Close
-SLib.Exit()
-[macro] Quit
-SLib.Exit()
-[macro] Find %arg2% Child in %arg1%
-SLib.FindChildOfClass(%arg1%, %arg2%)
-[macro] FPath %arg%
-SLib.FullPath(%arg%)
-[macro] GetLog
-SLib.GetLog()
-[macro] %arg% Location
-SLib.GetPath(%arg%)
-[macro] GetPS %arg%
-SLib.GetProjectSetting(%art%)
-[macro] GoScene %arg%
-SLib.GoToScene(%arg%)
-[macro] GoScene %arg1% in %arg2%
-SLib.GoToScene(%arg1%, %arg2%)
-[macro] Load %arg%
-SLib.LoadFile(%arg%)
-[macro] AdvanceLoad %arg%
-%arg% = SLib.LoadFile(SLib.GetPath(%arg%))
-[macro] Merge %arg1% and %arg2%
-SLib.MergeUnique(%arg1%, %arg2%)
-[macro] Open %arg%
-SLib.OSOpen(%arg%)
-[macro] Change Pause
-SLib.PauseChange()
-[macro] Pause
-SLib.PauseChange(true)
-[macro] Unpause
-SLib.PauseChange(false)
-[macro] Pause = %arg%
-SLib.PauseChange(%arg%)
-[macro] Reload
-SLib.Reload()
-[macro] RDict %arg%
-SLib.ReverseDict(%arg%)
-[macro] Save %arg1% in %arg2%
-SLib.SaveFile(%arg2%, %arg1%)
-[macro] Save %arg1% in %arg2% GFL
-SLib.SaveFile(SLib.GetPath(%arg2%), %arg1%)
-[macro] Save %arg%
-SLib.SaveFile(SLib.GetPath("%arg%"), %arg%)
-[macro] SaveLog %arg%
-SLib.SaveLog(%arg%)
-[macro] Alert %arg%
-SLib.SendAlert(%arg%)
-[macro] Alert %arg1% %arg2%
-SLib.SendAlert(%arg1%, %arg2%)
-[macro] Error
-SLib.SendError()
-[macro] Error %arg%
-SLib.SendError(%arg%)
-[macro] Error %arg1% from %arg2%
-SLib.SendError(%arg1%, %arg2%)
-[macro] Warning
-SLib.SendWarning()
-[macro] Warning %arg%
-SLib.SendWarning(%arg%)
-[macro] Warning %arg1% from %arg2%
-SLib.SendWarning(%arg1%, %arg2%)
-[macro] Set %arg2% for %arg1% PS
-SLib.SetProjectSetting(%arg1%, %arg2%)
-[macro] Wait %arg%
-await SLib.Wait(%arg%)
-[macro] expDecay %arg1% %arg2% %arg3% %arg4% 
-SLib.expDecay(%arg1%, %arg2%, %arg3%, %arg4%)
+[macro] appear %arg%
+SLib.appear(%arg%)
+[macro] backup %arg%
+SLib.backup_file(%arg%)
+[macro] backup %arg% GFL
+SLib.backup_file(SLib.get_path(%arg%))
+[macro] sort %arg1% by %arg2%
+SLib.patterned_sort(%arg1%, %arg2%)
+[macro] disappear %arg%
+SLib.disappear(%arg%)
+[macro] exit
+SLib.exit()
+[macro] close
+SLib.exit()
+[macro] quit
+SLib.exit()
+[macro] find %arg2% in %arg1%
+SLib.find_child_of_class(%arg1%, %arg2%)
+[macro] file %arg%
+SLib.file_path(%arg%)
+[macro] %arg1% file %arg2%
+%arg1% SLib.file_path(%arg%2)
+[macro] get_log
+SLib.get_log()
+[macro] get ps %arg%
+SLib.get_project_setting(%art%)
+[macro] go to scene %arg%
+SLib.change_scene(%arg%)
+[macro] change scene %arg%
+SLib.change_scene(%arg%)
+[macro] scene %arg%
+SLib.change_scene(%arg%)
+[macro] go to scene %arg1% in %arg2%
+SLib.change_scene(%arg1%, %arg2%)
+[macro] change scene %arg1% in %arg2%
+SLib.change_scene(%arg1%, %arg2%)
+[macro] scene %arg1% in %arg2%
+SLib.change_scene(%arg1%, %arg2%)
+[macro] load %arg%
+SLib.load_file(%arg%)
+[macro] advanced_load %arg%
+%arg% = SLib.load_file(SLib.file_path("%arg%"))
+[macro] merge %arg1% and %arg2%
+SLib.merge_unique(%arg1%, %arg2%)
+[macro] open %arg%
+SLib.os_open(%arg%)
+[macro] change pause
+SLib.change_pause()
+[macro] pause
+SLib.change_pause(true)
+[macro] unpause
+SLib.change_pause(false)
+[macro] pause = %arg%
+SLib.change_pause(%arg%)
+[macro] reload
+SLib.reload()
+[macro] reverse dict %arg%
+SLib.reverse_dict(%arg%)
+[macro] save %arg1% in %arg2%
+SLib.save_file(%arg2%, %arg1%)
+[macro] save %arg1% in %arg2% GFL
+SLib.save_file(SLib.file_path(%arg2%), %arg1%)
+[macro] save %arg%
+SLib.save_file(SLib.file_path("%arg%"), %arg%)
+[macro] save log %arg%
+SLib.save_log(%arg%)
+[macro] alert %arg%
+SLib.send_alert(%arg%)
+[macro] alert %arg1% %arg2%
+SLib.send_alert(%arg1%, %arg2%)
+[macro] error
+SLib.send_error()
+[macro] error %arg%
+SLib.send_error(%arg%)
+[macro] error %arg1% from %arg2%
+SLib.send_error(%arg1%, %arg2%)
+[macro] warning
+SLib.send_warning()
+[macro] warning %arg%
+SLib.send_warning(%arg%)
+[macro] warning %arg1% from %arg2%
+SLib.send_warning(%arg1%, %arg2%)
+[macro] set %arg2% for %arg1% ps
+SLib.set_project_setting(%arg1%, %arg2%)
+[macro] wait %arg%
+await SLib.wait(%arg%)
+[macro] exp decay %arg1% %arg2% %arg3% %arg4% 
+SLib.exp_decay(%arg1%, %arg2%, %arg3%, %arg4%)

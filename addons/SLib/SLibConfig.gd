@@ -3,60 +3,57 @@ class_name SLibConfig
 extends EditorPlugin
 
 ## File locations for config files.
-const ConfigFiles: Dictionary = {
+const CONFIG_FILES: Dictionary = {
 	"Defaults": "res://addons/SLib/SLibDefaults.cfg",
 	"FileLocations": "res://addons/SLib/SLibFileLocations.cfg"
-	}
+}
 
+#region config
 ## Default values
-var Defaults: Dictionary = {
+var defaults: Dictionary = {
 	"Descendants": false,
 	"AlertTitle": "Alert!",
 	"Error": "Error",
 	"Warning": "Warning",
 	"BackupSuffix": "Backup",
 	"ScenesFolder": "Scene"
-	}
-
-## Global file locations
-var FileLocations: Dictionary = {
-	"Log": "user://App.log"
 }
 
+## Global file locations
+var file_locations: Dictionary = {
+	"Log": "user://App.log"
+}
+#endregion
+
+#region main
 func _enter_tree():
-	set_project_settings()
+	if FileAccess.file_exists(CONFIG_FILES["Defaults"]):
+		var file = FileAccess.open(CONFIG_FILES["Defaults"],FileAccess.READ)
+		defaults = file.get_var()
+		file.close()
+	if FileAccess.file_exists(CONFIG_FILES["FileLocations"]):
+		var file = FileAccess.open(CONFIG_FILES["FileLocations"],FileAccess.READ)
+		file_locations = file.get_var()
+		file.close()
+	ProjectSettings.set("SLib/Defaults", defaults)
+	ProjectSettings.set_initial_value("SLib/Defaults", defaults)
+	ProjectSettings.set("SLib/FileLocations", file_locations)
+	ProjectSettings.set_initial_value("SLib/FileLocations", file_locations)
+	var file = FileAccess.open(CONFIG_FILES["FileLocations"],FileAccess.WRITE)
+	file.store_var(file_locations)
+	file.close()
+	var file2 = FileAccess.open(CONFIG_FILES["Defaults"],FileAccess.WRITE)
+	file2.store_var(defaults)
+	file2.close()
+
 
 func _exit_tree():
-	remove_project_settings()
-
-## Load config files and set config values to project setting
-func set_project_settings() -> void:
-	if FileAccess.file_exists(ConfigFiles["Defaults"]):
-		var file = FileAccess.open(ConfigFiles["Defaults"],FileAccess.READ)
-		Defaults = file.get_var()
-		file.close()
-	if FileAccess.file_exists(ConfigFiles["FileLocations"]):
-		var file = FileAccess.open(ConfigFiles["FileLocations"],FileAccess.READ)
-		FileLocations = file.get_var()
-		file.close()
-	ProjectSettings.set("SLib/Defaults", Defaults)
-	ProjectSettings.set_initial_value("SLib/Defaults", Defaults)
-	ProjectSettings.set("SLib/FileLocations", FileLocations)
-	ProjectSettings.set_initial_value("SLib/FileLocations", FileLocations)
-	var file = FileAccess.open(ConfigFiles["FileLocations"],FileAccess.WRITE)
-	file.store_var(FileLocations)
+	defaults = ProjectSettings.get_setting("SLib/Defaults")
+	file_locations = ProjectSettings.get_setting("SLib/FileLocations")
+	var file = FileAccess.open(CONFIG_FILES["Defaults"],FileAccess.WRITE)
+	file.store_var(defaults)
 	file.close()
-	var file2 = FileAccess.open(ConfigFiles["Defaults"],FileAccess.WRITE)
-	file2.store_var(Defaults)
+	var file2 = FileAccess.open(CONFIG_FILES["FileLocations"],FileAccess.WRITE)
+	file2.store_var(file_locations)
 	file2.close()
-
-## Save config values from project setting
-func remove_project_settings() -> void:
-	Defaults = ProjectSettings.get_setting("SLib/Defaults")
-	FileLocations = ProjectSettings.get_setting("SLib/FileLocations")
-	var file = FileAccess.open(ConfigFiles["Defaults"],FileAccess.WRITE)
-	file.store_var(Defaults)
-	file.close()
-	var file2 = FileAccess.open(ConfigFiles["FileLocations"],FileAccess.WRITE)
-	file2.store_var(FileLocations)
-	file2.close()
+#endregion
