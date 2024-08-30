@@ -4,69 +4,48 @@ Useful Codes For GDScript
 ## [Overview](https://github.com/Subject-Team/SLib#overview)
 SLib is a Godot library designed to simplify and enhance your development experience. It provides a set of ready-to-use, standard codes that eliminate the need to write repetitive and lengthy scripts. SLib is lightweight, easy to install, and helps make your code more readable and maintainable.
 
-## [Key Features](https://github.com/Subject-Team/SLib#key-features)
-- **Ease of Installation**: SLib is very easy to install. Simply save the SLib.gd file in the root directory of your project and add it to the AutoLoad settings in Godot1.
-- **Code Readability**: SLib helps make unreadable code readable quickly. It replaces complex and incomprehensible parts with useful and comprehensible expressions1.
-- **Efficiency**: You can execute multiple lines of code with a single line using SLib, which reduces the need to write duplicate sections1.
-- **Standardization**: SLib provides standard ways to perform certain tasks, ensuring consistency across your project1.
-- **Small Footprint**: The library requires very little space in your application, currently less than 100KB.
-- **Functionality**: SLib includes a variety of useful functions such as:
-  - `GoToScene()`: For transitioning between scenes.
-  - `SetProjectSetting()` and `GetProjectSetting()`: For managing project settings.
-  - `SaveFile()` and `LoadFile()`: For file operations.
-  - `SendError()`, `SendWarning()`, and `SendAlert()`: For error and alert handling1.
-These features make SLib a powerful and efficient tool for Godot developers, simplifying many common tasks and improving code quality.
+## [Getting Started](https://github.com/Subject-Team/SLib/wiki#getting-started)
 
-## [Why use?](https://github.com/Subject-Team/SLib#why-use)
-- SLib need very small space in your application (now less than 100KB)
-- SLib installation is very easy
-- With SLib you can make unreadable codes readable quickly
-- You will not need to write duplicate sections
-- You can execute multiple lines of code with one line
-- It replaces incomprehensible parts with useful and comprehensible expressions
-- It gives you standard ways to do certain thing
-- Optimizes your app export for any platform
+## Click on the desired topic:
 
-## [How To Install](https://github.com/Subject-Team/SLib/wiki/Installation-guid)
+### [Why use?](https://github.com/Subject-Team/SLib/wiki/Why-use%3F)
+How does SLib help you?
 
-## [How To Use](https://github.com/Subject-Team/SLib/wiki/Learn-how-to-use-SLib)
+### [Key Features](https://github.com/Subject-Team/SLib/wiki/Key-Features)
+Why is SLib a powerful and useful library?
 
-## [Detailed capabilities](https://github.com/Subject-Team/SLib/wiki/Detailed-capabilities)
+### [Versions](https://github.com/Subject-Team/SLib/wiki/Versions)
+Browse available versions
 
-## [Automation](https://github.com/Subject-Team/SLib/wiki/Automation)
+### [Change Logs](https://github.com/Subject-Team/SLib/wiki/Change-Logs)
+View the project development process
 
-## [Documentation](https://github.com/Subject-Team/SLib#documentation)
+### [Supported Versions](https://github.com/Subject-Team/SLib/wiki/Supported-Versions)
+In which version of Godot can I use SLib?
 
-**Godot Documetation**: Install project, press F1 and search `SLib` to see docs.
+### [How To Install](https://github.com/Subject-Team/SLib/wiki/Installation-guid)
+Install SLib on your project
 
-**GitHub Documentation**: For detailed documentation and examples, visit our [GitHub repository](https://github.com/Subject-Team/SLib).
+### [Automation](https://github.com/Subject-Team/SLib/wiki/Automation)
+Convert simple texts into complex codes
 
-**GitHub Wiki**: See the documentation and online guides of the project in the [wiki](https://github.com/Subject-Team/SLib/wiki/Home).
+### [How To Use](https://github.com/Subject-Team/SLib/wiki/Learn-how-to-use-SLib)
+Upgrade your code with SLib
 
-## [Bug fix guid](https://github.com/Subject-Team/SLib/wiki/Bug-fix-guide)
+### [Detailed capabilities](https://github.com/Subject-Team/SLib/wiki/Detailed-capabilities)
+Learn the details of SLib's capabilities
 
-## [Community and Support](https://github.com/Subject-Team/SLib#community-and-support)
+### [Bug fix guid](https://github.com/Subject-Team/SLib/wiki/Bug-fix-guide)
+How to correct errors?
 
-Join our community to share your experiences, ask questions, and get support from other SLib users. 
+### [Community and Support](https://github.com/Subject-Team/SLib/wiki/Community-and-Support)
+Join the SLib community and get help from each other
 
-- [GitHub repository](https://github.com/Subject-Team/SLib)
-  - [Discussions](https://github.com/Subject-Team/SLib/discussions)
-    - [Announcements](https://github.com/Subject-Team/SLib/discussions/categories/announcements)
-    - [General](https://github.com/Subject-Team/SLib/discussions/categories/general)
-    - [Ideas](https://github.com/Subject-Team/SLib/discussions/categories/ideas)
-    - [Polls](https://github.com/Subject-Team/SLib/discussions/categories/polls)
-    - [Q&A](https://github.com/Subject-Team/SLib/discussions/categories/q-a)
-    - [Show and tell](https://github.com/Subject-Team/SLib/discussions/categories/show-and-tell)
-  - [Wiki](https://github.com/Subject-Team/SLib/wiki)
-  - [Issues](https://github.com/Subject-Team/SLib/issues)
-- [Godot forum topic](https://forum.godotengine.org/t/slib-library-for-useful-codes/77760/1)
+### [Documentation](https://github.com/Subject-Team/SLib/wiki/Documentation)
+Documentation and user guide
 
-## [Contribute](https://github.com/Subject-Team/SLib#contribute)
-If you want to contribute to this project and extend the library, please fork the repository and submit a pull request. Or you can open an issue to discuss what you want to change.
-For help, see the [project's wiki guide](https://github.com/Subject-Team/SLib/wiki/Contribute-guide) and [Types of contributions](https://github.com/Subject-Team/SLib/wiki/Types-of-contributions).
+### [Contribute](https://github.com/Subject-Team/SLib/wiki/Types-of-contributions)
+This is an open source project, we grow together!
 
-## [Thanks](https://github.com/Subject-Team/SLib/wiki/Thanks)
-
-## [Versions](https://github.com/Subject-Team/SLib/wiki/Versions)
-
-## [Change Logs](https://github.com/Subject-Team/SLib/wiki/Change-Logs)
+### [Thanks](https://github.com/Subject-Team/SLib/wiki/Thanks)
+Project participation process and contributors
