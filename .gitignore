@@ -13,3 +13,9 @@ export_presets.cfg
 .mono/
 data_*/
 mono_crash.*.json
+/.idea
+/addons/wakatime
+wakatime_logo.jpg
+wakatime_logo.jpg.import
+SLibConfig.zip
+SLibFull.zip
