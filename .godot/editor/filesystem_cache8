@@ -1,5 +1,5 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1724920720
+::res://::1724854359
 CODE_OF_CONDUCT.md::TextFile::-1::1724340255::0::1::::<><>::
 CONTRIBUTING.md::TextFile::-1::1724340255::0::1::::<><>::
 export_presets.cfg::TextFile::-1::1724339519::0::1::::<><>::
@@ -9,15 +9,15 @@ macros.txt::TextFile::-1::1724842160::0::1::::<><>::
 README.md::TextFile::-1::1724843813::0::1::::<><>::
 SECURITY.md::TextFile::-1::1724661390::0::1::::<><>::
 SLib.gd::GDScript::-1::1724846485::0::1::::SLibMain<>Node<>::
-SLib.tscn::PackedScene::4438903168293362696::1724858514::0::1::::<><>::res://SLib.gd
+SLib.tscn::PackedScene::4438903168293362696::1724847641::0::1::::<><>::res://SLib.gd
 wakatime_logo.jpg::CompressedTexture2D::6593160766290272222::1724581888::1724581888::1::::<><>::
 _config.yml::TextFile::-1::1724340255::0::1::::<><>::
 ::res://addons/::1724675859
-::res://addons/SLib/::1724920720
+::res://addons/SLib/::1724854358
 plugin.cfg::TextFile::-1::1724675771::0::1::::<><>::
 SLibConfig.gd::GDScript::-1::1724822926::0::1::::SLibConfig<>EditorPlugin<>::
-SLibDefaults.cfg::TextFile::-1::1724920720::0::1::::<><>::
-SLibFileLocations.cfg::TextFile::-1::1724920720::0::1::::<><>::
+SLibDefaults.cfg::TextFile::-1::1724854358::0::1::::<><>::
+SLibFileLocations.cfg::TextFile::-1::1724854358::0::1::::<><>::
 ::res://addons/wakatime/::1724581888
 api_key_prompt.tscn::PackedScene::7230738953370575059::1724581888::0::1::::<><>::
 heartbeat.gd::GDScript::-1::1724581888::0::1::::<>RefCounted<>::
