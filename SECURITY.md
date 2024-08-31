@@ -2,11 +2,11 @@
 
 ## Supported Versions
 
-|  Version | Supported          |
-| -------- | ------------------ |
-| Stable Versions 1.0.x | ☑️    |
-| Alpha Versions  1.0.x | ❌           |
-| Beta Versions   1.0.x | ❌            |
+| Version               | Guaranteed safety | Guaranteed correction in the same version | Guaranteed to be fixed in the next version |
+| --------------------- | ----------------- | ----------------------------------------- | ------------------------------------------ |
+| Stable Versions 1.0.x | ☑️               | ❌                                        | ☑️                                        |
+| Alpha Versions  1.0.x | ❌               | ❌                                        | ☑️                                        |
+| Beta Versions   1.0.x | ❌               | ☑️                                        | ☑️                                        |
 
 ## Reporting a Vulnerability
 
