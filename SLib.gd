@@ -2,7 +2,8 @@ class_name SLibMain
 extends Node
 # Press F1 and search for SLib to see documentation
 
-## SLib (Subject Library) is a Godot library that provides Godot capabilities in a simpler way.
+## SLib (Subject Library) is a Godot library that provides Godot capabilities in a simpler way.[br][br]
+## See https://github.com/Subject-Team/SLib for the main repository
 ##
 ## SLib is a set of ready and standard code that makes you unnecessary to write many long and frequently used codes.[br][br]
 ## Available ability in this library now:[br]
@@ -127,6 +128,13 @@ func Exit(ExitCode: int = 0) -> void:
 ## NOTE:
 ## You must write [code]await[/code] at the beginning of this line for it to work!
 func Wait(WaitTime: float) -> void:
+	await get_tree().create_timer(WaitTime).timeout
+
+## This function creates a break in the program that puts a space between the code befor and after it. (on seconds)
+## [br][br]
+## NOTE:
+## You must write [code]await[/code] at the beginning of this line for it to work!
+func wait1(WaitTime: float) -> void:
 	await get_tree().create_timer(WaitTime).timeout
 
 ## This function will save a file with a customized path, this is very useful because the file saving process will be readable and fast.
@@ -329,3 +337,31 @@ func _sorter(a, b):
 ## Return global file locations by key.
 func GetPath(Key: String) -> String:
 	return FileLocations[Key]
+
+## Cast a ray between two points and return the result
+## Parameters:[br]
+## - from: The starting point of the ray (Vector3)[br]
+## - to: The ending point of the ray (Vector3)[br]
+## - exclude_nodes: An array of nodes (or RIDs) to exclude from the raycast (Array)[br]
+## Returns: A Dictionary with the raycast result, or an empty dictionary if nothing is hit.
+##
+## Example usage:
+## [codeblock]
+## var start_pos = player.global_transform.origin
+## var end_pos = target.global_transform.origin
+## var exclude = [self, player]
+## var world = get_world_3d()
+## var result = SLib.CastRayBetweenPoints(start_pos, end_pos, exclude, world)
+## if result.size() != 0:
+##     print("Ray hit: ", result.collider)
+## else:
+##     print("No collision detected.")
+## [/codeblock]
+func CastRayBetweenPoints(from: Vector3, to: Vector3, exclude: Array, world: World3D) -> Dictionary:
+	var query = PhysicsRayQueryParameters3D.new()
+	query.from = from
+	query.to = to
+	query.exclude = exclude
+
+	var space_state = world.direct_space_state
+	return space_state.intersect_ray(query)
