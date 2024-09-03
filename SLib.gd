@@ -130,13 +130,6 @@ func Exit(ExitCode: int = 0) -> void:
 func Wait(WaitTime: float) -> void:
 	await get_tree().create_timer(WaitTime).timeout
 
-## This function creates a break in the program that puts a space between the code befor and after it. (on seconds)
-## [br][br]
-## NOTE:
-## You must write [code]await[/code] at the beginning of this line for it to work!
-func wait1(WaitTime: float) -> void:
-	await get_tree().create_timer(WaitTime).timeout
-
 ## This function will save a file with a customized path, this is very useful because the file saving process will be readable and fast.
 ## [br][br]
 ## NOTE:
