@@ -92,3 +92,5 @@ SLib.send_warning(%arg1%, %arg2%)
 SLib.set_project_setting(%arg1%, %arg2%)
 [macro] wait %arg%
 await SLib.wait(%arg%)
+[macro] FastLoad %arg%
+%arg% = SLib.LoadFile(FileLocation_%arg%)
