@@ -5,6 +5,10 @@
 .import/
 export.cfg
 export_presets.cfg
+/addons/wakatime
+wakatime_logo.jpg
+wakatime_logo.jpg.import
+*.tmp
 
 # Imported translations (automatically generated from CSV files)
 *.translation
@@ -13,9 +17,10 @@ export_presets.cfg
 .mono/
 data_*/
 mono_crash.*.json
+
+# Intellij idea ignores
 /.idea
-/addons/wakatime
-wakatime_logo.jpg
-wakatime_logo.jpg.import
+
+# Export ignores
 SLibConfig.zip
 SLibFull.zip
