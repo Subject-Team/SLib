@@ -3,7 +3,7 @@ extends Node
 # Press F1 and search for SLib to see documentation
 
 ## SLib (Subject Library) is a Godot library that provides Godot capabilities in a simpler way.[br][br]
-## See https://github.com/Subject-Team/SLib for the main repository
+## See [url]https://github.com/Subject-Team/SLib[/url] for the main repository
 ##
 ## SLib is a set of ready and standard code that makes you unnecessary to write many long and frequently used codes.[br][br]
 ## Available ability in this library now:[br]
