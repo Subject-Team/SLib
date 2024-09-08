@@ -4,6 +4,8 @@ SLib.appear(%arg%)
 SLib.backup_file(%arg%)
 [macro] backup %arg% GFL
 SLib.backup_file(SLib.get_path(%arg%))
+[macro] cast ray %arg1% %arg2% %arg3% %arg4%
+SLib.cast_ray_between_points(%arg1%, %arg2%, %arg3%, %arg4%)
 [macro] sort %arg1% by %arg2%
 SLib.patterned_sort(%arg1%, %arg2%)
 [macro] disappear %arg%
@@ -14,12 +16,18 @@ SLib.exit()
 SLib.exit()
 [macro] quit
 SLib.exit()
-[macro] find %arg2% in %arg1%
-SLib.find_child_of_class(%arg1%, %arg2%)
+[macro] exp decay %arg1% %arg2% %arg3% %arg4% 
+SLib.exp_decay(%arg1%, %arg2%, %arg3%, %arg4%)
 [macro] file %arg%
 SLib.file_path(%arg%)
 [macro] %arg1% file %arg2%
 %arg1% SLib.file_path(%arg%2)
+[macro] find %arg2% in %arg1%
+SLib.find_child_of_class(%arg1%, %arg2%)
+[macro] full path %arg%
+SLib.full_path(%arg%)
+[macro] get ip
+SLib.get_local_ip()
 [macro] get_log
 SLib.get_log()
 [macro] get ps %arg%
@@ -84,5 +92,3 @@ SLib.send_warning(%arg1%, %arg2%)
 SLib.set_project_setting(%arg1%, %arg2%)
 [macro] wait %arg%
 await SLib.wait(%arg%)
-[macro] exp decay %arg1% %arg2% %arg3% %arg4% 
-SLib.exp_decay(%arg1%, %arg2%, %arg3%, %arg4%)
