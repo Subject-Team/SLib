@@ -57,7 +57,6 @@ func _enter_tree():
 #endregion
 
 #region main
-
 ## You can use this function to transition between scenes, this increases code readability and helps you understand which scene in the target.
 ## [br][br]
 ## [b]1- Standard format (Recommended):[/b]
@@ -341,7 +340,8 @@ func patterned_sort(scrambled_array : Array, pattern: Array) -> Array:
 ## Return global file locations by key.
 func file_path(key: String) -> String:
 	return file_locations[key]
-  
+
+
 ## Cast a ray between two points and return the result
 ## Parameters:[br]
 ## - from: The starting point of the ray (Vector3)[br]
@@ -366,7 +366,6 @@ func cast_ray_between_points(from: Vector3, to: Vector3, exclude: Array, world: 
 	query.from = from
 	query.to = to
 	query.exclude = exclude
-
 	var space_state = world.direct_space_state
 	return space_state.intersect_ray(query)
 #endregion
