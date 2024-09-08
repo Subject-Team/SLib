@@ -368,6 +368,21 @@ func cast_ray_between_points(from: Vector3, to: Vector3, exclude: Array, world: 
 	query.exclude = exclude
 	var space_state = world.direct_space_state
 	return space_state.intersect_ray(query)
+
+
+## Returns the local IP address of the operating system[br][br]
+## NOTE: Works for Windows, Mac and Linux, returns [code]""[/code] for all other operating systems
+func get_local_ip() -> String:
+	if OS.has_feature("windows"):
+		if OS.has_environment("COMPUTERNAME"):
+			return IP.resolve_hostname(str(OS.get_environment("COMPUTERNAME")),1)
+	elif OS.has_feature("x11"):
+		if OS.has_environment("HOSTNAME"):
+			return IP.resolve_hostname(str(OS.get_environment("HOSTNAME")),1)
+	elif OS.has_feature("OSX"):
+		if OS.has_environment("HOSTNAME"):
+			return IP.resolve_hostname(str(OS.get_environment("HOSTNAME")),1)
+	return ""
 #endregion
 
 #region private functions
