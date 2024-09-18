@@ -3,12 +3,16 @@ extends Node
 # Press F1 and search for SLib to see documentation
 
 # TODO
+# fix get_local_ip warning
 
 # NOTE
+# ---
 
 # WARNING
+# ---
 
 # TEST
+# ---
 
 ## SLib (Subject Library) is a Godot library that provides Godot capabilities in a simpler way.[br][br]
 ## See [url]https://github.com/Subject-Team/SLib[/url] for the main repository
@@ -378,6 +382,7 @@ func cast_ray_between_points(from: Vector3, to: Vector3, exclude: Array, world: 
 	return space_state.intersect_ray(query)
 
 
+@warning_ignore("int_as_enum_without_cast")
 ## Returns the local IP address of the operating system[br][br]
 ## NOTE: Works for Windows, Mac and Linux, returns [code]""[/code] for all other operating systems
 func get_local_ip() -> String:
