@@ -31,7 +31,7 @@ extends Node
 
 #region config
 ## Default values
-var defaults: Dictionary = {
+var defaults := {
 	"Descendants": false,
 	"AlertTitle": "Alert!",
 	"Error": "Error",
@@ -41,7 +41,7 @@ var defaults: Dictionary = {
 }
 
 ## Library file locations
-var file_locations: Dictionary = {
+var file_locations := {
 	"Log": "user://App.log",
 }
 #endregion
@@ -317,7 +317,7 @@ func disappear(object) -> void:
 
 ## Reverses the key-value pairs in a given dictionary.
 func reverse_dict(dict: Dictionary) -> Dictionary:
-	var reverse: Dictionary = {}
+	var reverse := {}
 	for key in dict.keys():
 		reverse[dict[key]] = key
 	return reverse
