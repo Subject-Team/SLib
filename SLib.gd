@@ -2,6 +2,14 @@ class_name SLibMain
 extends Node
 # Press F1 and search for SLib to see documentation
 
+# TODO
+
+# NOTE
+
+# WARNING
+
+# TEST
+
 ## SLib (Subject Library) is a Godot library that provides Godot capabilities in a simpler way.[br][br]
 ## See [url]https://github.com/Subject-Team/SLib[/url] for the main repository
 ##
