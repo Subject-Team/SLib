@@ -3,25 +3,25 @@ class_name SLibConfig
 extends EditorPlugin
 
 ## File locations for config files.
-const CONFIG_FILES: Dictionary = {
+const CONFIG_FILES := {
 	"Defaults": "res://addons/SLib/SLibDefaults.cfg",
-	"FileLocations": "res://addons/SLib/SLibFileLocations.cfg"
+	"FileLocations": "res://addons/SLib/SLibFileLocations.cfg",
 }
 
 #region config
 ## Default values
-var defaults: Dictionary = {
+var defaults := {
 	"Descendants": false,
 	"AlertTitle": "Alert!",
 	"Error": "Error",
 	"Warning": "Warning",
 	"BackupSuffix": "Backup",
-	"ScenesFolder": "Scene"
+	"ScenesFolder": "Scene",
 }
 
 ## Global file locations
-var file_locations: Dictionary = {
-	"Log": "user://App.log"
+var file_locations := {
+	"Log": "user://App.log",
 }
 #endregion
 
