@@ -192,6 +192,32 @@ func backup_file(location: String, suffix: String = defaults["BackupSuffix"]) ->
 		send_error("Can't load from " + location + ", file not exists!", "SLib File Backup")
 
 
+## This function will save a resource file ([code].tres[/code] with a customized path, this is very useful because the file saving process will be readable and fast.
+## [br][br]
+## NOTE:
+## For use project directory type [code]res://[/code] and for hidden user data directory use [code]user://[/code].
+## [br][br]
+## NOTE:
+## You should type [code].tres[/code] format for your file.
+func save_resource_file(location: String, data) -> void:
+	var error := ResourceSaver.save(data, location)
+	if error:
+		send_error("An error happened while saving data: '" + str(error) + "'", "SLib Resource File Save")
+
+
+## This function returns the content stored in the resource file, you can use it for all resource files.
+func load_resource_file(location: String):
+	return load(location)
+
+
+## Backup function create a new file with [code]main file name-suffix[/code] in main file location, if you doesn't select a custom suffix, [code]-Backup[/code] append to file name.
+func backup_resource_file(location: String, suffix: String = defaults["BackupSuffix"]) -> void:
+	var data = load(location)
+	var error := ResourceSaver.save(data, location.get_basename() + "-" + suffix + "." + location.get_extension())
+	if error:
+		send_error("An error happened while saving data in backup: '" + str(error) + "'", "SLib Resource File Backup")
+
+
 ## Sends a custom error to the console that can be viewed in the engine debugger, error like this: [code]SLib.gd:x @ SendError(): ->From<-: ->Error<-[/code]
 func send_error(error: String = defaults["Error"], from: String = "Debugger") -> void:
 	push_error(from + ": " + error)
