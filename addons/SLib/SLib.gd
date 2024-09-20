@@ -179,7 +179,6 @@ func load_file(location: String):
 ## [br][br]
 ## NOTE:
 ## If the file doesn't exist, it will send an error to the console like this: [code]SLib.gd:x @ SendError(): SLib File Backup: Can't load from -->file_location<--, file not exists![/code]
-## [br][br]
 func backup_file(location: String, suffix: String = defaults["BackupSuffix"]) -> void:
 	if FileAccess.file_exists(location):
 		var file = FileAccess.open(location,FileAccess.READ)
