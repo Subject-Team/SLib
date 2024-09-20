@@ -193,6 +193,45 @@ func backup_file(location: String, suffix: String = defaults["BackupSuffix"]) ->
 		send_error("Can't load from " + location + ", file not exists!", "SLib File Backup")
 
 
+## This function will save a config file ([code].ini[/code]) with a customized path, this is very useful because the file saving process will be readable and fast.
+## [br][br]
+## NOTE:
+## For use project directory type [code]res://[/code] and for hidden user data directory use [code]user://[/code].
+## [br][br]
+## NOTE:
+## You should select section and key for your value for save file.
+func save_config_file(location: String, section, key, value) -> void:
+	var config_file := ConfigFile.new()
+	config_file.set_value(section, key, value)
+	var error := config_file.save(location)
+	if error:
+		send_error("An error happened while saving data: '" + str(error) + "'", "SLib Config File Save")
+
+
+## This function returns the value stored in the section of config file by key, you can use it for all config files.
+func load_config_file(location: String, section, key, default_value = null):
+	var config_file := ConfigFile.new()
+	var error := config_file.load(location)
+	if error:
+		send_error("An error happened while loading data: '" + str(error) + "'", "SLib Config File Load")
+		return
+	return config_file.get_value(section, key, default_value)
+
+
+## Backup function create a new file with [code]main file name-suffix[/code] in main file location, if you doesn't select a custom suffix, [code]-Backup[/code] append to file name.
+func backup_config_file(location: String, section, key, suffix: String = defaults["BackupSuffix"]) -> void:
+	var config_file := ConfigFile.new()
+	var load_error := config_file.load(location)
+	if load_error:
+		send_error("An error happened while loading data for backup: '" + str(load_error) + "'", "SLib Config File Backup")
+	var data = config_file.get_value(section, key)
+	var backup_config_file := ConfigFile.new()
+	backup_config_file.set_value(section, key, data)
+	var save_error := backup_config_file.save(location.get_basename() + "-" + suffix + "." + location.get_extension())
+	if save_error:
+		send_error("An error happened while saving data for backup: '" + str(save_error) + "'", "SLib Config File Backup")
+
+
 ## Sends a custom error to the console that can be viewed in the engine debugger, error like this: [code]SLib.gd:x @ SendError(): ->From<-: ->Error<-[/code]
 func send_error(error: String = defaults["Error"], from: String = "Debugger") -> void:
 	push_error(from + ": " + error)
