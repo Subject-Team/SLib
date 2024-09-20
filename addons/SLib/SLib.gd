@@ -442,6 +442,17 @@ func get_local_ip() -> String:
 		if OS.has_environment("HOSTNAME"):
 			return IP.resolve_hostname(str(OS.get_environment("HOSTNAME")),1)
 	return ""
+
+
+## Filtering bad words, If word in profanity list return [code]false[/code].
+## [br]
+## Visit the repository to see the list.
+func is_word_ok(word: String) -> bool:
+	for d in [' ', '_', '-']:
+		for s in word.split(d):
+			if _profanity_list.has(s):
+				return false
+	return true
 #endregion
 
 #region private functions
