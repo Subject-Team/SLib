@@ -27,6 +27,7 @@ var file_locations: Dictionary = {
 
 #region main
 func _enter_tree():
+	add_autoload_singleton("SLib", "res://addons/SLib/SLib.gd")
 	if FileAccess.file_exists(CONFIG_FILES["Defaults"]):
 		var file = FileAccess.open(CONFIG_FILES["Defaults"],FileAccess.READ)
 		defaults = file.get_var()
@@ -48,6 +49,7 @@ func _enter_tree():
 
 
 func _exit_tree():
+	remove_autoload_singleton("SLib")
 	defaults = ProjectSettings.get_setting("SLib/Defaults")
 	file_locations = ProjectSettings.get_setting("SLib/FileLocations")
 	var file = FileAccess.open(CONFIG_FILES["Defaults"],FileAccess.WRITE)
