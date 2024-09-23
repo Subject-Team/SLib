@@ -60,6 +60,52 @@ var file_locations := {
 
 #region private variables
 var _user_pattern: Array
+
+const _profanity_list := ['2g1c','2 girls 1 cup','acrotomophilia','anal','anilingus','anus','arsehole',
+	'ass','asshole','assmunch','auto erotic','autoerotic','babeland','baby batter','ball gag',
+	'ball gravy','ball kicking','ball licking','ball sack','ball sucking','bangbros','bareback',
+	'barely legal','barenaked','bastardo','bastinado','bbw','bdsm','beaver cleaver','beaver lips',
+	'bestiality','bi curious','big black','big breasts','big knockers','big tits','bimbos',
+	'birdlock','bitch','black cock','blonde action','blonde on blonde action','blow j',
+	'blow your l','blue waffle','blumpkin','bollocks','bondage','boner','boob','boobs','booty call',
+	'brown showers','brunette action','bukkake','bulldyke','bullet vibe','bung hole','bunghole',
+	'busty','butt','buttcheeks','butthole','camel toe','camgirl','camslut','camwhore',
+	'carpet muncher','carpetmuncher','chocolate rosebuds','circlejerk','cleveland steamer','clit',
+	'clitoris','clover clamps','clusterfuck','cock','cocks','coprolagnia','coprophilia','cornhole',
+	'cum','cumming','cunnilingus','cunt','darkie','date rape','daterape','deep throat','deepthroat',
+	'dick','dildo','dirty pillows','dirty sanchez','dog style','doggie style','doggiestyle',
+	'doggy style','doggystyle','dolcett','domination','dominatrix','dommes','donkey punch',
+	'double dong','double penetration','dp action','eat my ass','ecchi','ejaculation','erotic',
+	'erotism','escort','ethical slut','eunuch','faggot','fecal','felch','fellatio','feltch',
+	'female squirting','femdom','figging','fingering','fisting','foot fetish','footjob','frotting',
+	'fuck','fucking','fuck buttons','fudge packer','fudgepacker','futanari','g-spot','gang bang',
+	'gay sex','genitals','giant cock','girl on','girl on top','girls gone wild','goatcx','goatse',
+	'gokkun','golden shower','goo girl','goodpoop','goregasm','grope','group sex','guro','hand job',
+	'handjob','hard core','hardcore','hentai','homoerotic','honkey','hooker','hot chick',
+	'how to kill','how to murder','huge fat','humping','incest','intercourse','jack off',
+	'jail bait','jailbait','jerk off','jigaboo','jiggaboo','jiggerboo','jizz','juggs','kike',
+	'kinbaku','kinkster','kinky','knobbing','leather restraint','leather straight jacket',
+	'lemon party','lolita','lovemaking','make me come','male squirting','masturbate',
+	'menage a trois','milf','missionary position','motherfucker','mound of venus','mr hands',
+	'muff diver','muffdiving','nambla','nawashi','negro','neonazi','nig nog','nigga','nigger',
+	'nimphomania','nipple','nipples','nsfw images','nude','nudity','nympho','nymphomania',
+	'octopussy','omorashi','one cup two girls','one guy one jar','orgasm','orgy','paedophile',
+	'panties','panty','pedobear','pedophile','pegging','penis','phone sex','piece of shit',
+	'piss pig','pissing','pisspig','playboy','pleasure chest','pole smoker','ponyplay','poof',
+	'poop chute','poopchute','porn','porno','pornography','prince albert piercing','pthc','pubes',
+	'pussy','queaf','raghead','raging boner','rape','raping','rapist','rectum','reverse cowgirl',
+	'rimjob','rimming','rosy palm','rosy palm and her 5 sisters','rusty trombone','s&m','sadism',
+	'scat','schlong','scissoring','semen','sex','sexo','sexy','shaved beaver','shaved pussy',
+	'shemale','shibari','shit','shota','shrimping','slanteye','slut','smut','snatch','snowballing',
+	'sodomize','sodomy','spic','spooge','spread legs','strap on','strapon','strappado','strip club',
+	'style doggy','suck','sucks','suicide girls','sultry women','swastika','swinger','tainted love',
+	'taste my','tea bagging','threesome','throating','tied up','tight white','tit','tits','titties',
+	'titty','tongue in a','topless','tosser','towelhead','tranny','tribadism','tub girl','tubgirl',
+	'tushy','twat','twink','twinkie','two girls one cup','undressing','upskirt','urethra play',
+	'urophilia','vagina','venus mound','vibrator','violet blue','violet wand','vorarephilia',
+	'voyeur','vulva','wank','wet dream','wetback','white power','women rapping','wrapping men',
+	'wrinkled starfish','xx','xxx','yaoi','yellow showers','yiffy','zoophilia',
+]
 #endregion
 
 #region initalizing
@@ -190,6 +236,45 @@ func backup_file(location: String, suffix: String = defaults["BackupSuffix"]) ->
 		backup.close()
 	else:
 		send_error("Can't load from " + location + ", file not exists!", "SLib File Backup")
+
+
+## This function will save a config file ([code].ini[/code]) with a customized path, this is very useful because the file saving process will be readable and fast.
+## [br][br]
+## NOTE:
+## For use project directory type [code]res://[/code] and for hidden user data directory use [code]user://[/code].
+## [br][br]
+## NOTE:
+## You should select section and key for your value for save file.
+func save_config_file(location: String, section, key, value) -> void:
+	var config_file := ConfigFile.new()
+	config_file.set_value(section, key, value)
+	var error := config_file.save(location)
+	if error:
+		send_error("An error happened while saving data: '" + str(error) + "'", "SLib Config File Save")
+
+
+## This function returns the value stored in the section of config file by key, you can use it for all config files.
+func load_config_file(location: String, section, key, default_value = null):
+	var config_file := ConfigFile.new()
+	var error := config_file.load(location)
+	if error:
+		send_error("An error happened while loading data: '" + str(error) + "'", "SLib Config File Load")
+		return
+	return config_file.get_value(section, key, default_value)
+
+
+## Backup function create a new file with [code]main file name-suffix[/code] in main file location, if you doesn't select a custom suffix, [code]-Backup[/code] append to file name.
+func backup_config_file(location: String, section, key, suffix: String = defaults["BackupSuffix"]) -> void:
+	var config_file := ConfigFile.new()
+	var load_error := config_file.load(location)
+	if load_error:
+		send_error("An error happened while loading data for backup: '" + str(load_error) + "'", "SLib Config File Backup")
+	var data = config_file.get_value(section, key)
+	var backup_config_file := ConfigFile.new()
+	backup_config_file.set_value(section, key, data)
+	var save_error := backup_config_file.save(location.get_basename() + "-" + suffix + "." + location.get_extension())
+	if save_error:
+		send_error("An error happened while saving data for backup: '" + str(save_error) + "'", "SLib Config File Backup")
 
 
 ## This function will save a resource file ([code].tres[/code] with a customized path, this is very useful because the file saving process will be readable and fast.
@@ -421,6 +506,17 @@ func get_local_ip() -> String:
 		if OS.has_environment("HOSTNAME"):
 			return IP.resolve_hostname(str(OS.get_environment("HOSTNAME")),1)
 	return ""
+
+
+## Filtering bad words, If word in profanity list return [code]false[/code].
+## [br]
+## Visit the repository to see the list.
+func is_word_ok(word: String) -> bool:
+	for d in [' ', '_', '-']:
+		for s in word.split(d):
+			if _profanity_list.has(s):
+				return false
+	return true
 #endregion
 
 #region private functions
