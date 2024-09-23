@@ -61,7 +61,7 @@ var file_locations := {
 #region private variables
 var _user_pattern: Array
 
-const _profanity_list := ['2g1c','2 girls 1 cup','acrotomophilia','anal','anilingus','anus','arsehole',
+const _PROFANITY_LIST := ['2g1c','2 girls 1 cup','acrotomophilia','anal','anilingus','anus','arsehole',
 	'ass','asshole','assmunch','auto erotic','autoerotic','babeland','baby batter','ball gag',
 	'ball gravy','ball kicking','ball licking','ball sack','ball sucking','bangbros','bareback',
 	'barely legal','barenaked','bastardo','bastinado','bbw','bdsm','beaver cleaver','beaver lips',
@@ -449,7 +449,7 @@ func get_local_ip() -> String:
 func is_word_ok(word: String) -> bool:
 	for d in [' ', '_', '-']:
 		for s in word.split(d):
-			if _profanity_list.has(s):
+			if _PROFANITY_LIST.has(s):
 				return false
 	return true
 #endregion
