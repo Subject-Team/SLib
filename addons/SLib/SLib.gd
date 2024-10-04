@@ -453,6 +453,12 @@ func find_child_of_class(target_node: Node, type_name: StringName, descendants: 
 	return null
 
 
+## Clear all children in a node
+func free_all_children(node: Node) -> void:
+	for child in node.get_children():
+		child.queue_free()
+
+
 ## Time based smooth interpolation, [b]not framedependant[/b] like [code]a = lerp(a, b, delta)[/code][br][br]
 ## NOTE: Set [i]decay[/i] to 1-25 for a good range of values
 func exp_decay(a: float, b: float, decay: float, delta: float) -> float:
