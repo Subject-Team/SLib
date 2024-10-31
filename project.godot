@@ -12,11 +12,10 @@ config_version=5
 
 config/name="Subject Library"
 config/tags=PackedStringArray("subject", "tools")
-run/main_scene="res://SLib.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 boot_splash/bg_color=Color(1, 1, 1, 1)
 boot_splash/image="res://icon.png"
-config/icon="res://icon.png"
+config/icon="res://SLib.png"
 
 [autoload]
 

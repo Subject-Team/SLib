@@ -1,5 +1,4 @@
 @tool
-class_name SLibConfig
 extends EditorPlugin
 
 ## File locations for config files.
