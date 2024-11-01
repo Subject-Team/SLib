@@ -25,3 +25,4 @@ mono_crash.*.json
 SLibConfig.zip
 SLibFull.zip
 SLibPlugin.zip
+*.import
