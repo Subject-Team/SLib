@@ -1,7 +1,9 @@
 # Subject-Library
 Useful Codes For GDScript
 
-<p align="center"> <a href="https://github.com/Subject-Team/SLib"><img align="center" src="https://github-readme-stats.vercel.app/api/pin/?username=Subject-Team&repo=SLib&theme=gotham" /></a>
+<p align="center"> <a href="https://github.com/Subject-Team/SLib"><img align="center" src="https://github-readme-stats.vercel.app/api/pin/?username=Subject-Team&repo=SLib&theme=gotham" /></a> </p>
+
+
 
 ## [Overview](https://github.com/Subject-Team/SLib#overview)
 SLib is a Godot library designed to simplify and enhance your development experience. It provides a set of ready-to-use, standard codes that eliminate the need to write repetitive and lengthy scripts. SLib is lightweight, easy to install, and helps make your code more readable and maintainable.
