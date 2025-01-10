@@ -497,14 +497,13 @@ func get_project_setting(path: String):
 ## ● [code]"mailto:example@example.com"[/code] opens the default email client with the "To" field set to example@example.com.
 ## [br][br]
 ## NOTE:
-## File URI only works with globalized path, Use [code]SLib.FullPath(path)[/code] to convert a [code]res://[/code] or [code]user://[/code] path into a system path for use with this method.
-## [br][br]
-## NOTE:
 ## Use [code]String.uri_encode()[/code] to encode characters within URLs in a URL-safe, portable way. This is especially required for line breaks. Otherwise, function may not work correctly in a project exported to the Web platform.
 ## [br][br]
 ## NOTE:
 ## This method is implemented on Android, iOS, Web, Linux, macOS and Windows.
 func os_open(uri: String) -> void:
+	if uri.begins_with("res://") or uri.begins_with("user://"):
+		uri = SLib.full_path(uri)
 	OS.shell_open(uri)
 
 
