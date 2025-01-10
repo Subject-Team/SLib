@@ -3,7 +3,6 @@ extends Node
 # Press F1 and search for SLib to see documentation
 
 # TODO
-# fix get_local_ip warning
 # fix pause macro
 
 # NOTE
@@ -509,7 +508,6 @@ func os_open(uri: String) -> void:
 	OS.shell_open(uri)
 
 
-@warning_ignore("int_as_enum_without_cast")
 ## Returns the local IP address of the operating system[br][br]
 ## NOTE: Works for Windows, Mac and Linux, returns [code]""[/code] for all other operating systems
 func get_local_ip() -> String:
