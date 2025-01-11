@@ -460,8 +460,8 @@ func exit(exit_code: int = 0) -> void:
 #endregion
 
 #region NODE MANAGE
-## Finds the first child of a given class, does not find class_name declarations
-func find_child_of_class(target_node: Node, type_name: StringName, descendants: bool = defaults["Descendants"]) -> Node:
+## Finds the first child of a given [param target_class] in [param target_node], does not find [code]class_name[/code] declarations!
+func find_child_of_class(target_node: Node, target_class: StringName, descendants: bool = defaults["Descendants"]) -> Node:
 	for child in target_node.get_children():
 		if child.is_class(target_class):
 			return child
