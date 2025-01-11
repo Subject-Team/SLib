@@ -533,7 +533,7 @@ func get_local_ip() -> String:
 	return ""
 
 
-## Displays a modal dialog box using the host OS' facilities with alert text and title.
+## Displays a modal dialog box using the host OS' facilities with [param alert] for text and [param title].
 func send_alert(alert: String, title: String = defaults["AlertTitle"]) -> void:
 	OS.alert(alert, title)
 #endregion
