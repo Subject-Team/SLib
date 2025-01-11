@@ -393,7 +393,7 @@ func stringify(arguments: Array, seperator: String = "") -> String:
 
 ## Filtering bad words, If word in profanity list return [code]false[/code].
 ## [br]
-## Visit the repository to see the list.
+## Visit [url=https://github.com/subject-team/slib]the repository[/url] to see the list.
 func is_word_ok(word: String) -> bool:
 	for d in [' ', '_', '-']:
 		for s in word.split(d):
