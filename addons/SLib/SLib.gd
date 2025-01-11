@@ -169,7 +169,6 @@ func globalize_path(path: String) -> String:
 			path = path.erase(0,6)
 			path = OS.get_executable_path().get_base_dir().path_join(path)
 		return path
-#endregion
 
 #region FILE ACCESS
 ## This function will save a file with a customized path, this is very useful because the file saving process will be readable and fast.
@@ -187,6 +186,10 @@ func save_file(location: String, value = null) -> void:
 	file.store_var(value)
 	file.close()
 
+## Returns the localized path (starting with [code]res://[/code]) corresponding to the absolute, native OS [param path]. See also [method globalize_path].
+func localize_path(path: String) -> String:
+	return ProjectSettings.localize_path(path)
+#endregion
 
 ## This function returns the content stored in the file, you can use it for all file created by your godot application.
 ## [br][br]
