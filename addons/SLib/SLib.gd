@@ -123,7 +123,6 @@ const _PROFANITY_LIST := ['2g1c','2 girls 1 cup','acrotomophilia','anal','anilin
 #region INITALIZING
 func _enter_tree():
 	defaults = ProjectSettings.get_setting("SLib/Defaults", defaults)
-	file_locations = ProjectSettings.get_setting("SLib/FileLocations", file_locations)
 #endregion
 
 #region PRIVATE FUNCTIONS
@@ -138,9 +137,20 @@ func _sorter(a, b):
 #region FILE MANAGE
 
 #region GFL
-## Return global file locations by key.
-func file_path(key: String) -> String:
-	return file_locations[key]
+## Return global file locations with [param key], If the [param key] does not exist in the location of the files,
+## it sends an error to the debugger and returns [code]""[/code].
+func get_file_path(key: String) -> String:
+	file_locations = ProjectSettings.get_setting("SLib/FileLocations", file_locations)
+	if key in file_locations:
+		return file_locations[key]
+	else:
+		send_error("Can't find \"%s\" key in file locations!" % key, "SLib.get_file_path")
+		return ""
+
+## Set a file location with [param key] name & [param path] path, If the [param key] already exists, it changes its value with [param  path], otherwise it creates it.
+func set_file_path(key: String, path: String) -> void:
+	file_locations[key] = path
+	ProjectSettings.set_setting("SLib/FileLocations", file_locations)
 #endregion
 
 #region PATH CONVERTER
