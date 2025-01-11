@@ -539,22 +539,22 @@ func send_alert(alert: String, title: String = defaults["AlertTitle"]) -> void:
 #endregion
 
 #region PAUSE MANAGE
-## Auto Change get_tree().paused, if true, the SceneTree is paused. Doing so will have the following behavior:
+## Auto change get_tree().paused, if true, the SceneTree is paused. Doing so will have the following behavior:
 ## [br][br]
 ## - 2D and 3D physics will be stopped. This includes signals and collision detection.
 ## [br][br]
 ## - Node._process(), Node._physics_process() and Node._input() will not be called anymore in nodes.
 ## [br][br]
-## If you need fast change, only use [code]PauseChange()[/code]. When need to set pause, use [code]ChagePause(true)[/code] or [code]ChagePause(false)[/code].
+## If you need fast change, only use [code]SLib.change_pause()[/code]. When need to set pause, use [code]SLib.chage_pause(true)[/code] or [code]SLib.chage_pause(false)[/code].
 ## [br][br]
-## NOTE: If you set a not-boolean parameter, it will send an error to the console: [code]SLib.gd:x @ SendError(): SLib Pause Changer: Only use boolean parameters![/code]
+## NOTE: If you set a not-boolean parameter, it will send an error to the console.
 func change_pause(pause = null) -> void:
 	if pause == null:
 		get_tree().paused = !get_tree().paused
 	elif typeof(pause) == 1:
 		get_tree().paused = pause
 	else:
-		send_error("Only use boolean parameters!", "SLib Pause Changer")
+		send_error("Only use boolean parameters!", "SLib.change_pause")
 #endregion
 
 #region DEBUGGING
