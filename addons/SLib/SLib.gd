@@ -170,176 +170,171 @@ func globalize_path(path: String) -> String:
 			path = OS.get_executable_path().get_base_dir().path_join(path)
 		return path
 
-#region FILE ACCESS
-## This function will save a file with a customized path, this is very useful because the file saving process will be readable and fast.
-## [br][br]
-## NOTE:
-## For use project directory type [code]res://[/code] and for hidden user data directory use [code]user://[/code].
-## [br][br]
-## NOTE:
-## If you don't select Variable parameter, Variable set to [code]null[/code].
-## [br][br]
-## NOTE:
-## You should type a format for your file, you can select any format but default format not open in other programs!
-func save_file(location: String, value = null) -> void:
-	var file = FileAccess.open(location,FileAccess.WRITE)
-	file.store_var(value)
-	file.close()
 
 ## Returns the localized path (starting with [code]res://[/code]) corresponding to the absolute, native OS [param path]. See also [method globalize_path].
 func localize_path(path: String) -> String:
 	return ProjectSettings.localize_path(path)
 #endregion
 
-## This function returns the content stored in the file, you can use it for all file created by your godot application.
+#region SAVE LOAD BACKUP
+## This function will save a file with a customized path, this is very useful because the file saving process will be readable and fast.It supports four methods: [FileAccess], [ConfigFile], [JSON], [ResourceSaver][br]
+## see [enum file_types] for more information about [param type].[br]
+## Supports local and global file locations, see [method globalize_path] and [method localize_path] for more information.[br][br]
+## NOTE: [param cofig] just for COFIG [enum file_types], use [code]"%section%,%key%"[/code] pattern for this parameter. See also [method ConfigFile.set_value][br]
+## See also [method load_file]
+## Examples:
+## [codeblock]
+## # 0: FILE_ACCESS (any extension), save player_data in "res://restore_point.save":
+## SLib.save_file(0, "res://restore_point.save", player_data) 
+## # 1: Config (.ini), save "Jack" in key "name" in section "main" in "user://player.ini":
+## SLib.save_file(1, "user://player.ini", "Jack", "main,name")
+## # 2: JSON (.json), save enemy_data_dict in "user://Data.json" with JSON formatting:
+## SLib.save_file(2, "user://Data.json", enemy_data_dict)
+## # 3: Resource (.tres, .tscn , ...), save panel style in "res://theme/custom_panel.tres":
+## SLib.save_file(3, "res://theme/custom_panel.tres", $Panel.theme_override_styles/panel)
+## [/codeblock]
+func save_file(type: file_types, location: String, value = null, config: String = "") -> void:
+	match type:
+		0:
+			var file = FileAccess.open(location,FileAccess.WRITE)
+			file.store_var(value)
+			file.close()
+		1:
+			if config.split(",", false).size() != 2:
+				send_error("Save data in config files need section & key, cann't save data in \'{file}\'".format({"file": location}), "SLib.save_file")
+				return
+			var section = config.split(",", false)[0]
+			var key = config.split(",", false)[0]
+			var config_file := ConfigFile.new()
+			config_file.set_value(section, key, value)
+			var error := config_file.save(location)
+			if error:
+				send_error("An error happened while saving data in \'{file}\' > \'{section}\' > \'{key}\': \'{error}\'".format({"file": location, "section": section, "key": key, "error": str(error)}), "SLib.save_file")
+		2:
+			var json_string := JSON.stringify(value)
+			var file_access := FileAccess.open(location, FileAccess.WRITE)
+			if not file_access:
+				send_error("An error happened while saving data in \'{file}\': \'{error}\'".format({"file": location, "error": FileAccess.get_open_error()}), "SLib.save_file")
+			file_access.store_var(json_string)
+			file_access.close()
+		3:
+			var error := ResourceSaver.save(value, location)
+			if error:
+				send_error("An error happened while saving data in \'{file}\': \'{error}\'".format({"file": location, "error": error}), "SLib.save_file")
+		_:
+			send_error("Please select a valid file type for save!", "SLib.save_file")
+
+
+## This function returns the content stored in the file, you can use it for:[br]
+## - All files created by [FileAccess] and [method save_file] with FILE_ACCESS type in [enum file_types]. (Use FILE_ACCESS for these files)[br]
+## - All config files ([code].ini[/code]). (Use CONFIG type in [enum file_types] for these files)[br]
+## - All JSON files ([code].json[/code]). (Use JSON_FILE type in [enum file_types] for these files)[br]
+## - All Resource files ([code].tres[/code], [code].tscn[/code], [code].res[/code] & [code].scn[/code]). See also [Resource] & [ResourceSaver]. (Use RESOURCE for these files)[br]
+## NOTE: [param cofig] just for COFIG [enum file_types], use [code]"%section%,%key%"[/code] pattern for this parameter. See also [method ConfigFile.get_value][br]
+## See also [method save_file].
 ## [br][br]
 ## NOTE:
-## If the file doesn't exist, it will send an error to the console like this: [code]SLib.gd:x @ SendError(): SLib File Loader: Can't load from -->file_location<--, file not exists![/code]
-func load_file(location: String):
-	if FileAccess.file_exists(location):
-		var file = FileAccess.open(location,FileAccess.READ)
-		var data = file.get_var()
-		file.close()
-		return data
-	else:
-		send_error("Can't load from " + location + ", file not exists!", "SLib File Loader")
+## If the file doesn't exist, it will send an error to the console and return [param default_value].
+func load_file(type: file_types, location: String, default_value: Variant = null, config: String = "") -> Variant:
+	match type:
+		0:
+			if FileAccess.file_exists(location):
+				var file = FileAccess.open(location,FileAccess.READ)
+				var data = file.get_var()
+				file.close()
+				return data
+			else:
+				send_error("Can't load from \'{file}\', file not exists!".format({"file": location}), "SLib.load_file")
+				return default_value
+		1:
+			if config.split(",", false).size() != 2:
+				send_error("Load data from config files need section & key, cann't load data from \'{file}\'".format({"file": location}), "SLib.load_file")
+				return
+			var section = config.split(",", false)[0]
+			var key = config.split(",", false)[0]
+			var config_file := ConfigFile.new()
+			var error := config_file.load(location)
+			if error:
+				send_error("An error happened while loading data from \'{file}\' > \'{section}\' > \'{key}\': \'{error}\'".format({"file": location, "section": section, "key": key, "error": str(error)}), "SLib.load_file")
+				return default_value
+			return config_file.get_value(section, key, default_value)
+		2:
+			if not FileAccess.file_exists(location):
+				return default_value
+			var file_access := FileAccess.open(location, FileAccess.READ)
+			var json_string := file_access.get_line()
+			file_access.close()
+			var json := JSON.new()
+			var error := json.parse(json_string)
+			if error:
+				send_error("JSON Parse Error: {message} in {string} at line {line}".format({"message": str(json.get_error_message()), "string": json_string, "line": json.get_error_line()}), "SLib.load_file")
+				return default_value
+			return json.data
+		3:
+			return load(location)
+		_:
+			send_error("Please select a valid file type for load!", "SLib.load_file")
+			return default_value
 
 
-## Backup function create a new file with [code]main file name-suffix[/code] in main file location, if you doesn't select a custom suffix, [code]-Backup[/code] append to file name.
+## Backup function create a new file with [code]%main_file_name%-%suffix%[/code] name in main file location, if you doesn't select a custom [param suffix], [code]Project Settings > SLib > Defaults[BackupSuffix][/code] append to file name.[br]
+## See [method save_file] & [method load_file] for more information about this function.
 ## [br][br]
-## NOTE:
-## If the file doesn't exist, it will send an error to the console like this: [code]SLib.gd:x @ SendError(): SLib File Backup: Can't load from -->file_location<--, file not exists![/code]
-func backup_file(location: String, suffix: String = defaults["BackupSuffix"]) -> void:
-	if FileAccess.file_exists(location):
-		var file = FileAccess.open(location,FileAccess.READ)
-		var data = file.get_var()
-		var backup_location = location.get_basename() + "-" + suffix + "." + location.get_extension()
-		var backup = FileAccess.open(backup_location,FileAccess.WRITE)
-		backup.store_var(data)
-		file.close()
-		backup.close()
-	else:
-		send_error("Can't load from " + location + ", file not exists!", "SLib File Backup")
-#endregion
-
-#region CONFIG
-## This function will save a config file ([code].ini[/code]) with a customized path, this is very useful because the file saving process will be readable and fast.
-## [br][br]
-## NOTE:
-## For use project directory type [code]res://[/code] and for hidden user data directory use [code]user://[/code].
-## [br][br]
-## NOTE:
-## You should select section and key for your value for save file.
-func save_config_file(location: String, section, key, value) -> void:
-	var config_file := ConfigFile.new()
-	config_file.set_value(section, key, value)
-	var error := config_file.save(location)
-	if error:
-		send_error("An error happened while saving data: '" + str(error) + "'", "SLib Config File Save")
-
-
-## This function returns the value stored in the section of config file by key, you can use it for all config files.
-func load_config_file(location: String, section, key, default_value = null):
-	var config_file := ConfigFile.new()
-	var error := config_file.load(location)
-	if error:
-		send_error("An error happened while loading data: '" + str(error) + "'", "SLib Config File Load")
-		return
-	return config_file.get_value(section, key, default_value)
-
-
-## Backup function create a new file with [code]main file name-suffix[/code] in main file location, if you doesn't select a custom suffix, [code]-Backup[/code] append to file name.
-func backup_config_file(location: String, section, key, suffix: String = defaults["BackupSuffix"]) -> void:
-	var config_file := ConfigFile.new()
-	var load_error := config_file.load(location)
-	if load_error:
-		send_error("An error happened while loading data for backup: '" + str(load_error) + "'", "SLib Config File Backup")
-	var data = config_file.get_value(section, key)
-	var backup_config_file := ConfigFile.new()
-	backup_config_file.set_value(section, key, data)
-	var save_error := backup_config_file.save(location.get_basename() + "-" + suffix + "." + location.get_extension())
-	if save_error:
-		send_error("An error happened while saving data for backup: '" + str(save_error) + "'", "SLib Config File Backup")
-#endregion
-
-#region JSON
-## This function will save a JSON file with a customized path, this is very useful because the file saving process will be readable and fast.
-## [br][br]
-## NOTE:
-## For use project directory type [code]res://[/code] and for hidden user data directory use [code]user://[/code].
-## [br][br]
-## NOTE:
-## You should write [code].json[/code] format for your file.
-func save_json_file(location: String, data) -> void:
-	var json_string := JSON.stringify(data)
-	var file_access := FileAccess.open(location, FileAccess.WRITE)
-	if not file_access:
-		send_error("An error happened while saving data: " + str(FileAccess.get_open_error()), "SLib JSON File Save")
-	file_access.store_var(json_string)
-	file_access.close()
-
-
-## This function returns the content stored in the json file, you can use it for all json files.
-func load_json_file(location: String):
-	if not FileAccess.file_exists(location):
-		return
-	var file_access := FileAccess.open(location, FileAccess.READ)
-	var json_string := file_access.get_line()
-	file_access.close()
-	var json := JSON.new()
-	var error := json.parse(json_string)
-	if error:
-		send_error("JSON Parse Error: " + str(json.get_error_message()) + " in " + json_string + " at line " + str(json.get_error_line()), "SLib JSON File Loader")
-		return
-	return json.data
-
-
-## Backup function create a new file with [code]main file name-suffix[/code] in main file location, if you doesn't select a custom suffix, [code]-Backup[/code] append to file name.
-func backup_json_file(location: String, suffix: String = defaults["BackupSuffix"]):
-	if not FileAccess.file_exists(location):
-		return
-	var file_access := FileAccess.open(location, FileAccess.READ)
-	var json_string := file_access.get_line()
-	file_access.close()
-	var json := JSON.new()
-	var error := json.parse(json_string)
-	if error:
-		send_error("JSON Parse Error: " + str(json.get_error_message()) + " in " + json_string + " at line " + str(json.get_error_line()), "SLib JSON File Backup")
-		return
-	var data = json.data
-	var backup_json_string := JSON.stringify(data)
-	var backup_file_access := FileAccess.open(location.get_basename() + "-" + suffix + "." + location.get_extension(), FileAccess.WRITE)
-	if not backup_file_access:
-		send_error("An error happened while saving data: " + str(FileAccess.get_open_error()), "SLib JSON File Backup")
-	backup_file_access.store_var(backup_json_string)
-	backup_file_access.close()
-#endregion
-
-#region RESOURCE
-## This function will save a resource file ([code].tres[/code] with a customized path, this is very useful because the file saving process will be readable and fast.
-## [br][br]
-## NOTE:
-## For use project directory type [code]res://[/code] and for hidden user data directory use [code]user://[/code].
-## [br][br]
-## NOTE:
-## You should type [code].tres[/code] format for your file.
-func save_resource_file(location: String, data) -> void:
-	var error := ResourceSaver.save(data, location)
-	if error:
-		send_error("An error happened while saving data: '" + str(error) + "'", "SLib Resource File Save")
-
-
-## This function returns the content stored in the resource file, you can use it for all resource files.
-func load_resource_file(location: String):
-	return load(location)
-
-
-## Backup function create a new file with [code]main file name-suffix[/code] in main file location, if you doesn't select a custom suffix, [code]-Backup[/code] append to file name.
-func backup_resource_file(location: String, suffix: String = defaults["BackupSuffix"]) -> void:
-	var data = load(location)
-	var error := ResourceSaver.save(data, location.get_basename() + "-" + suffix + "." + location.get_extension())
-	if error:
-		send_error("An error happened while saving data in backup: '" + str(error) + "'", "SLib Resource File Backup")
+## NOTE: If the file doesn't exist, it will send an error to the console.
+func backup_file(type: file_types, location: String, suffix: String = defaults["BackupSuffix"], config: String = "") -> void:
+	match type:
+		0:
+			if FileAccess.file_exists(location):
+				var file = FileAccess.open(location,FileAccess.READ)
+				var data = file.get_var()
+				var backup_location = location.get_basename() + "-" + suffix + "." + location.get_extension()
+				var backup = FileAccess.open(backup_location,FileAccess.WRITE)
+				backup.store_var(data)
+				file.close()
+				backup.close()
+			else:
+				send_error("Can't load from {file}, file not exists!".format({"file": location}), "SLib.backup_file")
+		1:
+			if config.split(",", false).size() != 2:
+				send_error("Create backup from config files need section & key, cann't load data from \'{file}\'".format({"file": location}), "SLib.backup_file")
+				return
+			var section = config.split(",", false)[0]
+			var key = config.split(",", false)[0]
+			var config_file := ConfigFile.new()
+			var load_error := config_file.load(location)
+			if load_error:
+				send_error("An error happened while loading data for backup: \'{error}\'".format({"error": str(load_error)}), "SLib.backup_file")
+			var data = config_file.get_value(section, key)
+			var backup_config_file := ConfigFile.new()
+			backup_config_file.set_value(section, key, data)
+			var save_error := backup_config_file.save(location.get_basename() + "-" + suffix + "." + location.get_extension())
+			if save_error:
+				send_error("An error happened while saving data for backup: \'{error}\'".format({"error": str(save_error)}), "SLib.backup_file")
+		2:
+			if not FileAccess.file_exists(location):
+				return
+			var file_access := FileAccess.open(location, FileAccess.READ)
+			var json_string := file_access.get_line()
+			file_access.close()
+			var json := JSON.new()
+			var error := json.parse(json_string)
+			if error:
+				send_error("JSON Parse Error: {message} in {string} at line {line}".format({"message": str(json.get_error_message()), "string": json_string, "line": str(json.get_error_line())}), "SLib.backup_file")
+				return
+			var data = json.data
+			var backup_json_string := JSON.stringify(data)
+			var backup_file_access := FileAccess.open(location.get_basename() + "-" + suffix + "." + location.get_extension(), FileAccess.WRITE)
+			if not backup_file_access:
+				send_error("An error happened while saving data: {error}".format({"error": str(FileAccess.get_open_error())}), "SLib.backup_file")
+			backup_file_access.store_var(backup_json_string)
+			backup_file_access.close()
+		3:
+			var data = load(location)
+			var error := ResourceSaver.save(data, location.get_basename() + "-" + suffix + "." + location.get_extension())
+			if error:
+				send_error("An error happened while saving data in backup: \'{error}\'".format({"error": str(error)}), "SLib.backup_file")
+		_:
+			send_error("Please select a valid file type for backup!", "SLib.backup_file")
 #endregion
 
 #endregion
