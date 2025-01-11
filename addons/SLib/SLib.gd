@@ -558,7 +558,7 @@ func change_pause(pause = null) -> void:
 #endregion
 
 #region DEBUGGING
-## Sends a custom error to the console that can be viewed in the engine debugger, error like this: [code]SLib.gd:x @ SendError(): ->From<-: ->Error<-[/code]
+## Sends a custom error to the console that can be viewed in the engine debugger, error like this: [code]SLib.gd:x @ send_error(): [/code][param from][code]: [/code][param error]
 func send_error(error: String = defaults["Error"], from: String = "Debugger") -> void:
 	push_error(from + ": " + error)
 
