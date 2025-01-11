@@ -47,7 +47,7 @@ extends Node
 ## NOTE: Use [code]Project > Project Settings > SLib[/code] for change defaults and file locations.
 
 #region CONFIG
-## Default values
+## Default values for functions, Use project settings to change.
 var defaults := {
 	"Descendants": false,
 	"AlertTitle": "Alert!",
@@ -57,7 +57,7 @@ var defaults := {
 	"ScenesFolder": "Scene",
 }
 
-## Library file locations
+## File locations for GFL & logging, Use project settings to change.
 var file_locations := {
 	"Log": "user://App.log",
 }
