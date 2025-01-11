@@ -407,19 +407,24 @@ func is_word_ok(word: String) -> bool:
 ## [br][br]
 ## [b]1- Standard format (Recommended):[/b]
 ## [br]
-## If you save your [code].tscn[/code] files in the [code]res://Scene/[/code] path, just put the target file name:
+## If you save your [code].tscn[/code] files in the [code]res://Scene/[/code] path, just put the target file name in [param scene_name]:
 ## [codeblock]
-## SLib.GoToScene("Game")
+## SLib.change_scene("Game")
 ## [/codeblock]
-## The code above works exactly like the code below:
+## NOTE: [code]res://Scene/[/code] is the same as the one specified in the [code]Project Settings > SLib > Defaults[ScenesFolder][/code], if you change it you can use this method; example:
+## [codeblock]
+## # Project Settings > SLib > Defaults[ScenesFolder] seted to "My Scenes"
+## SLib.change_scene("Best Score") # change scene to "res://My Scenes/Best Score.tscn"\
+## [/codeblock]
+## The frist method works exactly like the code below:
 ## [codeblock]
 ## get_tree.change_scene_to_file("res://Scene/Game.tscn")
 ## [/codeblock]
 ## [b]2- Root folder:[/b]
 ## [br]
-## If you save [code].tscn[/code] files in [code]res://[/code], use the Folder parameter and set it to [code]/root[/code]:
+## If you save [code].tscn[/code] files in [code]res://[/code], use the [param folder] parameter and set it to [code]/root[/code]:
 ## [codeblock]
-## SLib.GoToScene("Game", "/root")
+## SLib.change_scene("Game", "/root")
 ## [/codeblock]
 ## This code replaces the following code:
 ## [codeblock]
@@ -427,16 +432,16 @@ func is_word_ok(word: String) -> bool:
 ## [/codeblock]
 ## [b]3- Custom folder:[/b]
 ## [br]
-## You can also choose the folder where you saved your scene:
+## You can also choose the [param folder] where you saved your scene:
 ## [codeblock]
-## SLib.GoToScene("Game", "My Scenes")
+## SLib.change_scene("Game", "My Scenes")
 ## [/codeblock]
 ## In this way, the following code will be executed:
 ## [codeblock]
 ## get_tree.change_scene_to_file("res://My Scenes/Game.tscn")
 ## [/codeblock]
 ## NOTE:
-## You can also call nested folders, for example: [code]Scenes/Old Files[/code]
+## You can also call nested folders, for example: [code]SLib.change_scene("Main Menu", "Scenes/Old Files")[/code] to open [code]"res://Scenes/Old Files/Main Menu.tscn"[/code]
 func change_scene(scene_name: String, folder: String = defaults["ScenesFolder"]) -> void:
 	if folder == "/root":
 		get_tree().change_scene_to_file("res://" + scene_name + ".tscn")
