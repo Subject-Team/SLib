@@ -4,9 +4,9 @@
 
 | Version               | Guaranteed safety | Guaranteed correction in the same version | Guaranteed to be fixed in the next version |
 | --------------------- | ----------------- | ----------------------------------------- | ------------------------------------------ |
-| Stable Versions 1.0.x | ☑️               | ❌                                        | ☑️                                        |
-| Alpha Versions  1.0.x | ❌               | ❌                                        | ☑️                                        |
-| Beta Versions   1.0.x | ❌               | ☑️                                        | ☑️                                        |
+| Stable Versions 1.x.x | ☑️               | ❌                                        | ☑️                                        |
+| Alpha Versions  1.x.x | ❌               | ❌                                        | ☑️                                        |
+| Beta Versions   1.x.x | ❌               | ☑️                                        | ☑️                                        |
 
 ## Reporting a Vulnerability
 
