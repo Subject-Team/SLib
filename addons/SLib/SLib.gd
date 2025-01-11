@@ -324,12 +324,12 @@ func backup_resource_file(location: String, suffix: String = defaults["BackupSuf
 
 #region TWEEN MANAGE
 ## This function shows an object and creates an animation to change its color.
-func appear(object) -> void:
+func appear(object: Object) -> void:
 	object.show() 
 	create_tween().tween_property(object, "modulate", Color.WHITE, 1.0)
 
 ## This function creates an animation to make an object disappear by changing its color to transparent.
-func disappear(object) -> void:
+func disappear(object: Object) -> void:
 	var tween = create_tween()
 	tween.tween_property(object, "modulate", Color.TRANSPARENT, 1.0)
 	tween.finished.connect(func(): object.hide())
@@ -350,7 +350,8 @@ func patterned_sort(scrambled_array : Array, pattern: Array) -> Array:
 	return sorted_array
 
 
-## It combines two arrays and only adds items from the second array to the first array if the first array does not already contain them.
+## It combines two arrays and only adds items from the second array to the first array if the first array does not already contain them.[br]
+## For make unique an array, merge it with [code][][/code].
 ## [br][br]
 ## Example:
 ## [codeblock]
