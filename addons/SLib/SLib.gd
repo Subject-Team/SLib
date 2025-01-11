@@ -463,10 +463,10 @@ func exit(exit_code: int = 0) -> void:
 ## Finds the first child of a given class, does not find class_name declarations
 func find_child_of_class(target_node: Node, type_name: StringName, descendants: bool = defaults["Descendants"]) -> Node:
 	for child in target_node.get_children():
-		if child.is_class(type_name):
+		if child.is_class(target_class):
 			return child
 		elif descendants:
-			var found: Node = find_child_of_class(child, type_name, descendants)
+			var found: Node = find_child_of_class(child, target_class, descendants)
 			if found:
 				return found
 	return null
