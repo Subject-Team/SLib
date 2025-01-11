@@ -61,6 +61,13 @@ var defaults := {
 var file_locations := {
 	"Log": "user://App.log",
 }
+
+enum file_types {
+	FILE_ACCESS,
+	CONFIG,
+	JSON_FILE,
+	RESOURCE,
+}
 #endregion
 
 #region PRIVATE VARIABLES
