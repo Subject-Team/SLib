@@ -584,12 +584,12 @@ func send_warning(warning: String = defaults["Warning"], from: String = "Debugge
 ## NOTE:
 ## You can change the log file path with [code]SLib.Log_FileLcation[/code].
 func save_log(custom_log) -> void:
-	save_file(file_locations["Log"], custom_log)
+	save_file(0, file_locations["Log"], custom_log)
 
 
 ## Return saved log.
 func get_log():
-	return load_file(file_locations["Log"])
+	return load_file(0, file_locations["Log"])
 #endregion
 
 #region 3D TOOLS
