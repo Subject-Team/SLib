@@ -490,10 +490,12 @@ func set_project_setting(path: String, value) -> void:
 
 ## This function returns the variable stored in the desired property, its use is as follows:
 ## [codeblock]
-## MyVar = SLib.GetPrjectSetting("application/config/windows_native_icon")
+## MyVar = SLib.get_prject_setting("application/config/windows_native_icon")
 ## [/codeblock]
-func get_project_setting(path: String):
-	return ProjectSettings.get_setting(path)
+## NOTE: For settings that are not present in the engine and are created manually,
+## [code]null[/code] will be returned if the value is the same as the initial value, so use [param default_value] to avoid possible bugs.
+func get_project_setting(path: String, default_value: Variant = null):
+	return ProjectSettings.get_setting(path, default_value)
 #endregion
 
 #region OS COMMUNICATION
