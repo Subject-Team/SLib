@@ -454,7 +454,7 @@ func reload() -> void:
 	get_tree().reload_current_scene()
 
 
-## This function closes the program and also uses the optional exit code, added for code readability.
+## This function closes the program and also uses the optional [param exit_code], added for code readability.
 func exit(exit_code: int = 0) -> void:
 	get_tree().quit(exit_code)
 #endregion
