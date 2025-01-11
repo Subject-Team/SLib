@@ -472,7 +472,7 @@ func find_child_of_class(target_node: Node, target_class: StringName, descendant
 	return null
 
 
-## Clear all children in a node
+## Clear all children of [param node] with [method Node.queue_free].
 func free_all_children(node: Node) -> void:
 	for child in node.get_children():
 		child.queue_free()
