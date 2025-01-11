@@ -568,13 +568,10 @@ func send_warning(warning: String = defaults["Warning"], from: String = "Debugge
 	push_warning(from + ": " + warning)
 
 
-## Save log parameter in log file, log file save in [code]user://Log.ject[/code] as default.
+## Save log parameter in log file, log file save in [code]user://App.log[/code] as default.
 ## [br][br]
 ## NOTE:
-## You can see log data with [code]print(LoadFile("user://Log.ject"))[/code].
-## [br][br]
-## NOTE:
-## You can change the log file path with [code]SLib.Log_FileLcation[/code].
+## You can see log data with [code]print(SLib.get_log())[/code].
 func save_log(custom_log) -> void:
 	save_file(file_locations["Log"], custom_log)
 
