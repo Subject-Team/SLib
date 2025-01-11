@@ -17,8 +17,9 @@ extends Node
 # ALERT
 # ---
 
+## [center][img width=400]res://addons/SLib/SLib.png[/img][br]
 ## SLib (Subject Library) is a Godot library that provides Godot capabilities in a simpler way.[br][br]
-## See [url]https://github.com/Subject-Team/SLib[/url] for the main repository
+## See [url=https://subject-team.github.io/SLib]project web page[/url] for more information or [url=https://github.com/Subject-Team/SLib]this Github repo[/url] for the main repository[/center]
 ##
 ## SLib is a set of ready and standard code that makes you unnecessary to write many long and frequently used codes.[br][br]
 ## Available ability in this library now:[br]
@@ -41,6 +42,7 @@ extends Node
 ## ● Tween controller[br]
 ## ● Dictionary reverser[br]
 ## ● Global file locations space[br]
+## ● And more abilities...[br]
 ## [br]
 ## NOTE: Use [code]Project > Project Settings > SLib[/code] for change defaults and file locations.
 
