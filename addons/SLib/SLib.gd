@@ -481,9 +481,9 @@ func free_all_children(node: Node) -> void:
 #region PROJECT SETTING
 ## This function changes the project settings, for this it needs two parameters:
 ## [br]
-## ● Path: can use [kbd]Ctrl+Shift+C[/kbd] on property of project settings window
+## ● [param path]: can use [kbd]Ctrl+Shift+C[/kbd] on any property of project settings window to copy that path
 ## [br]
-## ● Value: this parameter set to selected property
+## ● [param value]: this parameter set to selected property
 func set_project_setting(path: String, value) -> void:
 	ProjectSettings.set_setting(path, value)
 
