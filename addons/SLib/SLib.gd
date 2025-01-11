@@ -563,7 +563,7 @@ func send_error(error: String = defaults["Error"], from: String = "Debugger") ->
 	push_error(from + ": " + error)
 
 
-## Sends a custom warning to the console that can be viewed in the engine debugger like this: [code]SLib.gd:x @ SendWarning(): ->From<-: ->Warning<-[/code]
+## Sends a custom warning to the console that can be viewed in the engine debugger like this: [code]SLib.gd:x @ send_warning(): [/code][param from][code]: [/code][param warning]
 func send_warning(warning: String = defaults["Warning"], from: String = "Debugger") -> void:
 	push_warning(from + ": " + warning)
 
