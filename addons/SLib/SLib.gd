@@ -381,6 +381,7 @@ func reverse_dict(dict: Dictionary) -> Dictionary:
 #endregion
 
 #region STRING TOOLS
+## Converts [Array] to [String] with [param seperator] between array arguments
 func stringify(arguments: Array, seperator: String = "") -> String:
 	var string = ""
 	for i in arguments.size():
