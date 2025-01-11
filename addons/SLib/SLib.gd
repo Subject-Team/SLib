@@ -336,12 +336,12 @@ func disappear(object: Object) -> void:
 #endregion
 
 #region ARRAY TOOLS
-## Sorts the array based on the sorter, eg:
+## Sorts the array based on the [param pattern] array, eg:
 ## [codeblock]
-## var Scrambled = ["5", "A", "10", "K", "J", "Q", "3"]
-## var Pattern = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
+## var scrambled = ["5", "A", "10", "K", "J", "Q", "3"]
+## var pattern = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
 ##
-## var Sorted = SLib.patterned_sort(Scrambled, Pattern) #-> ["A", "3", "5", "10", "J", "Q", "K"] 
+## var sorted = SLib.patterned_sort(scrambled, pattern) # sorted: ["A", "3", "5", "10", "J", "Q", "K"] 
 ## [/codeblock]
 func patterned_sort(scrambled_array : Array, pattern: Array) -> Array:
 	_user_pattern = pattern
