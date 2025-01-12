@@ -57,10 +57,8 @@ var defaults := {
 	"ScenesFolder": "Scene",
 }
 
-## File locations for GFL & logging, Use project settings to change.
-var file_locations := {
-	"Log": "user://App.log",
-}
+## File locations for GFL, Use project settings to change.
+var file_locations := {}
 
 enum file_types {
 	FILE_ACCESS,
@@ -531,7 +529,7 @@ func get_project_setting(path: String, default_value: Variant = null):
 ## This method is implemented on Android, iOS, Web, Linux, macOS and Windows.
 func os_open(uri: String) -> void:
 	if uri.begins_with("res://") or uri.begins_with("user://"):
-		uri = SLib.full_path(uri)
+		uri = SLib.globalize_path(uri)
 	OS.shell_open(uri)
 
 
@@ -583,19 +581,6 @@ func send_error(error: String = defaults["Error"], from: String = "Debugger") ->
 ## Sends a custom warning to the console that can be viewed in the engine debugger like this: [code]SLib.gd:x @ send_warning(): [/code][param from][code]: [/code][param warning]
 func send_warning(warning: String = defaults["Warning"], from: String = "Debugger") -> void:
 	push_warning(from + ": " + warning)
-
-
-## Save log parameter in log file, log file save in [code]user://App.log[/code] as default.
-## [br][br]
-## NOTE:
-## You can see log data with [code]print(SLib.get_log())[/code].
-func save_log(custom_log) -> void:
-	save_file(0, file_locations["Log"], custom_log)
-
-
-## Return saved log.
-func get_log():
-	return load_file(0, file_locations["Log"])
 #endregion
 
 #region 3D TOOLS

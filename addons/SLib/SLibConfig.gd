@@ -19,14 +19,13 @@ var defaults := {
 }
 
 ## Global file locations
-var file_locations := {
-	"Log": "user://App.log",
-}
+var file_locations := {}
 #endregion
 
 #region main
 func _enter_tree():
 	add_autoload_singleton("SLib", "res://addons/SLib/SLib.gd")
+	add_autoload_singleton("Log", "res://addons/SLib/Logger.gd")
 	if FileAccess.file_exists(CONFIG_FILES["Defaults"]):
 		var file = FileAccess.open(CONFIG_FILES["Defaults"],FileAccess.READ)
 		defaults = file.get_var()
@@ -49,6 +48,7 @@ func _enter_tree():
 
 func _exit_tree():
 	remove_autoload_singleton("SLib")
+	remove_autoload_singleton("Log")
 	defaults = ProjectSettings.get_setting("SLib/Defaults")
 	file_locations = ProjectSettings.get_setting("SLib/FileLocations")
 	var file = FileAccess.open(CONFIG_FILES["Defaults"],FileAccess.WRITE)
