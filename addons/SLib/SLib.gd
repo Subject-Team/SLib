@@ -204,10 +204,11 @@ func save_file(type: file_types, location: String, value = null, config: String 
 				send_error("Save data in config files need section & key, cann't save data in \'{file}\'".format({"file": location}), "SLib.save_file")
 				return
 			var section = config.split(",", false)[0]
-			var key = config.split(",", false)[0]
+			var key = config.split(",", false)[1]
 			var config_file := ConfigFile.new()
+			var error := config_file.load(location)
 			config_file.set_value(section, key, value)
-			var error := config_file.save(location)
+			error = config_file.save(location)
 			if error:
 				send_error("An error happened while saving data in \'{file}\' > \'{section}\' > \'{key}\': \'{error}\'".format({"file": location, "section": section, "key": key, "error": str(error)}), "SLib.save_file")
 		2:
@@ -251,7 +252,7 @@ func load_file(type: file_types, location: String, default_value: Variant = null
 				send_error("Load data from config files need section & key, cann't load data from \'{file}\'".format({"file": location}), "SLib.load_file")
 				return
 			var section = config.split(",", false)[0]
-			var key = config.split(",", false)[0]
+			var key = config.split(",", false)[1]
 			var config_file := ConfigFile.new()
 			var error := config_file.load(location)
 			if error:
