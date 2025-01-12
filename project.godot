@@ -20,6 +20,7 @@ config/icon="res://SLib.png"
 [autoload]
 
 SLib="*res://addons/SLib/SLib.gd"
+Log="*res://addons/SLib/Logger.gd"
 
 [display]
 
