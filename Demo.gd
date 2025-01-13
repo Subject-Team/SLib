@@ -3,7 +3,8 @@ extends Node
 # Demo Script For Test & Show SLib functions
 
 func _ready():
-	SLib.save_file(0, "res://test")
+	pass
+#	SLib.save_file(0, "res://test.save")
 
 func _backup_game():
 	# This one line of code creates a backup of the player's data file with an optional
