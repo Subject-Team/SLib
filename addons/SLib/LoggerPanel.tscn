@@ -1,0 +1,209 @@
+[gd_scene load_steps=6 format=3 uid="uid://dl2bdby660qof"]
+
+[ext_resource type="Script" path="res://addons/SLib/LoggerPanel.gd" id="1_afsns"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vpqck"]
+bg_color = Color(0.129412, 0.14902, 0.180392, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_e3611"]
+color = Color(0, 0, 0, 0)
+thickness = 10
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vu30n"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jvpb1"]
+
+[node name="Logger" type="Control"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_afsns")
+
+[node name="Scroll" type="ScrollContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Margin" type="MarginContainer" parent="Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Panel" type="Panel" parent="Scroll/Margin"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vpqck")
+
+[node name="Tab" type="TabContainer" parent="Scroll/Margin"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxLine_e3611")
+
+[node name="Debugging" type="GridContainer" parent="Scroll/Margin/Tab"]
+layout_mode = 2
+columns = 2
+
+[node name="Disable Errors" type="CheckBox" parent="Scroll/Margin/Tab/Debugging"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_vu30n")
+text = "Disable Errors"
+
+[node name="Disable Warnings" type="CheckBox" parent="Scroll/Margin/Tab/Debugging"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_vu30n")
+text = "Disable Warnings"
+
+[node name="UNKNOWN" type="Label" parent="Scroll/Margin/Tab/Debugging"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+text = "UNKNOWN"
+vertical_alignment = 1
+
+[node name="UNKNOWN2" type="OptionButton" parent="Scroll/Margin/Tab/Debugging"]
+layout_mode = 2
+size_flags_horizontal = 0
+item_count = 4
+selected = 3
+allow_reselect = true
+popup/item_0/text = "Disable"
+popup/item_0/id = 0
+popup/item_1/text = "Error"
+popup/item_1/id = 1
+popup/item_2/text = "Warning"
+popup/item_2/id = 2
+popup/item_3/text = "Soft Error"
+popup/item_3/id = 3
+
+[node name="AWAKE_NOW" type="Label" parent="Scroll/Margin/Tab/Debugging"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+text = "AWAKE_NOW"
+vertical_alignment = 1
+
+[node name="AWAKE_NOW2" type="OptionButton" parent="Scroll/Margin/Tab/Debugging"]
+layout_mode = 2
+size_flags_horizontal = 0
+item_count = 4
+selected = 0
+allow_reselect = true
+popup/item_0/text = "Disable"
+popup/item_0/id = 0
+popup/item_1/text = "Warning"
+popup/item_1/id = 1
+popup/item_2/text = "Error"
+popup/item_2/id = 2
+popup/item_3/text = "Soft Error"
+popup/item_3/id = 3
+
+[node name="SYNTAX" type="Label" parent="Scroll/Margin/Tab/Debugging"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+text = "SYNTAX"
+vertical_alignment = 1
+
+[node name="SYNTAX2" type="OptionButton" parent="Scroll/Margin/Tab/Debugging"]
+layout_mode = 2
+size_flags_horizontal = 0
+item_count = 4
+selected = 0
+allow_reselect = true
+popup/item_0/text = "Disable"
+popup/item_0/id = 0
+popup/item_1/text = "Warning"
+popup/item_1/id = 1
+popup/item_2/text = "Error"
+popup/item_2/id = 2
+popup/item_3/text = "Soft Error"
+popup/item_3/id = 3
+
+[node name="Limitation" type="VBoxContainer" parent="Scroll/Margin/Tab"]
+visible = false
+layout_mode = 2
+
+[node name="Grid" type="GridContainer" parent="Scroll/Margin/Tab/Limitation"]
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="Scroll/Margin/Tab/Limitation/Grid"]
+layout_mode = 2
+size_flags_vertical = 1
+text = "Limit Mode"
+vertical_alignment = 1
+
+[node name="Limit Mode" type="OptionButton" parent="Scroll/Margin/Tab/Limitation/Grid"]
+layout_mode = 2
+size_flags_horizontal = 0
+item_count = 4
+selected = 2
+allow_reselect = true
+popup/item_0/text = "No Limit"
+popup/item_0/id = 0
+popup/item_1/text = ""
+popup/item_1/id = 10
+popup/item_1/separator = true
+popup/item_2/text = "Limit All"
+popup/item_2/id = 1
+popup/item_3/text = "Limit Section"
+popup/item_3/id = 2
+
+[node name="Grid2" type="GridContainer" parent="Scroll/Margin/Tab/Limitation"]
+layout_mode = 2
+columns = 2
+
+[node name="Label" type="Label" parent="Scroll/Margin/Tab/Limitation/Grid2"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 1
+text = "Limit Value"
+vertical_alignment = 1
+
+[node name="Limit Value" type="SpinBox" parent="Scroll/Margin/Tab/Limitation/Grid2"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+min_value = 1.0
+max_value = 10000.0
+value = 1.0
+allow_greater = true
+alignment = 1
+
+[node name="Outputs" type="VBoxContainer" parent="Scroll/Margin/Tab"]
+visible = false
+layout_mode = 2
+
+[node name="Print Wake Messages" type="CheckBox" parent="Scroll/Margin/Tab/Outputs"]
+layout_mode = 2
+tooltip_text = "Controls messages on wakeup or shutdown"
+theme_override_styles/focus = SubResource("StyleBoxEmpty_jvpb1")
+text = "Print wake messages"
+
+[node name="Log" type="Label" parent="Scroll/Margin/Tab"]
+visible = false
+layout_mode = 2
+
+[connection signal="pressed" from="Scroll/Margin/Tab/Debugging/Disable Errors" to="." method="_save_changes"]
+[connection signal="pressed" from="Scroll/Margin/Tab/Debugging/Disable Warnings" to="." method="_save_changes"]
+[connection signal="item_selected" from="Scroll/Margin/Tab/Debugging/UNKNOWN2" to="." method="_save_options"]
+[connection signal="item_selected" from="Scroll/Margin/Tab/Debugging/AWAKE_NOW2" to="." method="_save_options"]
+[connection signal="item_selected" from="Scroll/Margin/Tab/Debugging/SYNTAX2" to="." method="_save_options"]
+[connection signal="item_selected" from="Scroll/Margin/Tab/Limitation/Grid/Limit Mode" to="." method="_save_options"]
+[connection signal="value_changed" from="Scroll/Margin/Tab/Limitation/Grid2/Limit Value" to="." method="_save_spins"]
+[connection signal="pressed" from="Scroll/Margin/Tab/Outputs/Print Wake Messages" to="." method="_save_changes"]
