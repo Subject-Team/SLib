@@ -62,11 +62,11 @@ var file_locations := {
 	"Log": "user://App.log",
 }
 
-enum file_types {
-	FILE_ACCESS,
-	CONFIG,
-	JSON_FILE,
-	RESOURCE,
+enum {
+	FILE_TYPE_FILE_ACCESS,
+	FILE_TYPE_CONFIG,
+	FILE_TYPE_JSON,
+	FILE_TYPE_RESOURCE,
 }
 #endregion
 
@@ -193,13 +193,13 @@ func localize_path(path: String) -> String:
 ## # 3: Resource (.tres, .tscn , ...), save panel style in "res://theme/custom_panel.tres":
 ## SLib.save_file(3, "res://theme/custom_panel.tres", $Panel.theme_override_styles/panel)
 ## [/codeblock]
-func save_file(type: file_types, location: String, value = null, config: String = "") -> void:
+func save_file(type, location: String, value = null, config: String = "") -> void:
 	match type:
-		0:
+		FILE_TYPE_FILE_ACCESS:
 			var file = FileAccess.open(location,FileAccess.WRITE)
 			file.store_var(value)
 			file.close()
-		1:
+		FILE_TYPE_CONFIG:
 			if config.split(",", false).size() != 2:
 				send_error("Save data in config files need section & key, cann't save data in \'{file}\'".format({"file": location}), "SLib.save_file")
 				return
@@ -211,14 +211,14 @@ func save_file(type: file_types, location: String, value = null, config: String 
 			error = config_file.save(location)
 			if error:
 				send_error("An error happened while saving data in \'{file}\' > \'{section}\' > \'{key}\': \'{error}\'".format({"file": location, "section": section, "key": key, "error": str(error)}), "SLib.save_file")
-		2:
+		FILE_TYPE_JSON:
 			var json_string := JSON.stringify(value)
 			var file_access := FileAccess.open(location, FileAccess.WRITE)
 			if not file_access:
 				send_error("An error happened while saving data in \'{file}\': \'{error}\'".format({"file": location, "error": FileAccess.get_open_error()}), "SLib.save_file")
 			file_access.store_var(json_string)
 			file_access.close()
-		3:
+		FILE_TYPE_RESOURCE:
 			var error := ResourceSaver.save(value, location)
 			if error:
 				send_error("An error happened while saving data in \'{file}\': \'{error}\'".format({"file": location, "error": error}), "SLib.save_file")
@@ -236,9 +236,9 @@ func save_file(type: file_types, location: String, value = null, config: String 
 ## [br][br]
 ## NOTE:
 ## If the file doesn't exist, it will send an error to the console and return [param default_value].
-func load_file(type: file_types, location: String, default_value: Variant = null, config: String = "") -> Variant:
+func load_file(type, location: String, default_value: Variant = null, config: String = "") -> Variant:
 	match type:
-		0:
+		FILE_TYPE_FILE_ACCESS:
 			if FileAccess.file_exists(location):
 				var file = FileAccess.open(location,FileAccess.READ)
 				var data = file.get_var()
@@ -247,7 +247,7 @@ func load_file(type: file_types, location: String, default_value: Variant = null
 			else:
 				send_error("Can't load from \'{file}\', file not exists!".format({"file": location}), "SLib.load_file")
 				return default_value
-		1:
+		FILE_TYPE_CONFIG:
 			if config.split(",", false).size() != 2:
 				send_error("Load data from config files need section & key, cann't load data from \'{file}\'".format({"file": location}), "SLib.load_file")
 				return
@@ -259,7 +259,7 @@ func load_file(type: file_types, location: String, default_value: Variant = null
 				send_error("An error happened while loading data from \'{file}\' > \'{section}\' > \'{key}\': \'{error}\'".format({"file": location, "section": section, "key": key, "error": str(error)}), "SLib.load_file")
 				return default_value
 			return config_file.get_value(section, key, default_value)
-		2:
+		FILE_TYPE_JSON:
 			if not FileAccess.file_exists(location):
 				return default_value
 			var file_access := FileAccess.open(location, FileAccess.READ)
@@ -271,7 +271,7 @@ func load_file(type: file_types, location: String, default_value: Variant = null
 				send_error("JSON Parse Error: {message} in {string} at line {line}".format({"message": str(json.get_error_message()), "string": json_string, "line": json.get_error_line()}), "SLib.load_file")
 				return default_value
 			return json.data
-		3:
+		FILE_TYPE_RESOURCE:
 			return load(location)
 		_:
 			send_error("Please select a valid file type for load!", "SLib.load_file")
@@ -282,9 +282,9 @@ func load_file(type: file_types, location: String, default_value: Variant = null
 ## See [method save_file] & [method load_file] for more information about this function.
 ## [br][br]
 ## NOTE: If the file doesn't exist, it will send an error to the console.
-func backup_file(type: file_types, location: String, suffix: String = defaults["BackupSuffix"], config: String = "") -> void:
+func backup_file(type, location: String, suffix: String = defaults["BackupSuffix"], config: String = "") -> void:
 	match type:
-		0:
+		FILE_TYPE_FILE_ACCESS:
 			if FileAccess.file_exists(location):
 				var file = FileAccess.open(location,FileAccess.READ)
 				var data = file.get_var()
@@ -295,7 +295,7 @@ func backup_file(type: file_types, location: String, suffix: String = defaults["
 				backup.close()
 			else:
 				send_error("Can't load from {file}, file not exists!".format({"file": location}), "SLib.backup_file")
-		1:
+		FILE_TYPE_CONFIG:
 			if config.split(",", false).size() != 2:
 				send_error("Create backup from config files need section & key, cann't load data from \'{file}\'".format({"file": location}), "SLib.backup_file")
 				return
@@ -311,7 +311,7 @@ func backup_file(type: file_types, location: String, suffix: String = defaults["
 			var save_error := backup_config_file.save(location.get_basename() + "-" + suffix + "." + location.get_extension())
 			if save_error:
 				send_error("An error happened while saving data for backup: \'{error}\'".format({"error": str(save_error)}), "SLib.backup_file")
-		2:
+		FILE_TYPE_JSON:
 			if not FileAccess.file_exists(location):
 				return
 			var file_access := FileAccess.open(location, FileAccess.READ)
@@ -329,7 +329,7 @@ func backup_file(type: file_types, location: String, suffix: String = defaults["
 				send_error("An error happened while saving data: {error}".format({"error": str(FileAccess.get_open_error())}), "SLib.backup_file")
 			backup_file_access.store_var(backup_json_string)
 			backup_file_access.close()
-		3:
+		FILE_TYPE_RESOURCE:
 			var data = load(location)
 			var error := ResourceSaver.save(data, location.get_basename() + "-" + suffix + "." + location.get_extension())
 			if error:
@@ -591,12 +591,12 @@ func send_warning(warning: String = defaults["Warning"], from: String = "Debugge
 ## NOTE:
 ## You can see log data with [code]print(SLib.get_log())[/code].
 func save_log(custom_log) -> void:
-	save_file(0, file_locations["Log"], custom_log)
+	save_file(FILE_TYPE_FILE_ACCESS, file_locations["Log"], custom_log)
 
 
 ## Return saved log.
 func get_log():
-	return load_file(0, file_locations["Log"])
+	return load_file(FILE_TYPE_FILE_ACCESS, file_locations["Log"])
 #endregion
 
 #region 3D TOOLS
