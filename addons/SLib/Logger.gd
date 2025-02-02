@@ -37,21 +37,27 @@ var error_messages := {
 	"SYNTAX": "There is an error in calling the logger or in the settings!"
 }
 
-enum parts {
-	PERT_GAME,
+enum {
+	PART_GAME,
+	PART_MAX,
 }
 
 var awake := false
-var default_part: parts = PART_GAME
+var default_part: int = PART_GAME:
+	set(value):
+		if value >= PART_MAX:
+			value = PART_MAX - 1
+		if value < 0:
+			value = 0
 
-func wake_up(set_default_part_to: parts = parts.GAME) -> void:
+func wake_up(set_default_part_to: int = PART_GAME) -> void:
 	if awake:
 		handle_error("AWAKE_NOW", "Log.wake_up")
 		return
 	awake = true
 	default_part = set_default_part_to
 
-func write(what: Variant, format: Dictionary = {}, part: parts = default_part) -> void:
+func write(what: Variant, format: Dictionary = {}, part: int = default_part) -> void:
 	pass
 
 func handle_error(err_string: String, from: String = "Log") -> void:
