@@ -57,25 +57,8 @@ var defaults := {
 	"ScenesFolder": "Scene",
 }
 
-<<<<<<< Updated upstream
-## File locations for GFL & logging, Use project settings to change.
-var file_locations := {
-	"Log": "user://App.log",
-}
-
-enum {
-	FILE_TYPE_FILE_ACCESS,
-	FILE_TYPE_CONFIG,
-	FILE_TYPE_JSON,
-	FILE_TYPE_RESOURCE,
-}
-=======
 ## File locations for GFL, Use project settings to change.
 var file_locations := {}
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 #endregion
 
 #region PRIVATE VARIABLES
@@ -201,31 +184,12 @@ func localize_path(path: String) -> String:
 ## # 3: Resource (.tres, .tscn , ...), save panel style in "res://theme/custom_panel.tres":
 ## SLib.save_file("res://theme/custom_panel.tres", $Panel.theme_override_styles/panel)
 ## [/codeblock]
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-func save_file(type, location: String, value = null, config: String = "") -> void:
-	match type:
-		FILE_TYPE_FILE_ACCESS:
-			var file = FileAccess.open(location,FileAccess.WRITE)
-			file.store_var(value)
-			file.close()
-		FILE_TYPE_CONFIG:
-=======
 func save_file(location: String, value = null, config: String = "") -> Error:
 	var type = location.get_extension()
 	if not DirAccess.dir_exists_absolute(ProjectSettings.globalize_path(location).get_base_dir()):
 		DirAccess.make_dir_absolute(ProjectSettings.globalize_path(location).get_base_dir())
 	match type:
 		"ini":
->>>>>>> Stashed changes
-=======
-func save_file(location: String, value = null, config: String = "") -> Error:
-	var type = location.get_extension()
-	if not DirAccess.dir_exists_absolute(ProjectSettings.globalize_path(location).get_base_dir()):
-		DirAccess.make_dir_absolute(ProjectSettings.globalize_path(location).get_base_dir())
-	match type:
-		"ini":
->>>>>>> Stashed changes
 			if config.split(",", false).size() != 2:
 				send_error("Save data in config files need section & key, cann't save data in \'{file}\'".format({"file": location}), "SLib.save_file")
 				return ERR_INVALID_PARAMETER
@@ -237,34 +201,14 @@ func save_file(location: String, value = null, config: String = "") -> Error:
 			error = config_file.save(location)
 			if error:
 				send_error("An error happened while saving data in \'{file}\' > \'{section}\' > \'{key}\': \'{error}\'".format({"file": location, "section": section, "key": key, "error": str(error)}), "SLib.save_file")
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-		FILE_TYPE_JSON:
-=======
-			return error
 		"json":
->>>>>>> Stashed changes
-=======
-			return error
-		"json":
->>>>>>> Stashed changes
 			var json_string := JSON.stringify(value)
 			var file_access := FileAccess.open(location, FileAccess.WRITE)
 			if not file_access:
 				send_error("An error happened while saving data in \'{file}\': \'{error}\'".format({"file": location, "error": FileAccess.get_open_error()}), "SLib.save_file")
 			file_access.store_var(json_string)
 			file_access.close()
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-		FILE_TYPE_RESOURCE:
-=======
-			return FileAccess.get_open_error()
 		"tres", "res", "tscn", "scn":
->>>>>>> Stashed changes
-=======
-			return FileAccess.get_open_error()
-		"tres", "res", "tscn", "scn":
->>>>>>> Stashed changes
 			var error := ResourceSaver.save(value, location)
 			if error:
 				send_error("An error happened while saving data in \'{file}\': \'{error}\'".format({"file": location, "error": error}), "SLib.save_file")
@@ -308,49 +252,6 @@ func save_file(location: String, value = null, config: String = "") -> Error:
 ## [br][br]
 ## NOTE:
 ## If the file doesn't exist, it will send an error to the console and return [param default_value].
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-func load_file(type, location: String, default_value: Variant = null, config: String = "") -> Variant:
-	match type:
-		FILE_TYPE_FILE_ACCESS:
-			if FileAccess.file_exists(location):
-				var file = FileAccess.open(location,FileAccess.READ)
-				var data = file.get_var()
-				file.close()
-				return data
-			else:
-				send_error("Can't load from \'{file}\', file not exists!".format({"file": location}), "SLib.load_file")
-				return default_value
-		FILE_TYPE_CONFIG:
-			if config.split(",", false).size() != 2:
-				send_error("Load data from config files need section & key, cann't load data from \'{file}\'".format({"file": location}), "SLib.load_file")
-				return
-			var section = config.split(",", false)[0]
-			var key = config.split(",", false)[1]
-			var config_file := ConfigFile.new()
-			var error := config_file.load(location)
-			if error:
-				send_error("An error happened while loading data from \'{file}\' > \'{section}\' > \'{key}\': \'{error}\'".format({"file": location, "section": section, "key": key, "error": str(error)}), "SLib.load_file")
-				return default_value
-			return config_file.get_value(section, key, default_value)
-		FILE_TYPE_JSON:
-			if not FileAccess.file_exists(location):
-				return default_value
-			var file_access := FileAccess.open(location, FileAccess.READ)
-			var json_string := file_access.get_line()
-			file_access.close()
-			var json := JSON.new()
-			var error := json.parse(json_string)
-			if error:
-				send_error("JSON Parse Error: {message} in {string} at line {line}".format({"message": str(json.get_error_message()), "string": json_string, "line": json.get_error_line()}), "SLib.load_file")
-				return default_value
-			return json.data
-		FILE_TYPE_RESOURCE:
-			return load(location)
-		_:
-			send_error("Please select a valid file type for load!", "SLib.load_file")
-			return default_value
-=======
 func load_file(location: String, type: Variant.Type, default_value: Variant = null, config: String = ""):
 	var extension = location.get_extension()
 	match type:
@@ -392,49 +293,6 @@ func load_file(location: String, type: Variant.Type, default_value: Variant = nu
 			if file == null:
 				send_error("An error happened while loading data from \'{file}\'!".format({"file": location}))
 				return default_value
-=======
-func load_file(location: String, type: Variant.Type, default_value: Variant = null, config: String = ""):
-	var extension = location.get_extension()
-	match type:
-		TYPE_NIL:
-			match extension:
-				"ini":
-					if config.split(",", false).size() != 2:
-						send_error("Load data from config files need section & key, cann't load data from \'{file}\'".format({"file": location}), "SLib.load_file")
-						return
-					var section = config.split(",", false)[0]
-					var key = config.split(",", false)[0]
-					var config_file := ConfigFile.new()
-					var error := config_file.load(location)
-					if error:
-						send_error("An error happened while loading data from \'{file}\' > \'{section}\' > \'{key}\': \'{error}\'".format({"file": location, "section": section, "key": key, "error": str(error)}), "SLib.load_file")
-						return default_value
-					return config_file.get_value(section, key, default_value)
-				"json":
-					if not FileAccess.file_exists(location):
-						return default_value
-					var file_access := FileAccess.open(location, FileAccess.READ)
-					var json_string := file_access.get_line()
-					file_access.close()
-					var json := JSON.new()
-					var error := json.parse(json_string)
-					if error:
-						send_error("JSON Parse Error: {message} in {string} at line {line}".format({"message": str(json.get_error_message()), "string": json_string, "line": json.get_error_line()}), "SLib.load_file")
-						return default_value
-					return json.data
-				"tres", "res", "tscn", "scn":
-					return load(location)
-				_:
-					return null
-		_:
-			if not FileAccess.file_exists(location):
-				send_error("Can't load from \'{file}\', file not exists!".format({"file": location}), "SLib.load_file")
-				return default_value
-			var file = FileAccess.open(location,FileAccess.READ)
-			if file == null:
-				send_error("An error happened while loading data from \'{file}\'!".format({"file": location}))
-				return default_value
->>>>>>> Stashed changes
 			var data
 			match type:
 				TYPE_INT:
@@ -452,82 +310,15 @@ func load_file(location: String, type: Variant.Type, default_value: Variant = nu
 			file.close()
 			return data
 	return default_value
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 
 
 ## Backup function create a new file with [code]%main_file_name%-%suffix%[/code] name in main file location, if you doesn't select a custom [param suffix], [code]Project Settings > SLib > Defaults[BackupSuffix][/code] append to file name.[br]
 ## See [method save_file] & [method load_file] for more information about this function.
 ## [br][br]
 ## NOTE: If the file doesn't exist, it will send an error to the console.
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-func backup_file(type, location: String, suffix: String = defaults["BackupSuffix"], config: String = "") -> void:
-	match type:
-		FILE_TYPE_FILE_ACCESS:
-			if FileAccess.file_exists(location):
-				var file = FileAccess.open(location,FileAccess.READ)
-				var data = file.get_var()
-				var backup_location = location.get_basename() + "-" + suffix + "." + location.get_extension()
-				var backup = FileAccess.open(backup_location,FileAccess.WRITE)
-				backup.store_var(data)
-				file.close()
-				backup.close()
-			else:
-				send_error("Can't load from {file}, file not exists!".format({"file": location}), "SLib.backup_file")
-		FILE_TYPE_CONFIG:
-			if config.split(",", false).size() != 2:
-				send_error("Create backup from config files need section & key, cann't load data from \'{file}\'".format({"file": location}), "SLib.backup_file")
-				return
-			var section = config.split(",", false)[0]
-			var key = config.split(",", false)[0]
-			var config_file := ConfigFile.new()
-			var load_error := config_file.load(location)
-			if load_error:
-				send_error("An error happened while loading data for backup: \'{error}\'".format({"error": str(load_error)}), "SLib.backup_file")
-			var data = config_file.get_value(section, key)
-			var backup_config_file := ConfigFile.new()
-			backup_config_file.set_value(section, key, data)
-			var save_error := backup_config_file.save(location.get_basename() + "-" + suffix + "." + location.get_extension())
-			if save_error:
-				send_error("An error happened while saving data for backup: \'{error}\'".format({"error": str(save_error)}), "SLib.backup_file")
-		FILE_TYPE_JSON:
-			if not FileAccess.file_exists(location):
-				return
-			var file_access := FileAccess.open(location, FileAccess.READ)
-			var json_string := file_access.get_line()
-			file_access.close()
-			var json := JSON.new()
-			var error := json.parse(json_string)
-			if error:
-				send_error("JSON Parse Error: {message} in {string} at line {line}".format({"message": str(json.get_error_message()), "string": json_string, "line": str(json.get_error_line())}), "SLib.backup_file")
-				return
-			var data = json.data
-			var backup_json_string := JSON.stringify(data)
-			var backup_file_access := FileAccess.open(location.get_basename() + "-" + suffix + "." + location.get_extension(), FileAccess.WRITE)
-			if not backup_file_access:
-				send_error("An error happened while saving data: {error}".format({"error": str(FileAccess.get_open_error())}), "SLib.backup_file")
-			backup_file_access.store_var(backup_json_string)
-			backup_file_access.close()
-		FILE_TYPE_RESOURCE:
-			var data = load(location)
-			var error := ResourceSaver.save(data, location.get_basename() + "-" + suffix + "." + location.get_extension())
-			if error:
-				send_error("An error happened while saving data in backup: \'{error}\'".format({"error": str(error)}), "SLib.backup_file")
-		_:
-			send_error("Please select a valid file type for backup!", "SLib.backup_file")
-=======
 func backup_file(location: String, type: Variant.Type, suffix: String = defaults["BackupSuffix"], config: String = "") -> Error:
 	var load = SLib.load_file(location, type, defaults, config)
 	return SLib.save_file("{location}-{suffix}.{extension}".format({"location": location.get_basename(), "suffix": suffix, "extension": location.get_extension()}), load, config)
->>>>>>> Stashed changes
-=======
-func backup_file(location: String, type: Variant.Type, suffix: String = defaults["BackupSuffix"], config: String = "") -> Error:
-	var load = SLib.load_file(location, type, defaults, config)
-	return SLib.save_file("{location}-{suffix}.{extension}".format({"location": location.get_basename(), "suffix": suffix, "extension": location.get_extension()}), load, config)
->>>>>>> Stashed changes
 #endregion
 
 #endregion
