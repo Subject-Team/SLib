@@ -72,6 +72,9 @@ enum {
 =======
 ## File locations for GFL, Use project settings to change.
 var file_locations := {}
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 #endregion
 
@@ -199,6 +202,7 @@ func localize_path(path: String) -> String:
 ## SLib.save_file("res://theme/custom_panel.tres", $Panel.theme_override_styles/panel)
 ## [/codeblock]
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 func save_file(type, location: String, value = null, config: String = "") -> void:
 	match type:
 		FILE_TYPE_FILE_ACCESS:
@@ -206,6 +210,14 @@ func save_file(type, location: String, value = null, config: String = "") -> voi
 			file.store_var(value)
 			file.close()
 		FILE_TYPE_CONFIG:
+=======
+func save_file(location: String, value = null, config: String = "") -> Error:
+	var type = location.get_extension()
+	if not DirAccess.dir_exists_absolute(ProjectSettings.globalize_path(location).get_base_dir()):
+		DirAccess.make_dir_absolute(ProjectSettings.globalize_path(location).get_base_dir())
+	match type:
+		"ini":
+>>>>>>> Stashed changes
 =======
 func save_file(location: String, value = null, config: String = "") -> Error:
 	var type = location.get_extension()
@@ -226,7 +238,12 @@ func save_file(location: String, value = null, config: String = "") -> Error:
 			if error:
 				send_error("An error happened while saving data in \'{file}\' > \'{section}\' > \'{key}\': \'{error}\'".format({"file": location, "section": section, "key": key, "error": str(error)}), "SLib.save_file")
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 		FILE_TYPE_JSON:
+=======
+			return error
+		"json":
+>>>>>>> Stashed changes
 =======
 			return error
 		"json":
@@ -238,7 +255,12 @@ func save_file(location: String, value = null, config: String = "") -> Error:
 			file_access.store_var(json_string)
 			file_access.close()
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 		FILE_TYPE_RESOURCE:
+=======
+			return FileAccess.get_open_error()
+		"tres", "res", "tscn", "scn":
+>>>>>>> Stashed changes
 =======
 			return FileAccess.get_open_error()
 		"tres", "res", "tscn", "scn":
@@ -286,6 +308,7 @@ func save_file(location: String, value = null, config: String = "") -> Error:
 ## [br][br]
 ## NOTE:
 ## If the file doesn't exist, it will send an error to the console and return [param default_value].
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 func load_file(type, location: String, default_value: Variant = null, config: String = "") -> Variant:
 	match type:
@@ -369,6 +392,49 @@ func load_file(location: String, type: Variant.Type, default_value: Variant = nu
 			if file == null:
 				send_error("An error happened while loading data from \'{file}\'!".format({"file": location}))
 				return default_value
+=======
+func load_file(location: String, type: Variant.Type, default_value: Variant = null, config: String = ""):
+	var extension = location.get_extension()
+	match type:
+		TYPE_NIL:
+			match extension:
+				"ini":
+					if config.split(",", false).size() != 2:
+						send_error("Load data from config files need section & key, cann't load data from \'{file}\'".format({"file": location}), "SLib.load_file")
+						return
+					var section = config.split(",", false)[0]
+					var key = config.split(",", false)[0]
+					var config_file := ConfigFile.new()
+					var error := config_file.load(location)
+					if error:
+						send_error("An error happened while loading data from \'{file}\' > \'{section}\' > \'{key}\': \'{error}\'".format({"file": location, "section": section, "key": key, "error": str(error)}), "SLib.load_file")
+						return default_value
+					return config_file.get_value(section, key, default_value)
+				"json":
+					if not FileAccess.file_exists(location):
+						return default_value
+					var file_access := FileAccess.open(location, FileAccess.READ)
+					var json_string := file_access.get_line()
+					file_access.close()
+					var json := JSON.new()
+					var error := json.parse(json_string)
+					if error:
+						send_error("JSON Parse Error: {message} in {string} at line {line}".format({"message": str(json.get_error_message()), "string": json_string, "line": json.get_error_line()}), "SLib.load_file")
+						return default_value
+					return json.data
+				"tres", "res", "tscn", "scn":
+					return load(location)
+				_:
+					return null
+		_:
+			if not FileAccess.file_exists(location):
+				send_error("Can't load from \'{file}\', file not exists!".format({"file": location}), "SLib.load_file")
+				return default_value
+			var file = FileAccess.open(location,FileAccess.READ)
+			if file == null:
+				send_error("An error happened while loading data from \'{file}\'!".format({"file": location}))
+				return default_value
+>>>>>>> Stashed changes
 			var data
 			match type:
 				TYPE_INT:
@@ -386,6 +452,9 @@ func load_file(location: String, type: Variant.Type, default_value: Variant = nu
 			file.close()
 			return data
 	return default_value
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 
@@ -393,6 +462,7 @@ func load_file(location: String, type: Variant.Type, default_value: Variant = nu
 ## See [method save_file] & [method load_file] for more information about this function.
 ## [br][br]
 ## NOTE: If the file doesn't exist, it will send an error to the console.
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 func backup_file(type, location: String, suffix: String = defaults["BackupSuffix"], config: String = "") -> void:
 	match type:
@@ -448,6 +518,11 @@ func backup_file(type, location: String, suffix: String = defaults["BackupSuffix
 				send_error("An error happened while saving data in backup: \'{error}\'".format({"error": str(error)}), "SLib.backup_file")
 		_:
 			send_error("Please select a valid file type for backup!", "SLib.backup_file")
+=======
+func backup_file(location: String, type: Variant.Type, suffix: String = defaults["BackupSuffix"], config: String = "") -> Error:
+	var load = SLib.load_file(location, type, defaults, config)
+	return SLib.save_file("{location}-{suffix}.{extension}".format({"location": location.get_basename(), "suffix": suffix, "extension": location.get_extension()}), load, config)
+>>>>>>> Stashed changes
 =======
 func backup_file(location: String, type: Variant.Type, suffix: String = defaults["BackupSuffix"], config: String = "") -> Error:
 	var load = SLib.load_file(location, type, defaults, config)
