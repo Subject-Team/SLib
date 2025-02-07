@@ -487,7 +487,7 @@ func get_project_setting(path: String, default_value: Variant = null):
 ## This method is implemented on Android, iOS, Web, Linux, macOS and Windows.
 func os_open(uri: String) -> void:
 	if uri.begins_with("res://") or uri.begins_with("user://"):
-		uri = SLib.full_path(uri)
+		uri = SLib.globalize_path(uri)
 	OS.shell_open(uri)
 
 
