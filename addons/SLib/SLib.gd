@@ -544,7 +544,7 @@ func send_alert(alert: String, title: String = _defaults["AlertTitle"]) -> void:
 func change_pause(pause = null) -> void:
 	if pause == null:
 		get_tree().paused = !get_tree().paused
-	elif typeof(pause) == 1:
+	elif typeof(pause) == TYPE_BOOL:
 		get_tree().paused = pause
 	else:
 		send_error("Only use boolean parameters!", "SLib.change_pause")
