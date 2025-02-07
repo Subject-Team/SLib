@@ -571,7 +571,7 @@ func save_log(custom_log: String) -> Error:
 
 ## Return saved log.
 func get_log():
-	return load_file(FILE_TYPE_FILE_ACCESS, file_locations["Log"])
+	return load_file(_file_locations["Log"], TYPE_STRING)
 #endregion
 
 #region 3D TOOLS
