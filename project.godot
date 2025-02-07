@@ -27,7 +27,7 @@ window/size/mode=1
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/SLib/plugin.cfg")
+enabled=PackedStringArray("res://addons/SLib/plugin.cfg", "res://addons/wakatime/plugin.cfg")
 
 [filesystem]
 
