@@ -62,8 +62,6 @@ var file_locations := {}
 #endregion
 
 #region PRIVATE VARIABLES
-var _user_pattern: Array
-
 const _PROFANITY_LIST := ['2g1c','2 girls 1 cup','acrotomophilia','anal','anilingus','anus','arsehole',
 	'ass','asshole','assmunch','auto erotic','autoerotic','babeland','baby batter','ball gag',
 	'ball gravy','ball kicking','ball licking','ball sack','ball sucking','bangbros','bareback',
@@ -114,13 +112,6 @@ const _PROFANITY_LIST := ['2g1c','2 girls 1 cup','acrotomophilia','anal','anilin
 #region INITALIZING
 func _enter_tree():
 	defaults = ProjectSettings.get_setting("SLib/Defaults", defaults)
-#endregion
-
-#region PRIVATE FUNCTIONS
-func _sorter(a, b):
-	if _user_pattern.find(a) < _user_pattern.find(b):
-		return true
-	return false
 #endregion
 
 #-----FUNCTIONS-----
@@ -345,10 +336,8 @@ func disappear(object: Object) -> void:
 ## var sorted = SLib.patterned_sort(scrambled, pattern) # sorted: ["A", "3", "5", "10", "J", "Q", "K"] 
 ## [/codeblock]
 func patterned_sort(scrambled_array : Array, pattern: Array) -> Array:
-	_user_pattern = pattern
-	scrambled_array.sort_custom(_sorter)
-	var sorted_array = scrambled_array
-	return sorted_array
+	scrambled_array.sort_custom(func(a, b): return pattern.find(a) < pattern.find(b))
+	return scrambled_array
 
 
 ## It combines two arrays and only adds items from the second array to the first array if the first array does not already contain them.[br]
