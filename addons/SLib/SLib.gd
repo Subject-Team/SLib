@@ -1,5 +1,5 @@
-class_name SLibDocs
 extends Node
+class_name SLibDocs
 # Press F1 and search for SLib to see documentation
 
 # TODO
