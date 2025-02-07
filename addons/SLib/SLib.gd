@@ -437,9 +437,9 @@ func is_word_ok(word: String) -> bool:
 ## You can also call nested folders, for example: [code]SLib.change_scene("Main Menu", "Scenes/Old Files")[/code] to open [code]"res://Scenes/Old Files/Main Menu.tscn"[/code]
 func change_scene(scene_name: String, folder: String = _defaults["ScenesFolder"]) -> void:
 	if folder == "/root":
-		get_tree().change_scene_to_file("res://" + scene_name + ".tscn")
+		get_tree().change_scene_to_file("res://{scene}.tscn".format({"scene": scene_name}))
 	else:
-		get_tree().change_scene_to_file("res://" + folder + "/" + scene_name + ".tscn")
+		get_tree().change_scene_to_file("res://{folder}/{scene}.tscn".format({"folder": folder, "scene": scene_name}))
 
 
 ## This function reloads the current scene, this is just a shortcut to increase code readability.
