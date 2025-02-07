@@ -375,7 +375,7 @@ func reverse_dict(dict: Dictionary) -> Dictionary:
 
 #region STRING TOOLS
 ## Converts [Array] to [String] with [param seperator] between array arguments
-func stringify(arguments: Array, seperator: String = "") -> String:
+func stringify_array(arguments: Array, seperator: String = "") -> String:
 	var string = ""
 	for i in arguments.size():
 		string = string + str(arguments[i])
