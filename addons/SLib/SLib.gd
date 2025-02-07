@@ -192,13 +192,16 @@ func save_file(location: String, value = null, config: String = "") -> Error:
 			error = config_file.save(location)
 			if error:
 				send_error("An error happened while saving data in \'{file}\' > \'{section}\' > \'{key}\': \'{error}\'".format({"file": location, "section": section, "key": key, "error": str(error)}), "SLib.save_file")
+			return error
 		"json":
 			var json_string := JSON.stringify(value)
 			var file_access := FileAccess.open(location, FileAccess.WRITE)
 			if not file_access:
 				send_error("An error happened while saving data in \'{file}\': \'{error}\'".format({"file": location, "error": FileAccess.get_open_error()}), "SLib.save_file")
+				return file_access.get_open_error()
 			file_access.store_var(json_string)
 			file_access.close()
+			return file_access.get_open_error()
 		"tres", "res", "tscn", "scn":
 			var error := ResourceSaver.save(value, location)
 			if error:
