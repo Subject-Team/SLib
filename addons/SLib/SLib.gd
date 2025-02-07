@@ -565,8 +565,8 @@ func send_warning(warning: String = _defaults["Warning"], from: String = "Debugg
 ## [br][br]
 ## NOTE:
 ## You can see log data with [code]print(SLib.get_log())[/code].
-func save_log(custom_log) -> void:
-	save_file(FILE_TYPE_FILE_ACCESS, file_locations["Log"], custom_log)
+func save_log(custom_log: String) -> Error:
+	return save_file(_file_locations["Log"], custom_log)
 
 
 ## Return saved log.
