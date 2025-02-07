@@ -246,7 +246,7 @@ func save_file(location: String, value = null, config: String = "") -> Error:
 ## [br][br]
 ## NOTE:
 ## If the file doesn't exist, it will send an error to the console and return [param default_value].
-func load_file(location: String, type: Variant.Type, default_value: Variant = null, config: String = ""):
+func load_file(location: String, type: Variant.Type = TYPE_NIL, default_value: Variant = null, config: String = ""):
 	var extension = location.get_extension()
 	match type:
 		TYPE_NIL:
