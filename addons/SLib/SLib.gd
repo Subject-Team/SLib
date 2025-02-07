@@ -570,7 +570,7 @@ func save_log(custom_log: String) -> Error:
 
 
 ## Return saved log.
-func get_log():
+func get_log() -> String:
 	return load_file(_file_locations["Log"], TYPE_STRING)
 #endregion
 
