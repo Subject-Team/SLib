@@ -47,8 +47,8 @@ class_name SLibDocs
 ## NOTE: Use [code]Project > Project Settings > SLib[/code] for change defaults and file locations.
 
 #region CONFIG
-## Default values for functions, Use project settings to change.
-var defaults := {
+# Default values for functions, Use project settings to change.
+var _defaults := {
 	"Descendants": false,
 	"AlertTitle": "Alert!",
 	"Error": "Error",
@@ -57,8 +57,8 @@ var defaults := {
 	"ScenesFolder": "Scene",
 }
 
-## File locations for GFL, Use project settings to change.
-var file_locations := {}
+# File locations for GFL, Use project settings to change.
+var _file_locations := {}
 #endregion
 
 #region PRIVATE VARIABLES
@@ -111,7 +111,7 @@ const _PROFANITY_LIST := ['2g1c','2 girls 1 cup','acrotomophilia','anal','anilin
 
 #region INITALIZING
 func _enter_tree():
-	defaults = ProjectSettings.get_setting("SLib/Defaults", defaults)
+	_defaults = ProjectSettings.get_setting("SLib/Defaults", _defaults)
 #endregion
 
 #-----FUNCTIONS-----
@@ -122,17 +122,17 @@ func _enter_tree():
 ## Return global file locations with [param key], If the [param key] does not exist in the location of the files,
 ## it sends an error to the debugger and returns [code]""[/code].
 func get_file_path(key: String) -> String:
-	file_locations = ProjectSettings.get_setting("SLib/FileLocations", file_locations)
-	if key in file_locations:
-		return file_locations[key]
+	_file_locations = ProjectSettings.get_setting("SLib/FileLocations", _file_locations)
+	if _file_locations.has(key):
+		return _file_locations[key]
 	else:
 		send_error("Can't find \"%s\" key in file locations!" % key, "SLib.get_file_path")
 		return ""
 
 ## Set a file location with [param key] name & [param path] path, If the [param key] already exists, it changes its value with [param  path], otherwise it creates it.
 func set_file_path(key: String, path: String) -> void:
-	file_locations[key] = path
-	ProjectSettings.set_setting("SLib/FileLocations", file_locations)
+	_file_locations[key] = path
+	ProjectSettings.set_setting("SLib/FileLocations", _file_locations)
 #endregion
 
 #region PATH CONVERTER
@@ -307,8 +307,8 @@ func load_file(location: String, type: Variant.Type, default_value: Variant = nu
 ## See [method save_file] & [method load_file] for more information about this function.
 ## [br][br]
 ## NOTE: If the file doesn't exist, it will send an error to the console.
-func backup_file(location: String, type: Variant.Type, suffix: String = defaults["BackupSuffix"], config: String = "") -> Error:
 	var load = SLib.load_file(location, type, defaults, config)
+func backup_file(location: String, type: Variant.Type, suffix: String = _defaults["BackupSuffix"], config: String = "") -> Error:
 	return SLib.save_file("{location}-{suffix}.{extension}".format({"location": location.get_basename(), "suffix": suffix, "extension": location.get_extension()}), load, config)
 #endregion
 
@@ -432,7 +432,7 @@ func is_word_ok(word: String) -> bool:
 ## [/codeblock]
 ## NOTE:
 ## You can also call nested folders, for example: [code]SLib.change_scene("Main Menu", "Scenes/Old Files")[/code] to open [code]"res://Scenes/Old Files/Main Menu.tscn"[/code]
-func change_scene(scene_name: String, folder: String = defaults["ScenesFolder"]) -> void:
+func change_scene(scene_name: String, folder: String = _defaults["ScenesFolder"]) -> void:
 	if folder == "/root":
 		get_tree().change_scene_to_file("res://" + scene_name + ".tscn")
 	else:
@@ -451,7 +451,7 @@ func exit(exit_code: int = 0) -> void:
 
 #region NODE MANAGE
 ## Finds the first child of a given [param target_class] in [param target_node], does not find [code]class_name[/code] declarations!
-func find_child_of_class(target_node: Node, target_class: StringName, descendants: bool = defaults["Descendants"]) -> Node:
+func find_child_of_class(target_node: Node, target_class: StringName, descendants: bool = _defaults["Descendants"]) -> Node:
 	for child in target_node.get_children():
 		if child.is_class(target_class):
 			return child
@@ -524,7 +524,7 @@ func get_local_ip() -> String:
 
 
 ## Displays a modal dialog box using the host OS' facilities with [param alert] for text and [param title].
-func send_alert(alert: String, title: String = defaults["AlertTitle"]) -> void:
+func send_alert(alert: String, title: String = _defaults["AlertTitle"]) -> void:
 	OS.alert(alert, title)
 #endregion
 
@@ -549,12 +549,12 @@ func change_pause(pause = null) -> void:
 
 #region DEBUGGING
 ## Sends a custom error to the console that can be viewed in the engine debugger, error like this: [code]SLib.gd:x @ send_error(): [/code][param from][code]: [/code][param error]
-func send_error(error: String = defaults["Error"], from: String = "Debugger") -> void:
+func send_error(error: String = _defaults["Error"], from: String = "Debugger") -> void:
 	push_error(from + ": " + error)
 
 
 ## Sends a custom warning to the console that can be viewed in the engine debugger like this: [code]SLib.gd:x @ send_warning(): [/code][param from][code]: [/code][param warning]
-func send_warning(warning: String = defaults["Warning"], from: String = "Debugger") -> void:
+func send_warning(warning: String = _defaults["Warning"], from: String = "Debugger") -> void:
 	push_warning(from + ": " + warning)
 
 
