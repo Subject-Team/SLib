@@ -1,5 +1,6 @@
 @tool
 extends EditorPlugin
+class_name SLibPlugin
 
 ## File locations for config files.
 const CONFIG_FILES := {
