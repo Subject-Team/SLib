@@ -23,28 +23,29 @@ class_name SLibDocs
 ##
 ## SLib is a set of ready and standard code that makes you unnecessary to write many long and frequently used codes.[br][br]
 ## Available ability in this library now:[br]
-## ● Fast, safe and similar change scene[br]
-## ● Easy project setting modify and use with code[br]
-## ● Optimized reload scene system[br]
-## ● Similar exit and close application code[br]
-## ● Best wait timer system for readability[br]
-## ● Internal and automatic save and load files system[br]
-## ● Fast backuping system[br]
-## ● Optimized debugging with error and warning sender[br]
-## ● optimized alert system for all OS[br]
-## ● Customizable logging system[br]
-## ● Similar URI using system[br]
-## ● Fast path convertor[br]
-## ● Similar array unique merge[br]
-## ● Find the first child of a given class[br]
-## ● Time based smooth interpolation[br]
-## ● Standard and fast pause set[br]
-## ● Tween controller[br]
-## ● Dictionary reverser[br]
-## ● Global file locations space[br]
-## ● And more abilities...[br]
+## ● Tween management: [method appear], [method disappear][br]
+## ● File management: [method save_file], [method load_file], [method backup_file], [method get_file_path], [method set_file_path], [globalize_path], [localize_path][br]
+## ● Ray casting: [method cast_ray_between_points][br]
+## ● Pause management: [method change_pause][br]
+## ● Game scenes management: [method change_scene], [method exit], [method reload][br]
+## ● Time based smooth interpolation: [method exp_decay][br]
+## ● Node management: [method find_child_pf_class], [method free_all_children][br]
+## ● IP tools: [method get_local_ip][br]
+## ● Debugging system: [method save_log], [method get_log], [method send_error], [method send_warning][br]
+## ● Project Setting management: [method get_project_setting], [method set_project_setting][br]
+## ● Bad word filter: [method is_word_ok][br]
+## ● Array tools: [method merge_unique], [method patterned_sort], [method stringify_array][br]
+## ● Dictionary tools: [method reverse_dict][br]
+## ● OS tools: [method os_open], [method send_alert][br]
+## ● Timer tools: [method wait][br]
 ## [br]
-## NOTE: Use [code]Project > Project Settings > SLib[/code] for change defaults and file locations.
+## [b]Note:[/b] Use [code]Project > Project Settings > SLib[/code] for change defaults and file locations.[br][br]
+## [b][color=Orange]Important Changes & Update Notes: [/color] 1.1.0[/b][br]
+## ● [b] Automatic modify local path:[/b] Now [method os_open] [param uri] can be localized path.[br]
+## ● [b] Documentation update:[/b] After this version docs have SLib icon and modified format.[br]
+## ● [b] More type hint:[/b] Type hint for [method appear] [param object], [method disappear] [param object] and more...[br]
+## ● [b] Error and warning formation:[/b] New format for [method send_error] and [method send_alert].[br]
+## ● [b] File management update:[/b] Set save & load format by file extension and use [enum Variant.Type] for [FileAccess] files.[br]
 
 #region CONFIG
 # Default values for functions, Use project settings to change.
@@ -138,9 +139,9 @@ func set_file_path(key: String, path: String) -> void:
 #region PATH CONVERTER
 ## Returns the absolute, native OS path corresponding to the localized path (starting with [code]res://[/code] or [code]user://[/code]).
 ## The returned path will vary depending on the operating system and user preferences.[br]
-## If it receives a file in [code]"res://"[/code] in the exported project, unlike [code]ProjectSettings.globalize_path()[/code] it returns its path in the exportded accompanying files.[br]
-## See [url=https://docs.godotengine.org/en/4.2/tutorials/io/data_paths.html]File paths in Godot projects[/url] to see what those paths convert to.[br]
-## See also [method localize_path].
+## If it receives a file in [code]"res://"[/code] in the exported project, unlike [code]ProjectSettings.globalize_path()[/code] it returns its path in the exportded accompanying files.[br][br]
+## [b]Engine Docs:[/b] See [url=https://docs.godotengine.org/en/stable/tutorials/io/data_paths.html]File paths in Godot projects[/url] to see what those paths convert to.[br]
+## [b]See also:[/b] [method localize_path].
 func globalize_path(path: String) -> String:
 	if path[0] == "u":
 		return ProjectSettings.globalize_path(path)
@@ -237,15 +238,13 @@ func save_file(location: String, value = null, config: String = "") -> Error:
 
 
 ## This function returns the content stored in the file, you can use it for:[br]
-## - All files created by [FileAccess] and [method save_file] with FILE_ACCESS type in [enum file_types]. (Use FILE_ACCESS for these files)[br]
-## - All config files ([code].ini[/code]). (Use CONFIG type in [enum file_types] for these files)[br]
-## - All JSON files ([code].json[/code]). (Use JSON_FILE type in [enum file_types] for these files)[br]
-## - All Resource files ([code].tres[/code], [code].tscn[/code], [code].res[/code] & [code].scn[/code]). See also [Resource] & [ResourceSaver]. (Use RESOURCE for these files)[br]
-## NOTE: [param cofig] just for COFIG [enum file_types], use [code]"%section%,%key%"[/code] pattern for this parameter. See also [method ConfigFile.get_value][br]
-## See also [method save_file].
-## [br][br]
-## NOTE:
-## If the file doesn't exist, it will send an error to the console and return [param default_value].
+## - Load all files created by [param type] with [FileAccess] and [method save_file]. (You should select [param type] for these files from [enum Variant.Type])[br]
+## - Load config files ([code].ini[/code]).[br]
+## - Load JSON files ([code].json[/code]).[br]
+## - Load Resource files ([code].tres[/code], [code].tscn[/code], [code].res[/code] and [code].scn[/code]).[br][br]
+## [b]Note:[/b] [param cofig] just for config files, use [code]"%section%,%key%"[/code] pattern for this parameter.[br]
+## [b]Note:[/b] If the file doesn't exist, it will send an error to the console and return [param default_value].
+## [b]See also:[/b] [method save_file], [method backup_file], [method ConfigFile.get_value], [Resource], [ResourceSaver].[br]
 func load_file(location: String, type: Variant.Type = TYPE_NIL, default_value: Variant = null, config: String = ""):
 	var extension = location.get_extension()
 	match type:
@@ -306,10 +305,11 @@ func load_file(location: String, type: Variant.Type = TYPE_NIL, default_value: V
 	return default_value
 
 
-## Backup function create a new file with [code]%main_file_name%-%suffix%[/code] name in main file location, if you doesn't select a custom [param suffix], [code]Project Settings > SLib > Defaults[BackupSuffix][/code] append to file name.[br]
-## See [method save_file] & [method load_file] for more information about this function.
+## Backup function create a new file with [code]%main_file_name%-%suffix%[/code] name in main file location.[br]
+## if you doesn't select a custom [param suffix], [code]Project Settings > SLib > Defaults[BackupSuffix][/code] will append to file name.
 ## [br][br]
-## NOTE: If the file doesn't exist, it will send an error to the console.
+## [b]Note:[/b] If the file doesn't exist, it will send an error to the console.[br]
+## [b]See also:[/b] [method save_file] and [method load_file].
 func backup_file(location: String, type: Variant.Type, suffix: String = _defaults["BackupSuffix"], config: String = "") -> Error:
 	var load = SLib.load_file(location, type, null, config)
 	return SLib.save_file("{location}-{suffix}.{extension}".format({"location": location.get_basename(), "suffix": suffix, "extension": location.get_extension()}), load, config)
@@ -318,12 +318,14 @@ func backup_file(location: String, type: Variant.Type, suffix: String = _default
 #endregion
 
 #region TWEEN MANAGE
-## This function shows an object and creates an animation to change its color.
+## This function shows an [param object] and creates an animation to change its color.[br]
+## [b]See also:[/b] [method disappear].
 func appear(object: Object) -> void:
 	object.show() 
 	create_tween().tween_property(object, "modulate", Color.WHITE, 1.0)
 
-## This function creates an animation to make an object disappear by changing its color to transparent.
+## This function creates an animation to make an [param object] disappear by changing its color to transparent.[br]
+## [b]See also:[/b] [method appear].
 func disappear(object: Object) -> void:
 	var tween = create_tween()
 	tween.tween_property(object, "modulate", Color.TRANSPARENT, 1.0)
@@ -384,9 +386,8 @@ func stringify_array(arguments: Array, seperator: String = "") -> String:
 	return string
 
 
-## Filtering bad words, If word in profanity list return [code]false[/code].
-## [br]
-## Visit [url=https://github.com/subject-team/slib]the repository[/url] to see the list.
+## Filtering bad words, If word in profanity list return [code]false[/code].[br][br]
+## [b]Note:[/b] Visit [url=https://github.com/subject-team/slib]library repository[/url] to see the list.
 func is_word_ok(word: String) -> bool:
 	for d in [' ', '_', '-']:
 		for s in word.split(d):
@@ -402,39 +403,29 @@ func is_word_ok(word: String) -> bool:
 ## [br]
 ## If you save your [code].tscn[/code] files in the [code]res://Scene/[/code] path, just put the target file name in [param scene_name]:
 ## [codeblock]
-## SLib.change_scene("Game")
+## SLib.change_scene("Game") # works exacly like: get_tree.change_scene_to_file("res://Scene/Game.tscn")
 ## [/codeblock]
-## NOTE: [code]res://Scene/[/code] is the same as the one specified in the [code]Project Settings > SLib > Defaults[ScenesFolder][/code], if you change it you can use this method; example:
+## [b]Tip:[/b] [code]res://Scene/[/code] is the same as the one specified in the [code]Project Settings > SLib > Defaults[ScenesFolder][/code], if you change it you can use this method; example:
 ## [codeblock]
 ## # Project Settings > SLib > Defaults[ScenesFolder] seted to "My Scenes"
-## SLib.change_scene("Best Score") # change scene to "res://My Scenes/Best Score.tscn"\
-## [/codeblock]
-## The frist method works exactly like the code below:
-## [codeblock]
-## get_tree.change_scene_to_file("res://Scene/Game.tscn")
+## SLib.change_scene("Best Score") # change scene to "res://My Scenes/Best Score.tscn"
 ## [/codeblock]
 ## [b]2- Root folder:[/b]
 ## [br]
 ## If you save [code].tscn[/code] files in [code]res://[/code], use the [param folder] parameter and set it to [code]/root[/code]:
 ## [codeblock]
-## SLib.change_scene("Game", "/root")
-## [/codeblock]
-## This code replaces the following code:
-## [codeblock]
-## get_tree.change_scene_to_file("res://Game.tscn")
+## SLib.change_scene("Game", "/root") # works exacly like: get_tree.change_scene_to_file("res://Game.tscn")
 ## [/codeblock]
 ## [b]3- Custom folder:[/b]
 ## [br]
 ## You can also choose the [param folder] where you saved your scene:
 ## [codeblock]
-## SLib.change_scene("Game", "My Scenes")
+## SLib.change_scene("Game", "My Scenes") # works exacly like: get_tree.change_scene_to_file("res://My Scenes/Game.tscn")
 ## [/codeblock]
-## In this way, the following code will be executed:
+## [b]Tip:[/b] You can also call nested folders, for example:
 ## [codeblock]
-## get_tree.change_scene_to_file("res://My Scenes/Game.tscn")
+## SLib.change_scene("Main Menu", "Scenes/Old Files") # path to "res://Scenes/Old Files/Main Menu.tscn"
 ## [/codeblock]
-## NOTE:
-## You can also call nested folders, for example: [code]SLib.change_scene("Main Menu", "Scenes/Old Files")[/code] to open [code]"res://Scenes/Old Files/Main Menu.tscn"[/code]
 func change_scene(scene_name: String, folder: String = _defaults["ScenesFolder"]) -> void:
 	if folder == "/root":
 		get_tree().change_scene_to_file("res://{scene}.tscn".format({"scene": scene_name}))
@@ -447,13 +438,16 @@ func reload() -> void:
 	get_tree().reload_current_scene()
 
 
-## This function closes the program and also uses the optional [param exit_code], added for code readability.
+## This function closes the program and also uses the optional [param exit_code], added for code readability.[br][br]
+## [b]Important:[/b] On IOS this method doesn't work![br]
+## [b]See also:[/b] [method SceneTree.quit]
 func exit(exit_code: int = 0) -> void:
 	get_tree().quit(exit_code)
 #endregion
 
 #region NODE MANAGE
-## Finds the first child of a given [param target_class] in [param target_node], does not find [code]class_name[/code] declarations!
+## Finds the first child of a given [param target_class] in [param target_node].[br][br]
+## [b]Important:[/b] does not find [code]class_name[/code] declarations!
 func find_child_of_class(target_node: Node, target_class: StringName, descendants: bool = _defaults["Descendants"]) -> Node:
 	for child in target_node.get_children():
 		if child.is_class(target_class):
@@ -483,9 +477,9 @@ func set_project_setting(path: String, value) -> void:
 
 ## This function returns the variable stored in the desired property, its use is as follows:
 ## [codeblock]
-## MyVar = SLib.get_prject_setting("application/config/windows_native_icon")
+## native_icon = SLib.get_prject_setting("application/config/windows_native_icon")
 ## [/codeblock]
-## NOTE: For settings that are not present in the engine and are created manually,
+## [b]Note:[/b] For settings that are not present in the engine and are created manually,
 ## [code]null[/code] will be returned if the value is the same as the initial value, so use [param default_value] to avoid possible bugs.
 func get_project_setting(path: String, default_value: Variant = null):
 	return ProjectSettings.get_setting(path, default_value)
@@ -512,7 +506,7 @@ func os_open(uri: String) -> void:
 
 
 ## Returns the local IP address of the operating system[br][br]
-## NOTE: Works for Windows, Mac and Linux, returns [code]""[/code] for all other operating systems
+## [b]Note:[/b] Works for Windows, Mac and Linux, returns [code]""[/code] for all other operating systems.
 func get_local_ip() -> String:
 	if OS.has_feature("windows"):
 		if OS.has_environment("COMPUTERNAME"):
@@ -532,15 +526,10 @@ func send_alert(alert: String, title: String = _defaults["AlertTitle"]) -> void:
 #endregion
 
 #region PAUSE MANAGE
-## Auto change get_tree().paused, if true, the SceneTree is paused. Doing so will have the following behavior:
-## [br][br]
-## - 2D and 3D physics will be stopped. This includes signals and collision detection.
-## [br][br]
-## - Node._process(), Node._physics_process() and Node._input() will not be called anymore in nodes.
-## [br][br]
-## If you need fast change, only use [code]SLib.change_pause()[/code]. When need to set pause, use [code]SLib.chage_pause(true)[/code] or [code]SLib.chage_pause(false)[/code].
-## [br][br]
-## NOTE: If you set a not-boolean parameter, it will send an error to the console.
+## Auto change [code]get_tree().paused[/code], if this parameter is [code]true[/code], the [SceneTree] is paused.[br]
+## [code]SLib.change_pause()[/code] check current state and change it, if [param pause] isn't [code]null[/code] game pause state set to this parameter.[br][br]
+## [b]Note:[/b] If you set a not-boolean parameter, it will send an error to the console.
+## [b]See also:[/b] [member SceneTree.paused].
 func change_pause(pause = null) -> void:
 	if pause == null:
 		get_tree().paused = !get_tree().paused
@@ -551,7 +540,8 @@ func change_pause(pause = null) -> void:
 #endregion
 
 #region DEBUGGING
-## Sends a custom error to the console that can be viewed in the engine debugger, error like this: [code]SLib.gd:x @ send_error(): [/code][param from][code]: [/code][param error]
+## Sends a custom error to the console that can be viewed in the engine debugger, error like this: 
+## [code]SLib.gd:x @ send_error(): [/code][param from][code]: [/code][param error]
 func send_error(error: String = _defaults["Error"], from: String = "Debugger") -> void:
 	push_error(from + ": " + error)
 
@@ -569,19 +559,19 @@ func save_log(custom_log: String) -> Error:
 	return save_file(_file_locations["Log"], custom_log)
 
 
-## Return saved log.
+## Return saved log.[br][br]
+## [b]See also:[/b] [method save_log].
 func get_log() -> String:
 	return load_file(_file_locations["Log"], TYPE_STRING)
 #endregion
 
 #region 3D TOOLS
-## Cast a ray between two points and return the result
+## Cast a ray between two points and return the result[br]
 ## Parameters:[br]
-## - from: The starting point of the ray (Vector3)[br]
-## - to: The ending point of the ray (Vector3)[br]
-## - exclude_nodes: An array of nodes (or RIDs) to exclude from the raycast (Array)[br]
-## Returns: A Dictionary with the raycast result, or an empty dictionary if nothing is hit.
-##
+## - [param from]: The starting point of the ray. [Vector3][br]
+## - [param to]: The ending point of the ray. [Vector3][br]
+## - [param exclude_nodes]: An [Array] of nodes (or [RID]s) to exclude from the raycast[br]
+## Returns: A [Dictionary] with the raycast result, or an empty dictionary if nothing is hit.[br]
 ## Example usage:
 ## [codeblock]
 ## var start_pos = player.global_transform.origin
@@ -594,6 +584,7 @@ func get_log() -> String:
 ## else:
 ##     print("No collision detected.")
 ## [/codeblock]
+## [b]See also:[/b] [PhysicsRayQueryParameters3D].
 func cast_ray_between_points(from: Vector3, to: Vector3, exclude: Array, world: World3D) -> Dictionary:
 	var query = PhysicsRayQueryParameters3D.new()
 	query.from = from
@@ -612,8 +603,8 @@ func wait(wait_time: float) -> void:
 	await get_tree().create_timer(wait_time).timeout
 
 
-## Time based smooth interpolation, [b]not framedependant[/b] like [code]a = lerp(a, b, delta)[/code][br][br]
-## NOTE: Set [i]decay[/i] to 1-25 for a good range of values
+## Time based smooth interpolation, [b]not framedependant[/b] like [code]a = lerp(a, b, delta)[/code].[br][br]
+## [b]Tip:[/b] Keep [param decay] in 1 to 25 range for a good range of values.
 func exp_decay(a: float, b: float, decay: float, delta: float) -> float:
 	return b + (a - b) * exp(-decay * delta)
 #endregion
