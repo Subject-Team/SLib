@@ -296,7 +296,7 @@ func load_file(location: String, type: Variant.Type = TYPE_NIL, default_value: V
 ## [br][br]
 ## [b]Note:[/b] If the file doesn't exist, it will send an error to the console.[br]
 ## [b]See also:[/b] [method save_file] and [method load_file].
-func backup_file(location: String, type: Variant.Type, suffix: String = _defaults["BackupSuffix"], config: String = "") -> Error:
+func backup_file(location: String, type: Variant.Type = TYPE_NIL, suffix: String = _defaults["BackupSuffix"], config: String = "") -> Error:
 	var load = SLib.load_file(location, type, null, config)
 	return SLib.save_file("{location}-{suffix}.{extension}".format({"location": location.get_basename(), "suffix": suffix, "extension": location.get_extension()}), load, config)
 #endregion
