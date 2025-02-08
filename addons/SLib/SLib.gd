@@ -231,6 +231,12 @@ func save_file(location: String, value = null, config: String = "") -> Error:
 ## [b]See also:[/b] [method save_file], [method backup_file], [method ConfigFile.get_value], [Resource], [ResourceSaver].[br]
 func load_file(location: String, type: Variant.Type = TYPE_NIL, default_value: Variant = null, config: String = ""):
 	var extension = location.get_extension()
+	if not DirAccess.dir_exists_absolute(SLib.globalize_path(location).get_base_dir()):
+		send_error("Cann't load data from file, target directory isn't exists!", "SLib.load_file")
+		return default_value
+	if not FileAccess.file_exists(location):
+		send_error("Cann't load data from file, target file isn't exists!", "SLib.load_file")
+		return default_value
 	match type:
 		TYPE_NIL:
 			match extension:
