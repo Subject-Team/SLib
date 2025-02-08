@@ -146,21 +146,24 @@ func localize_path(path: String) -> String:
 #endregion
 
 #region SAVE LOAD BACKUP
-## This function will save a file with a customized path, this is very useful because the file saving process will be readable and fast.It supports four methods: [FileAccess], [ConfigFile], [JSON], [ResourceSaver][br]
-## see [enum file_types] for more information about [param type].[br]
-## Supports local and global file locations, see [method globalize_path] and [method localize_path] for more information.[br][br]
-## See also [method load_file]
-## Examples:
+## This function will save a file with a customized path, this is very useful because the file saving process will be readable and fast. It supports four methods: [FileAccess], [ConfigFile], [JSON], [ResourceSaver][br]
+## It can find correct method by file extesion:[br]● [code].ini[/code] for config files[br]● [code].json[/code] for json files[br]● [code].tres, .tscn, .res, .scn[/code] for resource files[br]● other extension for file access custom mode.[br]
+## For [FileAccess] method, this function automaticly use correct function in [FileAccess] functions for save data.[br][br]
 ## [b]Note:[/b] [param cofig] just for config files ([code]*.ini[/code]), use [code]"%section%/%key%"[/code] pattern for this parameter.[br]
+## [b]Note:[/b] You can save bytes with [PackedByteArray], this function use [method FileAccess.store_buffer] for this type.[br]
+## [b]Note:[/b] After update in [code]version 1.1.0 - Beta1[/code], if [param location] base directory isn't exists this function automaticly create it.[br]
+## [b]Important:[/b] Use [code]res://[/code] path for save game (or app) data not recommended, this directory is [b]Readonly[/b] in many platforms. (See [url=https://docs.godotengine.org/en/stable/tutorials/io/data_paths.html#file-paths-in-godot-projects]File paths in godot projects[/url] for more informatio)[br]
+## [b]See also:[/b] [method load_file], [method backup_file], [FileAccess], [method ConfigFile.set_value], [method JSON.stringify], [ResourceSaver].[br]
+## [b]Examples:[/b]
 ## [codeblock]
-## # 0: FILE_ACCESS (any extension), save player_data in "res://restore_point.save":
-## SLib.save_file("res://restore_point.save", player_data) 
-## # 1: Config (.ini), save "Jack" in key "name" in section "main" in "user://player.ini":
-## SLib.save_file("user://player.ini", "Jack", "main,name")
-## # 2: JSON (.json), save enemy_data_dict in "user://Data.json" with JSON formatting:
+## # ConfigFile (.ini), save "Jack" in key "name" in section "main" in "user://player.ini":
+## SLib.save_file("user://player.ini", "Jack", "main/name")
+## # JSON (.json), save enemy_data_dict in "user://Data.json" with JSON formatting:
 ## SLib.save_file("user://Data.json", enemy_data_dict)
-## # 3: Resource (.tres, .tscn , ...), save panel style in "res://theme/custom_panel.tres":
+## # ResourceSave (.tres, .tscn , .res, .scn), save panel style in "res://theme/custom_panel.tres":
 ## SLib.save_file("res://theme/custom_panel.tres", $Panel.theme_override_styles/panel)
+## # FileAccess (other extension), save player_data in "res://restore_point.save":
+## SLib.save_file("res://restore_point.save", player_data) 
 ## [/codeblock]
 func save_file(location: String, value = null, config: String = "") -> Error:
 	var type = location.get_extension()
@@ -221,14 +224,14 @@ func save_file(location: String, value = null, config: String = "") -> Error:
 			return FileAccess.get_open_error()
 
 
-## This function returns the content stored in the file, you can use it for:[br]
-## - Load all files created by [param type] with [FileAccess] and [method save_file]. (You should select [param type] for these files from [enum Variant.Type])[br]
-## - Load config files ([code].ini[/code]).[br]
-## - Load JSON files ([code].json[/code]).[br]
-## - Load Resource files ([code].tres[/code], [code].tscn[/code], [code].res[/code] and [code].scn[/code]).[br][br]
+## This function returns the content stored in the file. It supports four methods: [FileAccess], [ConfigFile], [JSON], [ResourceSaver][br]
+## It can find correct method by file extesion:[br]● [code].ini[/code] for config files[br]● [code].json[/code] for json files[br]● [code].tres, .tscn, .res, .scn[/code] for resource files[br]● other extension for file access custom mode.[br]
+## For [FileAccess] method, this function need [param type] from [enum Variant.Type] to use correct function in [FileAccess] functions for store data from file.[br][br]
 ## [b]Note:[/b] [param cofig] just for config files ([code]*.ini[/code]), use [code]"%section%/%key%"[/code] pattern for this parameter.[br]
+## [b]Note:[/b] You can save bytes with [PackedByteArray], this function use [method FileAccess.store_buffer] for this type.[br]
+## [b]Note:[/b] After update in [code]version 1.1.0 - Beta1[/code], if [param location] base directory isn't exists this function automaticly create it.[br]
 ## [b]Note:[/b] If the file doesn't exist, it will send an error to the console and return [param default_value].
-## [b]See also:[/b] [method save_file], [method backup_file], [method ConfigFile.get_value], [Resource], [ResourceSaver].[br]
+## [b]See also:[/b] [method save_file], [method backup_file], [FileAccess], [method ConfigFile.get_value], [method JSON.parse], [method @GDScript.load].[br]
 func load_file(location: String, type: Variant.Type = TYPE_NIL, default_value: Variant = null, config: String = ""):
 	var extension = location.get_extension()
 	if not DirAccess.dir_exists_absolute(SLib.globalize_path(location).get_base_dir()):
@@ -296,9 +299,8 @@ func load_file(location: String, type: Variant.Type = TYPE_NIL, default_value: V
 
 
 ## Backup function create a new file with [code]%main_file_name%-%suffix%[/code] name in main file location.[br]
-## if you doesn't select a custom [param suffix], [code]Project Settings > SLib > Defaults[BackupSuffix][/code] will append to file name.
-## [br][br]
-## [b]Note:[/b] If the file doesn't exist, it will send an error to the console.[br]
+## if you doesn't select a custom [param suffix], [code]Project Settings > SLib > Defaults[BackupSuffix][/code] will append to file name. [br][br]
+## [b]Tip:[/b] This function use [method load_file] and [method save_file] for more stability, please see documentations about these functions.[br]
 ## [b]See also:[/b] [method save_file] and [method load_file].
 func backup_file(location: String, type: Variant.Type = TYPE_NIL, suffix: String = _defaults["BackupSuffix"], config: String = "") -> Error:
 	var load = SLib.load_file(location, type, null, config)
