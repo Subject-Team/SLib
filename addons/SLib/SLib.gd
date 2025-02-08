@@ -149,9 +149,9 @@ func localize_path(path: String) -> String:
 ## This function will save a file with a customized path, this is very useful because the file saving process will be readable and fast.It supports four methods: [FileAccess], [ConfigFile], [JSON], [ResourceSaver][br]
 ## see [enum file_types] for more information about [param type].[br]
 ## Supports local and global file locations, see [method globalize_path] and [method localize_path] for more information.[br][br]
-## NOTE: [param cofig] just for COFIG [enum file_types], use [code]"%section%,%key%"[/code] pattern for this parameter. See also [method ConfigFile.set_value][br]
 ## See also [method load_file]
 ## Examples:
+## [b]Note:[/b] [param cofig] just for config files ([code]*.ini[/code]), use [code]"%section%/%key%"[/code] pattern for this parameter.[br]
 ## [codeblock]
 ## # 0: FILE_ACCESS (any extension), save player_data in "res://restore_point.save":
 ## SLib.save_file("res://restore_point.save", player_data) 
@@ -168,17 +168,17 @@ func save_file(location: String, value = null, config: String = "") -> Error:
 		DirAccess.make_dir_absolute(SLib.globalize_path(location).get_base_dir())
 	match type:
 		"ini":
-			if config.split(",", false).size() != 2:
+			if config.split("/", false).size() != 2:
 				send_error("Save data in config files need section & key, cann't save data in \'{file}\'".format({"file": location}), "SLib.save_file")
 				return ERR_INVALID_PARAMETER
-			var section = config.split(",", false)[0]
-			var key = config.split(",", false)[1]
+			var section = config.split("/", false)[0]
+			var key = config.split("/", false)[1]
 			var config_file := ConfigFile.new()
 			var error := config_file.load(location)
 			config_file.set_value(section, key, value)
 			error = config_file.save(location)
 			if error:
-				send_error("An error happened while saving data in \'{file}\' > \'{section}\' > \'{key}\': \'{error}\'".format({"file": location, "section": section, "key": key, "error": str(error)}), "SLib.save_file")
+				send_error("An error happened while saving data in \'{file}\' > \'{section}/{key}\': \'{error}\'".format({"file": location, "section": section, "key": key, "error": str(error)}), "SLib.save_file")
 			return error
 		"json":
 			var json_string := JSON.stringify(value)
@@ -228,7 +228,7 @@ func save_file(location: String, value = null, config: String = "") -> Error:
 ## - Load config files ([code].ini[/code]).[br]
 ## - Load JSON files ([code].json[/code]).[br]
 ## - Load Resource files ([code].tres[/code], [code].tscn[/code], [code].res[/code] and [code].scn[/code]).[br][br]
-## [b]Note:[/b] [param cofig] just for config files, use [code]"%section%,%key%"[/code] pattern for this parameter.[br]
+## [b]Note:[/b] [param cofig] just for config files ([code]*.ini[/code]), use [code]"%section%/%key%"[/code] pattern for this parameter.[br]
 ## [b]Note:[/b] If the file doesn't exist, it will send an error to the console and return [param default_value].
 ## [b]See also:[/b] [method save_file], [method backup_file], [method ConfigFile.get_value], [Resource], [ResourceSaver].[br]
 func load_file(location: String, type: Variant.Type = TYPE_NIL, default_value: Variant = null, config: String = ""):
@@ -237,15 +237,15 @@ func load_file(location: String, type: Variant.Type = TYPE_NIL, default_value: V
 		TYPE_NIL:
 			match extension:
 				"ini":
-					if config.split(",", false).size() != 2:
+					if config.split("/", false).size() != 2:
 						send_error("Load data from config files need section & key, cann't load data from \'{file}\'".format({"file": location}), "SLib.load_file")
 						return
-					var section = config.split(",", false)[0]
-					var key = config.split(",", false)[0]
+					var section = config.split("/", false)[0]
+					var key = config.split("/", false)[0]
 					var config_file := ConfigFile.new()
 					var error := config_file.load(location)
 					if error:
-						send_error("An error happened while loading data from \'{file}\' > \'{section}\' > \'{key}\': \'{error}\'".format({"file": location, "section": section, "key": key, "error": str(error)}), "SLib.load_file")
+						send_error("An error happened while loading data from \'{file}\' > \'{section}/{key}\': \'{error}\'".format({"file": location, "section": section, "key": key, "error": str(error)}), "SLib.load_file")
 						return default_value
 					return config_file.get_value(section, key, default_value)
 				"json":
