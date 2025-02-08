@@ -205,8 +205,6 @@ func save_file(location: String, value = null, config: String = "") -> Error:
 		_:
 			var file = FileAccess.open(location, FileAccess.WRITE)
 			match typeof(value):
-				TYPE_NIL:
-					file.store_var(null)
 				TYPE_INT:
 					file.store_64(value)
 				TYPE_FLOAT:
