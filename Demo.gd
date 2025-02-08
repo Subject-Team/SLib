@@ -9,7 +9,7 @@ func _backup_game():
 	# This one line of code creates a backup of the player's data file with an optional
 	# extension next to it, it has the ability to check all types of errors and manage them,
 	# prevent syntax errors, repeating lines and code length.
-	SLib.backup_json_file("user://main_data.json")
+	SLib.backup_file("user://main_data.json")
 
 func _old_backup_game():
 	# These 10 lines of code do the same thing as one line above, with the difference that
