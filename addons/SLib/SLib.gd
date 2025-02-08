@@ -164,8 +164,8 @@ func localize_path(path: String) -> String:
 ## [/codeblock]
 func save_file(location: String, value = null, config: String = "") -> Error:
 	var type = location.get_extension()
-	if not DirAccess.dir_exists_absolute(ProjectSettings.globalize_path(location).get_base_dir()):
-		DirAccess.make_dir_absolute(ProjectSettings.globalize_path(location).get_base_dir())
+	if not DirAccess.dir_exists_absolute(SLib.globalize_path(location).get_base_dir()):
+		DirAccess.make_dir_absolute(SLib.globalize_path(location).get_base_dir())
 	match type:
 		"ini":
 			if config.split(",", false).size() != 2:
