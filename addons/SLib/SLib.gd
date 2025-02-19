@@ -168,7 +168,7 @@ func localize_path(path: String) -> String:
 func save_file(location: String, value = null, config: String = "") -> Error:
 	var type = location.get_extension()
 	if not DirAccess.dir_exists_absolute(globalize_path(location).get_base_dir()):
-		DirAccess.make_dir_absolute(globalize_path(location).get_base_dir())
+		DirAccess.make_dir_recursive_absolute(globalize_path(location).get_base_dir())
 	match type:
 		"ini":
 			if config.split("/", false).size() != 2:
