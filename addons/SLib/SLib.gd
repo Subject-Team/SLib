@@ -167,8 +167,8 @@ func localize_path(path: String) -> String:
 ## [/codeblock]
 func save_file(location: String, value = null, config: String = "") -> Error:
 	var type = location.get_extension()
-	if not DirAccess.dir_exists_absolute(SLib.globalize_path(location).get_base_dir()):
-		DirAccess.make_dir_absolute(SLib.globalize_path(location).get_base_dir())
+	if not DirAccess.dir_exists_absolute(globalize_path(location).get_base_dir()):
+		DirAccess.make_dir_absolute(globalize_path(location).get_base_dir())
 	match type:
 		"ini":
 			if config.split("/", false).size() != 2:
@@ -234,7 +234,7 @@ func save_file(location: String, value = null, config: String = "") -> Error:
 ## [b]See also:[/b] [method save_file], [method backup_file], [FileAccess], [method ConfigFile.get_value], [method JSON.parse], [method @GDScript.load].[br]
 func load_file(location: String, type: Variant.Type = TYPE_NIL, default_value: Variant = null, config: String = ""):
 	var extension = location.get_extension()
-	if not DirAccess.dir_exists_absolute(SLib.globalize_path(location).get_base_dir()):
+	if not DirAccess.dir_exists_absolute(globalize_path(location).get_base_dir()):
 		send_error("Cann't load data from file, target directory isn't exists!", "SLib.load_file")
 		return default_value
 	if not FileAccess.file_exists(location):
@@ -299,8 +299,8 @@ func load_file(location: String, type: Variant.Type = TYPE_NIL, default_value: V
 ## [b]Tip:[/b] This function use [method load_file] and [method save_file] for more stability, please see documentations about these functions.[br]
 ## [b]See also:[/b] [method save_file] and [method load_file].
 func backup_file(location: String, type: Variant.Type = TYPE_NIL, suffix: String = _defaults["BackupSuffix"], config: String = "") -> Error:
-	var load = SLib.load_file(location, type, null, config)
-	return SLib.save_file("{location}-{suffix}.{extension}".format({"location": location.get_basename(), "suffix": suffix, "extension": location.get_extension()}), load, config)
+	var load = load_file(location, type, null, config)
+	return save_file("{location}-{suffix}.{extension}".format({"location": location.get_basename(), "suffix": suffix, "extension": location.get_extension()}), load, config)
 #endregion
 
 #endregion
@@ -489,7 +489,7 @@ func get_project_setting(path: String, default_value: Variant = null):
 ## This method is implemented on Android, iOS, Web, Linux, macOS and Windows.
 func os_open(uri: String) -> void:
 	if uri.begins_with("res://") or uri.begins_with("user://"):
-		uri = SLib.globalize_path(uri)
+		uri = globalize_path(uri)
 	OS.shell_open(uri)
 
 
