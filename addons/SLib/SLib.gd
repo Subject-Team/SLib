@@ -290,6 +290,7 @@ func load_file(location: String, type: Variant.Type = TYPE_NIL, default_value: V
 					_:
 						data = file.get_var()
 				file.close()
+				if typeof(data) != type: return default_value
 				return data
 		return default_value
 
