@@ -9,7 +9,7 @@ class_name SLibDocs
 ##
 ## SLib is a set of ready and standard code that makes you unnecessary to write many long and frequently used codes.[br][br]
 ## Available ability in this library now:[br]
-## ● Tween management: [method appear], [method disappear][br]
+## ● Tween management & Animations: [method play_animation][br]
 ## ● File management: [method save_file], [method load_file], [method backup_file], [method get_file_path], [method set_file_path], [globalize_path], [localize_path][br]
 ## ● Ray casting: [method cast_ray_between_points][br]
 ## ● Pause management: [method change_pause][br]
@@ -306,19 +306,41 @@ func backup_file(location: String, type: Variant.Type = TYPE_NIL, suffix: String
 
 #endregion
 
-#region TWEEN MANAGE
-## This function shows an [param object] and creates an animation to change its color.[br]
-## [b]See also:[/b] [method disappear].
-func appear(object: Object) -> void:
-	object.show() 
-	create_tween().tween_property(object, "modulate", Color.WHITE, 1.0)
+#region ANIMATIONS
+## Valid animations for [method play_animation]
+enum Animations {
+	## shows an [param object] and creates an animation to change its color.[br][b]Settings:[/b]
+	## [codeblock]
+	## {
+	## 	"duration": 1.0,
+	## }
+	## [/codeblock]
+	FADE_IN,
+	## make an [param object] disappear by changing its color to transparent.[br][b]Settings:[/b]
+	## [codeblock]
+	## {
+	## 	"duration": 1.0,
+	## }
+	## [/codeblock]
+	FADE_OUT,
+}
 
-## This function creates an animation to make an [param object] disappear by changing its color to transparent.[br]
-## [b]See also:[/b] [method appear].
-func disappear(object: Object) -> void:
-	var tween = create_tween()
-	tween.tween_property(object, "modulate", Color.TRANSPARENT, 1.0)
-	tween.finished.connect(func(): object.hide())
+
+## This function provides multiple animations with tweens.[br]You can see valid [param animation] and [param setting] values in [enum Animations].
+## [br][br][b]Example usage:[/b]
+## [codeblock]
+## # Automaticly play fade in animations for loot_box object in 3.0 seconds
+## SLib.play_animation(SLib.Animations.FADE_IN, loot_box, {"duration": 3.0})
+## [/codeblock]
+func play_animation(animation: Animations, object: Object, setting: Dictionary = {}) -> void:
+	match animation:
+		Animations.FADE_IN:
+			object.show()
+			create_tween().tween_property(object, "modulate", Color.WHITE, setting.get("duration", 1.0))
+		Animations.FADE_OUT:
+			var tween = create_tween()
+			tween.tween_property(object, "modulate", Color.TRANSPARENT, setting.get("duration", 1.0))
+			tween.finished.connect(func(): object.hide())
 #endregion
 
 #region ARRAY TOOLS
