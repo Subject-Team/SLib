@@ -1,6 +1,6 @@
 extends Node
 class_name SLibDocs
-# Press F1 and search for SLib to see documentation
+# NOTE: Press F1 and search for SLib to see documentation & informations!
 
 
 ## [center][img width=400]res://addons/SLib/SLib.png[/img][br]
