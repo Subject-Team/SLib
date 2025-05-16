@@ -32,6 +32,7 @@ class_name SLibDocs
 ## ● [b] More type hint:[/b] Type hint for [method appear] [param object], [method disappear] [param object] and more...[br]
 ## ● [b] Error and warning formation:[/b] New format for [method send_error] and [method send_alert].[br]
 ## ● [b] File management update:[/b] Set save & load format by file extension and use [enum Variant.Type] for [FileAccess] files.[br]
+## ● [b] Animation system:[/b] Play animations by name instead of use [code]appear()[/code] and [code]disappear()[/code].
 
 #region CONFIG
 # Default values for functions, Use project settings to change.
