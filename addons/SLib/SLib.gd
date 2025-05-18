@@ -10,7 +10,7 @@ class_name SLibDocs
 ## SLib is a set of ready and standard code that makes you unnecessary to write many long and frequently used codes.[br][br]
 ## Available ability in this library now:[br]
 ## ● Tween management & Animations: [method play_animation][br]
-## ● File management: [method save_file], [method load_file], [method backup_file], [method get_file_path], [method set_file_path], [globalize_path], [localize_path][br]
+## ● File management: [method save_file], [method load_file], [method backup_file], [method get_file_path], [method set_file_path], [method globalize_path], [method localize_path][br]
 ## ● Ray casting: [method cast_ray_between_points][br]
 ## ● Pause management: [method change_pause][br]
 ## ● Game scenes management: [method change_scene], [method exit], [method reload][br]
