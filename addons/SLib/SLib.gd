@@ -308,19 +308,19 @@ func backup_file(location: String, type: Variant.Type = TYPE_NIL, suffix: String
 #endregion
 
 #region ANIMATIONS
-## Valid animations for [method play_animation]
+## Valid animations for [method play_animation][br]
 enum Animations {
-	## shows an [param object] and creates an animation to change its color.[br][b]Settings:[/b]
+	## Shows an [param object] and creates an animation to change its [code]modulate[/code].[br][b]Settings:[/b]
 	## [codeblock]
 	## {
-	## 	"duration": 1.0,
+	## 	"duration": float,
 	## }
 	## [/codeblock]
 	FADE_IN,
-	## make an [param object] disappear by changing its color to transparent.[br][b]Settings:[/b]
+	## Makes an [param object] disappear by changing its [code]modulate[/code] to transparent.[br][b]Settings:[/b]
 	## [codeblock]
 	## {
-	## 	"duration": 1.0,
+	## 	"duration": float,
 	## }
 	## [/codeblock]
 	FADE_OUT,
