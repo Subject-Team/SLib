@@ -336,6 +336,7 @@ enum Animations {
 func play_animation(animation: Animations, object: Object, setting: Dictionary = {}) -> void:
 	match animation:
 		Animations.FADE_IN:
+			object.modulate = Color.TRANSPARENT
 			object.show()
 			create_tween().tween_property(object, "modulate", Color.WHITE, setting.get("duration", 1.0))
 		Animations.FADE_OUT:
