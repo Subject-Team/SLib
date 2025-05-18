@@ -309,6 +309,8 @@ func backup_file(location: String, type: Variant.Type = TYPE_NIL, suffix: String
 
 #region ANIMATIONS
 ## Valid animations for [method play_animation][br]
+## [b]Note:[/b] Some animations have two modes: [code]to[/code] & [code]by[/code], this animations have [color=green]Dual Mode[/color] badge. 
+## To use this animations you should have [code]to[/code] or [code]by[/code] key in [param setting] dictionary, for more information, see also [PropertyTweener] ( and as_relative method).
 enum Animations {
 	## Shows an [param object] and creates an animation to change its [code]modulate[/code].[br][b]Settings:[/b]
 	## [codeblock]
@@ -324,6 +326,15 @@ enum Animations {
 	## }
 	## [/codeblock]
 	FADE_OUT,
+	## [color=green]Dual Mode[/color][br]
+	## For scale an [param object] using object [code]scale[/code] property.[br][b]Settings:[/b]
+	## [codeblock]
+	## {
+	## 	"duration": float,
+	## 	"to/by": Vector2/Vector3,
+	## }
+	## [/codeblock]
+	SCALE,
 }
 
 
@@ -343,6 +354,13 @@ func play_animation(animation: Animations, object: Object, setting: Dictionary =
 			var tween = create_tween()
 			tween.tween_property(object, "modulate", Color.TRANSPARENT, setting.get("duration", 1.0))
 			tween.finished.connect(func(): object.hide())
+		Animations.SCALE:
+			if setting.has("to"):
+				create_tween().tween_property(object, "scale", setting.get("to"), setting.get("duration", 1.0))
+			elif setting.has("by"):
+				create_tween().tween_property(object, "scale", setting.get("by"), setting.get("duration", 1.0)).as_relative()
+			else:
+				send_error("You should have \"to\" or \"by\" key in your animation setting dictionary", "SLib.play_animation")
 #endregion
 
 #region ARRAY TOOLS
