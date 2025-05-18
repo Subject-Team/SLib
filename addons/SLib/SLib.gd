@@ -344,6 +344,15 @@ enum Animations {
 	## }
 	## [/codeblock]
 	ROTATE,
+	## [color=green]Dual Mode[/color][br]
+	## For move an [param object] using object [code]position[/code] property.[br][b]Settings:[/b]
+	## [codeblock]
+	## {
+	## 	"duration": float,
+	## 	"to/by": Vector2/Vector3,
+	## }
+	## [/codeblock]
+	MOVE,
 }
 
 
@@ -375,6 +384,13 @@ func play_animation(animation: Animations, object: Object, setting: Dictionary =
 				create_tween().tween_property(object, "rotation", setting.get("to"), setting.get("duration", 1.0))
 			elif setting.has("by"):
 				create_tween().tween_property(object, "rotation", setting.get("by"), setting.get("duration", 1.0))
+			else:
+				send_error("You should have \"to\" or \"by\" key in your animation setting dictionary", "SLib.play_animation")
+		Animations.MOVE:
+			if setting.has("to"):
+				create_tween().tween_property(object, "position", setting.get("to"), setting.get("duration", 1.0))
+			elif setting.has("by"):
+				create_tween().tween_property(object, "position", setting.get("by"), setting.get("duration", 1.0))
 			else:
 				send_error("You should have \"to\" or \"by\" key in your animation setting dictionary", "SLib.play_animation")
 #endregion
