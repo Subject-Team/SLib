@@ -393,14 +393,14 @@ func play_animation(animation: Animations, object: Object, setting: Dictionary =
 			if setting.has("to"):
 				create_tween().tween_property(object, "rotation", setting.get("to"), setting.get("duration", 1.0))
 			elif setting.has("by"):
-				create_tween().tween_property(object, "rotation", setting.get("by"), setting.get("duration", 1.0))
+				create_tween().tween_property(object, "rotation", setting.get("by"), setting.get("duration", 1.0)).as_relative()
 			else:
 				send_error("You should have \"to\" or \"by\" key in your animation setting dictionary", "SLib.play_animation")
 		Animations.MOVE:
 			if setting.has("to"):
 				create_tween().tween_property(object, "position", setting.get("to"), setting.get("duration", 1.0))
 			elif setting.has("by"):
-				create_tween().tween_property(object, "position", setting.get("by"), setting.get("duration", 1.0))
+				create_tween().tween_property(object, "position", setting.get("by"), setting.get("duration", 1.0)).as_relative()
 			else:
 				send_error("You should have \"to\" or \"by\" key in your animation setting dictionary", "SLib.play_animation")
 		Animations.CHANGE_OPACITY:
@@ -409,7 +409,7 @@ func play_animation(animation: Animations, object: Object, setting: Dictionary =
 				create_tween().tween_property(object, "modulate", Color(object.modulate, setting.get("to")), setting.get("duration", 1.0))
 			elif setting.has("by"):
 				if setting.get("in8", false): setting["by"] = setting["by"] / 255.0
-				create_tween().tween_property(object, "modulate", setting.get("by"), setting.get("duration", 1.0))
+				create_tween().tween_property(object, "modulate", Color(0, 0, 0, setting.get("by")), setting.get("duration", 1.0)).as_relative()
 			else:
 				send_error("You should have \"to\" or \"by\" key in your animation setting dictionary", "SLib.play_animation")
 #endregion
