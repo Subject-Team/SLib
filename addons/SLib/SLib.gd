@@ -648,7 +648,7 @@ func send_warning(warning: String = _defaults["Warning"], from: String = "Debugg
 	push_warning(from + ": " + warning)
 
 
-## Save log parameter in log file, log file save in [code]user://App.log[/code] as default.
+## Save log parameter in log file (Overwrite older log), log file save in [code]user://App.log[/code] as default.
 ## [br][br]
 ## NOTE:
 ## You can see log data with [code]print(SLib.get_log())[/code].
