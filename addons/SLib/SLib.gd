@@ -308,22 +308,61 @@ func backup_file(location: String, type: Variant.Type = TYPE_NIL, suffix: String
 #endregion
 
 #region ANIMATIONS
-## Valid animations for [method play_animation]
+## Valid animations for [method play_animation][br]
+## [b]Note:[/b] Some animations have two modes: [code]to[/code] & [code]by[/code], this animations have [color=green]Dual Mode[/color] badge. 
+## To use this animations you should have [code]to[/code] or [code]by[/code] key in [param setting] dictionary, for more information, see also [PropertyTweener] ( and as_relative method).
 enum Animations {
-	## shows an [param object] and creates an animation to change its color.[br][b]Settings:[/b]
+	## Shows an [param object] and creates an animation to change its [code]modulate[/code].[br][b]Settings:[/b]
 	## [codeblock]
 	## {
-	## 	"duration": 1.0,
+	## 	"duration": float,
 	## }
 	## [/codeblock]
 	FADE_IN,
-	## make an [param object] disappear by changing its color to transparent.[br][b]Settings:[/b]
+	## Makes an [param object] disappear by changing its [code]modulate[/code] to transparent.[br][b]Settings:[/b]
 	## [codeblock]
 	## {
-	## 	"duration": 1.0,
+	## 	"duration": float,
 	## }
 	## [/codeblock]
 	FADE_OUT,
+	## [color=green]Dual Mode[/color][br]
+	## For scale an [param object] using object [code]scale[/code] property.[br][b]Settings:[/b]
+	## [codeblock]
+	## {
+	## 	"duration": float,
+	## 	"to/by": Vector2/Vector3,
+	## }
+	## [/codeblock]
+	SCALE,
+	## [color=green]Dual Mode[/color][br]
+	## For rotate an [param object] using object [code]rotation[/code] property.[br][b]Settings:[/b]
+	## [codeblock]
+	## {
+	## 	"duration": float,
+	## 	"to/by": float/Vector3,
+	## }
+	## [/codeblock]
+	ROTATE,
+	## [color=green]Dual Mode[/color][br]
+	## For move an [param object] using object [code]position[/code] property.[br][b]Settings:[/b]
+	## [codeblock]
+	## {
+	## 	"duration": float,
+	## 	"to/by": Vector2/Vector3,
+	## }
+	## [/codeblock]
+	MOVE,
+	## [color=green]Dual Mode[/color][br]
+	## For change [param object] opacity ([code]modulate.a[/code] or [code]modulate.a8[/code] property). True value for parameter [code]in8[/code] will wrap target value in range 0 to 255, instead of 0 to 1.[br][b]Settings:[/b]
+	## [codeblock]
+	## {
+	## 	"duration": float,
+	## 	"to/by": float,
+	## 	"in8": bool,
+	## }
+	## [/codeblock]
+	CHANGE_OPACITY,
 }
 
 
@@ -336,12 +375,43 @@ enum Animations {
 func play_animation(animation: Animations, object: Object, setting: Dictionary = {}) -> void:
 	match animation:
 		Animations.FADE_IN:
+			object.modulate = Color.TRANSPARENT
 			object.show()
 			create_tween().tween_property(object, "modulate", Color.WHITE, setting.get("duration", 1.0))
 		Animations.FADE_OUT:
 			var tween = create_tween()
 			tween.tween_property(object, "modulate", Color.TRANSPARENT, setting.get("duration", 1.0))
 			tween.finished.connect(func(): object.hide())
+		Animations.SCALE:
+			if setting.has("to"):
+				create_tween().tween_property(object, "scale", setting.get("to"), setting.get("duration", 1.0))
+			elif setting.has("by"):
+				create_tween().tween_property(object, "scale", setting.get("by"), setting.get("duration", 1.0)).as_relative()
+			else:
+				send_error("You should have \"to\" or \"by\" key in your animation setting dictionary", "SLib.play_animation")
+		Animations.ROTATE:
+			if setting.has("to"):
+				create_tween().tween_property(object, "rotation", setting.get("to"), setting.get("duration", 1.0))
+			elif setting.has("by"):
+				create_tween().tween_property(object, "rotation", setting.get("by"), setting.get("duration", 1.0)).as_relative()
+			else:
+				send_error("You should have \"to\" or \"by\" key in your animation setting dictionary", "SLib.play_animation")
+		Animations.MOVE:
+			if setting.has("to"):
+				create_tween().tween_property(object, "position", setting.get("to"), setting.get("duration", 1.0))
+			elif setting.has("by"):
+				create_tween().tween_property(object, "position", setting.get("by"), setting.get("duration", 1.0)).as_relative()
+			else:
+				send_error("You should have \"to\" or \"by\" key in your animation setting dictionary", "SLib.play_animation")
+		Animations.CHANGE_OPACITY:
+			if setting.has("to"):
+				if setting.get("in8", false): setting["to"] = setting["to"] / 255.0
+				create_tween().tween_property(object, "modulate", Color(object.modulate, setting.get("to")), setting.get("duration", 1.0))
+			elif setting.has("by"):
+				if setting.get("in8", false): setting["by"] = setting["by"] / 255.0
+				create_tween().tween_property(object, "modulate", Color(0, 0, 0, setting.get("by")), setting.get("duration", 1.0)).as_relative()
+			else:
+				send_error("You should have \"to\" or \"by\" key in your animation setting dictionary", "SLib.play_animation")
 #endregion
 
 #region ARRAY TOOLS
