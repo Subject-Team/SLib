@@ -383,46 +383,47 @@ enum Animations {
 ## # Automaticly play fade in animations for loot_box object in 3.0 seconds
 ## SLib.play_animation(SLib.Animations.FADE_IN, loot_box, {"duration": 3.0})
 ## [/codeblock]
-func play_animation(animation: Animations, object: Object, setting: Dictionary = {}) -> void:
+func play_animation(animation: Animations, object: Node, setting: Dictionary = {}) -> Tween:
+	var tween = object.create_tween()
 	match animation:
 		Animations.FADE_IN:
 			object.modulate = Color.TRANSPARENT
 			object.show()
-			create_tween().tween_property(object, "modulate", Color.WHITE, setting.get("duration", 1.0))
+			tween.tween_property(object, "modulate", Color.WHITE, setting.get("duration", 1.0))
 		Animations.FADE_OUT:
-			var tween = create_tween()
 			tween.tween_property(object, "modulate", Color.TRANSPARENT, setting.get("duration", 1.0))
 			tween.finished.connect(func(): object.hide())
 		Animations.SCALE:
 			if setting.has("to"):
-				create_tween().tween_property(object, "scale", setting.get("to"), setting.get("duration", 1.0))
+				tween.tween_property(object, "scale", setting.get("to"), setting.get("duration", 1.0))
 			elif setting.has("by"):
-				create_tween().tween_property(object, "scale", setting.get("by"), setting.get("duration", 1.0)).as_relative()
+				tween.tween_property(object, "scale", setting.get("by"), setting.get("duration", 1.0)).as_relative()
 			else:
 				send_error(Errors["dual-animation-mistyped"], "SLib.play_animation")
 		Animations.ROTATE:
 			if setting.has("to"):
-				create_tween().tween_property(object, "rotation", setting.get("to"), setting.get("duration", 1.0))
+				tween.tween_property(object, "rotation", setting.get("to"), setting.get("duration", 1.0))
 			elif setting.has("by"):
-				create_tween().tween_property(object, "rotation", setting.get("by"), setting.get("duration", 1.0)).as_relative()
+				tween.tween_property(object, "rotation", setting.get("by"), setting.get("duration", 1.0)).as_relative()
 			else:
 				send_error(Errors["dual-animation-mistyped"], "SLib.play_animation")
 		Animations.MOVE:
 			if setting.has("to"):
-				create_tween().tween_property(object, "position", setting.get("to"), setting.get("duration", 1.0))
+				tween.tween_property(object, "position", setting.get("to"), setting.get("duration", 1.0))
 			elif setting.has("by"):
-				create_tween().tween_property(object, "position", setting.get("by"), setting.get("duration", 1.0)).as_relative()
+				tween.tween_property(object, "position", setting.get("by"), setting.get("duration", 1.0)).as_relative()
 			else:
 				send_error(Errors["dual-animation-mistyped"], "SLib.play_animation")
 		Animations.CHANGE_OPACITY:
 			if setting.has("to"):
 				if setting.get("in8", false): setting["to"] = setting["to"] / 255.0
-				create_tween().tween_property(object, "modulate", Color(object.modulate, setting.get("to")), setting.get("duration", 1.0))
+				tween.tween_property(object, "modulate", Color(object.modulate, setting.get("to")), setting.get("duration", 1.0))
 			elif setting.has("by"):
 				if setting.get("in8", false): setting["by"] = setting["by"] / 255.0
-				create_tween().tween_property(object, "modulate", Color(0, 0, 0, setting.get("by")), setting.get("duration", 1.0)).as_relative()
+				tween.tween_property(object, "modulate", Color(0, 0, 0, setting.get("by")), setting.get("duration", 1.0)).as_relative()
 			else:
 				send_error(Errors["dual-animation-mistyped"], "SLib.play_animation")
+	return tween
 #endregion
 
 #region ARRAY TOOLS
