@@ -255,60 +255,56 @@ func load_file(location: String, type: Variant.Type = TYPE_NIL, default_value: V
 		send_error(Errors["load-nonexistent-dir"], "SLib.load_file")
 		return default_value
 	if not FileAccess.file_exists(location):
-		match extension:
-			"ini":
-				if config.split("/", false).size() != 2:
-					send_error("Load data from config files need section & key, cann't load data from \'{file}\'".format({"file": location}), "SLib.load_file")
-					return
-				var section = config.split("/", false)[0]
-				var key = config.split("/", false)[0]
-				var config_file := ConfigFile.new()
-				var error := config_file.load(location)
-				if error:
-					send_error("An error happened while loading data from \'{file}\' > \'{section}/{key}\': \'{error}\'".format({"file": location, "section": section, "key": key, "error": str(error)}), "SLib.load_file")
-					return default_value
-				return config_file.get_value(section, key, default_value)
-			"json":
-				if not FileAccess.file_exists(location):
-					return default_value
-				var file_access := FileAccess.open(location, FileAccess.READ)
-				var json_string := file_access.get_line()
-				file_access.close()
-				var json := JSON.new()
-				var error := json.parse(json_string)
-				if error:
-					send_error("JSON Parse Error: {message} in {string} at line {line}".format({"message": str(json.get_error_message()), "string": json_string, "line": json.get_error_line()}), "SLib.load_file")
-					return default_value
-				return json.data
-			"tres", "res", "tscn", "scn":
-				return load(location)
-			_:
-				if not FileAccess.file_exists(location):
-					send_error("Can't load from \'{file}\', file not exists!".format({"file": location}), "SLib.load_file")
-					return default_value
-				var file = FileAccess.open(location,FileAccess.READ)
-				if file == null:
-					send_error("An error happened while loading data from \'{file}\'!".format({"file": location}))
-					return default_value
-				var data
-				match type:
-					TYPE_INT:
-						data = file.get_64()
-					TYPE_STRING:
-						data = file.get_as_text()
-					TYPE_PACKED_BYTE_ARRAY:
-						data = file.get_buffer(file.get_length())
-					TYPE_FLOAT:
-						data = file.get_float()
-					TYPE_OBJECT:
-						data = file.get_var(true)
-					_:
-						data = file.get_var()
-				file.close()
-				if typeof(data) != type: return default_value
-				return data
 		send_error(Errors["load-nonexistent"], "SLib.load_file")
 		return default_value
+	match extension:
+		"ini":
+			if config.split("/", false).size() != 2:
+				send_error(Errors["invalid-section-or-key"].format({"file": location}), "SLib.load_file")
+				return
+			var section = config.split("/", false)[0]
+			var key = config.split("/", false)[0]
+			var config_file := ConfigFile.new()
+			var error := config_file.load(location)
+			if error:
+				send_error(Errors["load-error-config"].format({"file": location, "section": section, "key": key, "error": str(error)}), "SLib.load_file")
+				return default_value
+			return config_file.get_value(section, key, default_value)
+		"json":
+			var file_access := FileAccess.open(location, FileAccess.READ)
+			var json_string := file_access.get_line()
+			file_access.close()
+			var json := JSON.new()
+			var error := json.parse(json_string)
+			if error:
+				send_error(Errors["json-pars-error"].format({"message": str(json.get_error_message()), "string": json_string, "line": json.get_error_line()}), "SLib.load_file")
+				return default_value
+			return json.data
+		"tres", "res", "tscn", "scn":
+			return load(location)
+		_:
+			var file = FileAccess.open(location,FileAccess.READ)
+			if file == null:
+				send_error(Errors["load-error"].format({"file": location}))
+				return default_value
+			var data
+			match type:
+				TYPE_INT:
+					data = file.get_64()
+				TYPE_STRING:
+					data = file.get_as_text()
+				TYPE_PACKED_BYTE_ARRAY:
+					data = file.get_buffer(file.get_length())
+				TYPE_FLOAT:
+					data = file.get_float()
+				TYPE_OBJECT:
+					data = file.get_var(true)
+				_:
+					data = file.get_var()
+			file.close()
+			if typeof(data) != type: return default_value
+			return data
+	return default_value
 
 
 ## Backup function create a new file with [code]%main_file_name%-%suffix%[/code] name in main file location.[br]
