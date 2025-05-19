@@ -34,6 +34,22 @@ class_name SLibDocs
 ## ● [b] File management update:[/b] Set save & load format by file extension and use [enum Variant.Type] for [FileAccess] files.[br]
 ## ● [b] Animation system:[/b] Play animations by name instead of use [code]appear()[/code] and [code]disappear()[/code].
 
+#region ERRORS
+const Errors: Dictionary = {
+	"invalid-file-path":"Can't find \"%s\" key in file locations!",
+	"invalid-section-or-key":"Use config files need section & key, can't open \'{file}\'!",
+	"save-error-config":"An error happened while saving data in \'{file}\' > \'{section}/{key}\': \'{error}\'!",
+	"save-error":"An error happened while saving data in \'{file}\': \'{error}\'!",
+	"load-nonexistent-dir":"Can't load data from file, target directory isn't exists!",
+	"load-nonexistent":"Can't load data from file, target file isn't exists!",
+	"load-error-config":"An error happened while loading data from \'{file}\' > \'{section}/{key}\': \'{error}\'!",
+	"load-error":"An error happened while loading data from \'{file}\'!",
+	"json-pars-error":"JSON Parse Error: {message} in {string} at line {line}!",
+	"dual-animation-mistyped":"You should have \"to\" or \"by\" key in dual mode animation setting dictionary!",
+	"invalid-pause-state":"Tree pause state should be boolean!",
+}
+#endregion
+
 #region CONFIG
 # Default values for functions, Use project settings to change.
 var _defaults := {
@@ -114,7 +130,7 @@ func get_file_path(key: String) -> String:
 	if _file_locations.has(key):
 		return _file_locations[key]
 	else:
-		send_error("Can't find \"%s\" key in file locations!" % key, "SLib.get_file_path")
+		send_error(Errors["invalid-file-path"] % key, "SLib.get_file_path")
 		return ""
 
 ## Set a file location with [param key] name & [param path] path, If the [param key] already exists, it changes its value with [param  path], otherwise it creates it.
@@ -173,7 +189,7 @@ func save_file(location: String, value = null, config: String = "") -> Error:
 	match type:
 		"ini":
 			if config.split("/", false).size() != 2:
-				send_error("Save data in config files need section & key, cann't save data in \'{file}\'".format({"file": location}), "SLib.save_file")
+				send_error(Errors["invalid-section-or-key"].format({"file": location}), "SLib.save_file")
 				return ERR_INVALID_PARAMETER
 			var section = config.split("/", false)[0]
 			var key = config.split("/", false)[1]
@@ -182,13 +198,13 @@ func save_file(location: String, value = null, config: String = "") -> Error:
 			config_file.set_value(section, key, value)
 			error = config_file.save(location)
 			if error:
-				send_error("An error happened while saving data in \'{file}\' > \'{section}/{key}\': \'{error}\'".format({"file": location, "section": section, "key": key, "error": str(error)}), "SLib.save_file")
+				send_error(Errors["save-error-config"].format({"file": location, "section": section, "key": key, "error": str(error)}), "SLib.save_file")
 			return error
 		"json":
 			var json_string := JSON.stringify(value)
 			var file_access := FileAccess.open(location, FileAccess.WRITE)
 			if not file_access:
-				send_error("An error happened while saving data in \'{file}\': \'{error}\'".format({"file": location, "error": FileAccess.get_open_error()}), "SLib.save_file")
+				send_error(Errors["save-error"].format({"file": location, "error": FileAccess.get_open_error()}), "SLib.save_file")
 				return file_access.get_open_error()
 			file_access.store_var(json_string)
 			file_access.close()
@@ -196,7 +212,7 @@ func save_file(location: String, value = null, config: String = "") -> Error:
 		"tres", "res", "tscn", "scn":
 			var error := ResourceSaver.save(value, location)
 			if error:
-				send_error("An error happened while saving data in \'{file}\': \'{error}\'".format({"file": location, "error": error}), "SLib.save_file")
+				send_error(Errors["save-error"].format({"file": location, "error": error}), "SLib.save_file")
 			return error
 		"csv":
 			var file = FileAccess.open(location, FileAccess.WRITE)
@@ -236,11 +252,9 @@ func save_file(location: String, value = null, config: String = "") -> Error:
 func load_file(location: String, type: Variant.Type = TYPE_NIL, default_value: Variant = null, config: String = ""):
 	var extension = location.get_extension()
 	if not DirAccess.dir_exists_absolute(globalize_path(location).get_base_dir()):
-		send_error("Cann't load data from file, target directory isn't exists!", "SLib.load_file")
+		send_error(Errors["load-nonexistent-dir"], "SLib.load_file")
 		return default_value
 	if not FileAccess.file_exists(location):
-		send_error("Cann't load data from file, target file isn't exists!", "SLib.load_file")
-		return default_value
 		match extension:
 			"ini":
 				if config.split("/", false).size() != 2:
@@ -293,6 +307,7 @@ func load_file(location: String, type: Variant.Type = TYPE_NIL, default_value: V
 				file.close()
 				if typeof(data) != type: return default_value
 				return data
+		send_error(Errors["load-nonexistent"], "SLib.load_file")
 		return default_value
 
 
@@ -388,21 +403,21 @@ func play_animation(animation: Animations, object: Object, setting: Dictionary =
 			elif setting.has("by"):
 				create_tween().tween_property(object, "scale", setting.get("by"), setting.get("duration", 1.0)).as_relative()
 			else:
-				send_error("You should have \"to\" or \"by\" key in your animation setting dictionary", "SLib.play_animation")
+				send_error(Errors["dual-animation-mistyped"], "SLib.play_animation")
 		Animations.ROTATE:
 			if setting.has("to"):
 				create_tween().tween_property(object, "rotation", setting.get("to"), setting.get("duration", 1.0))
 			elif setting.has("by"):
 				create_tween().tween_property(object, "rotation", setting.get("by"), setting.get("duration", 1.0)).as_relative()
 			else:
-				send_error("You should have \"to\" or \"by\" key in your animation setting dictionary", "SLib.play_animation")
+				send_error(Errors["dual-animation-mistyped"], "SLib.play_animation")
 		Animations.MOVE:
 			if setting.has("to"):
 				create_tween().tween_property(object, "position", setting.get("to"), setting.get("duration", 1.0))
 			elif setting.has("by"):
 				create_tween().tween_property(object, "position", setting.get("by"), setting.get("duration", 1.0)).as_relative()
 			else:
-				send_error("You should have \"to\" or \"by\" key in your animation setting dictionary", "SLib.play_animation")
+				send_error(Errors["dual-animation-mistyped"], "SLib.play_animation")
 		Animations.CHANGE_OPACITY:
 			if setting.has("to"):
 				if setting.get("in8", false): setting["to"] = setting["to"] / 255.0
@@ -411,7 +426,7 @@ func play_animation(animation: Animations, object: Object, setting: Dictionary =
 				if setting.get("in8", false): setting["by"] = setting["by"] / 255.0
 				create_tween().tween_property(object, "modulate", Color(0, 0, 0, setting.get("by")), setting.get("duration", 1.0)).as_relative()
 			else:
-				send_error("You should have \"to\" or \"by\" key in your animation setting dictionary", "SLib.play_animation")
+				send_error(Errors["dual-animation-mistyped"], "SLib.play_animation")
 #endregion
 
 #region ARRAY TOOLS
@@ -618,7 +633,7 @@ func change_pause(pause = null) -> void:
 	elif typeof(pause) == TYPE_BOOL:
 		get_tree().paused = pause
 	else:
-		send_error("Only use boolean parameters!", "SLib.change_pause")
+		send_error(Errors["invalid-pause-state"], "SLib.change_pause")
 #endregion
 
 #region DEBUGGING
