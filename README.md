@@ -37,7 +37,7 @@ SLib is a versatile library whose functions are used in any project, SLib improv
 # This one line of code creates a backup of the player's data file with an optional
 # extension next to it, it has the ability to check all types of errors and manage them,
 # prevent syntax errors, repeating lines and code length.
-SLib.backup_file("user://main_data.json", TYPE_DICT)
+SLib.backup_file("user://main_data.json")
 ```
 
 ### Without SLib:
