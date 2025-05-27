@@ -263,7 +263,7 @@ func load_file(location: String, type: Variant.Type = TYPE_NIL, default_value: V
 				send_error(Errors["invalid-section-or-key"].format({"file": location}), "SLib.load_file")
 				return
 			var section = config.split("/", false)[0]
-			var key = config.split("/", false)[0]
+			var key = config.split("/", false)[1]
 			var config_file := ConfigFile.new()
 			var error := config_file.load(location)
 			if error:
