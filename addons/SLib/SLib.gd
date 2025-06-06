@@ -206,7 +206,7 @@ func save_file(location: String, value = null, config: String = "") -> Error:
 			if not file_access:
 				send_error(Errors["save-error"].format({"file": location, "error": FileAccess.get_open_error()}), "SLib.save_file")
 				return file_access.get_open_error()
-			file_access.store_var(json_string)
+			file_access.store_line(json_string)
 			file_access.close()
 			return file_access.get_open_error()
 		"tres", "res", "tscn", "scn":
