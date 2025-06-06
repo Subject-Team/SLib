@@ -108,3 +108,7 @@ This is an open source project, we grow together!
 
 ### [Thanks](https://github.com/Subject-Team/SLib/wiki/Thanks)
 Project participation process and contributors
+
+---
+
+### Feel free to ask questions, give ideas, and contribute in discussions and issues! 
