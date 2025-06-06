@@ -25,7 +25,7 @@ class_name SLibDocs
 ## ● OS tools: [method os_open], [method send_alert][br]
 ## ● Timer tools: [method wait][br]
 ## [br]
-## [b]Note:[/b] Use [code]Project > Project Settings > SLib[/code] for change defaults and file locations.[br][br]
+## [b]Note:[/b] Use [code]Project > Project Settings > Addons > SLib[/code] for change defaults and file locations.[br][br]
 ## [b][color=Orange]Important Changes & Update Notes: [/color] 1.1.1[/b][br]
 ## ● [b] Fixed save & load system:[/b] Remove some options and add [param save_method].[br]
 ## ● [b] Remove [method backup_file]:[/b] Deprecated.[br]
@@ -121,7 +121,7 @@ enum {
 
 #region INITALIZING
 func _enter_tree():
-	_defaults = ProjectSettings.get_setting("SLib/Defaults", _defaults)
+	_defaults = ProjectSettings.get_setting("Addons/SLib/Defaults", _defaults)
 #endregion
 
 #-----FUNCTIONS-----
@@ -132,7 +132,7 @@ func _enter_tree():
 ## Return global file locations with [param key], If the [param key] does not exist in the location of the files,
 ## it sends an error to the debugger and returns [code]""[/code].
 func get_file_path(key: String) -> String:
-	_file_locations = ProjectSettings.get_setting("SLib/FileLocations", _file_locations)
+	_file_locations = ProjectSettings.get_setting("Addons/SLib/FileLocations", _file_locations)
 	if _file_locations.has(key):
 		return _file_locations[key]
 	else:
@@ -142,7 +142,7 @@ func get_file_path(key: String) -> String:
 ## Set a file location with [param key] name & [param path] path, If the [param key] already exists, it changes its value with [param  path], otherwise it creates it.
 func set_file_path(key: String, path: String) -> void:
 	_file_locations[key] = path
-	ProjectSettings.set_setting("SLib/FileLocations", _file_locations)
+	ProjectSettings.set_setting("Addons/SLib/FileLocations", _file_locations)
 #endregion
 
 #region PATH CONVERTER
