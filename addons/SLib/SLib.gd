@@ -10,14 +10,14 @@ class_name SLibDocs
 ## SLib is a set of ready and standard code that makes you unnecessary to write many long and frequently used codes.[br][br]
 ## Available ability in this library now:[br]
 ## ● Tween management & Animations: [method play_animation][br]
-## ● File management: [method save_file], [method load_file], [method backup_file], [method get_file_path], [method set_file_path], [method globalize_path], [method localize_path][br]
+## ● File management: [method save_file], [method load_file], [method get_file_path], [method set_file_path], [method globalize_path], [method localize_path][br]
 ## ● Ray casting: [method cast_ray_between_points][br]
 ## ● Pause management: [method change_pause][br]
 ## ● Game scenes management: [method change_scene], [method exit], [method reload][br]
 ## ● Time based smooth interpolation: [method exp_decay][br]
 ## ● Node management: [method find_child_pf_class], [method free_all_children][br]
 ## ● IP tools: [method get_local_ip][br]
-## ● Debugging system: [method save_log], [method get_log], [method send_error], [method send_warning][br]
+## ● Debugging system: [method send_error], [method send_warning][br]
 ## ● Project Setting management: [method get_project_setting], [method set_project_setting][br]
 ## ● Bad word filter: [method is_word_ok][br]
 ## ● Array tools: [method merge_unique], [method patterned_sort], [method stringify_array][br]
@@ -26,13 +26,10 @@ class_name SLibDocs
 ## ● Timer tools: [method wait][br]
 ## [br]
 ## [b]Note:[/b] Use [code]Project > Project Settings > SLib[/code] for change defaults and file locations.[br][br]
-## [b][color=Orange]Important Changes & Update Notes: [/color] 1.1.0[/b][br]
-## ● [b] Automatic modify local path:[/b] Now [method os_open] [param uri] can be localized path.[br]
-## ● [b] Documentation update:[/b] After this version docs have SLib icon and modified format.[br]
-## ● [b] More type hint:[/b] Type hint for [method appear] [param object], [method disappear] [param object] and more...[br]
-## ● [b] Error and warning formation:[/b] New format for [method send_error] and [method send_alert].[br]
-## ● [b] File management update:[/b] Set save & load format by file extension and use [enum Variant.Type] for [FileAccess] files.[br]
-## ● [b] Animation system:[/b] Play animations by name instead of use [code]appear()[/code] and [code]disappear()[/code].
+## [b][color=Orange]Important Changes & Update Notes: [/color] 1.1.1[/b][br]
+## ● [b] Fixed save & load system:[/b] Remove some options and add [param save_method].[br]
+## ● [b] Remove [method backup_file]:[/b] Deprecated.[br]
+## ● [b] Remove [method save_log] & [method get_log]:[/b] Deprecated.[br]
 
 #region ERRORS
 const Errors: Dictionary = {
@@ -113,6 +110,14 @@ const _PROFANITY_LIST := ['2g1c','2 girls 1 cup','acrotomophilia','anal','anilin
 ]
 #endregion
 
+#region SAVE METHODS
+enum {
+	SAVE_METHOD_AUTO,
+	SAVE_METHOD_CONFIG,
+	SAVE_METHOD_JSON,
+	SAVE_METHOD_RESOURCE,
+}
+
 #region INITALIZING
 func _enter_tree():
 	_defaults = ProjectSettings.get_setting("SLib/Defaults", _defaults)
@@ -163,93 +168,95 @@ func localize_path(path: String) -> String:
 #endregion
 
 #region SAVE LOAD BACKUP
-## This function will save a file with a customized path, this is very useful because the file saving process will be readable and fast. It supports four methods: [FileAccess], [ConfigFile], [JSON], [ResourceSaver][br]
-## It can find correct method by file extesion:[br]● [code].ini[/code] for config files[br]● [code].json[/code] for json files[br]● [code].tres, .tscn, .res, .scn[/code] for resource files[br]● other extension for file access custom mode.[br]
-## For [FileAccess] method, this function automaticly use correct function in [FileAccess] functions for save data.[br][br]
-## [b]Note:[/b] [param cofig] just for config files ([code]*.ini[/code]), use [code]"%section%/%key%"[/code] pattern for this parameter.[br]
-## [b]Note:[/b] You can save bytes with [PackedByteArray], this function use [method FileAccess.store_buffer] for this type.[br]
-## [b]Note:[/b] After update in [code]version 1.1.0 - Beta1[/code], if [param location] base directory isn't exists this function automaticly create it.[br]
-## [b]Important:[/b] Use [code]res://[/code] path for save game (or app) data not recommended, this directory is [b]Readonly[/b] in many platforms. (See [url=https://docs.godotengine.org/en/stable/tutorials/io/data_paths.html#file-paths-in-godot-projects]File paths in godot projects[/url] for more informatio)[br]
-## [b]See also:[/b] [method load_file], [method backup_file], [FileAccess], [method ConfigFile.set_value], [method JSON.stringify], [ResourceSaver].[br]
+## This function will save a file with a customized path, this is very useful because the file saving process will be readable and fast. It supports three methods: [ConfigFile], [JSON], [ResourceSaver][br]
+## It can find correct method by file extesion when [param save_method] is [constant SAVE_METHOD_AUTO]:[br]● [code].ini[/code] for config files[br]● [code].json[/code] for json files[br]● [code].tres, .tscn, .res, .scn[/code] for resource files[br]
+## [b]Note:[/b] param [param config] is just for config files ([code]*.ini[/code]), use [code]"section/key"[/code] pattern for this parameter.[br]
+## [b]Note:[/b] You can save other files with [FileAccess].[br]
+## [b]Note:[/b] After update in [code]version 1.1.0[/code], if [param location] base directory isn't exists this function automaticly create it.[br]
+## [b]Important:[/b] Use [code]res://[/code] path for save game (or app) data not recommended, this directory is [b]Readonly[/b] in many platforms.
+## (See [url=https://docs.godotengine.org/en/stable/tutorials/io/data_paths.html#file-paths-in-godot-projects]File paths in godot projects[/url] for more information)[br]
+## [b]See also:[/b] [method load_file], [FileAccess], [method ConfigFile.set_value], [method JSON.stringify], [ResourceSaver].[br]
 ## [b]Examples:[/b]
 ## [codeblock]
 ## # ConfigFile (.ini), save "Jack" in key "name" in section "main" in "user://player.ini":
-## SLib.save_file("user://player.ini", "Jack", "main/name")
+## SLib.save_file("user://player.ini", "Jack", SLib.SAVE_METHOD_CONFIG, "main/name") # You can set 3rd param to SLib.SAVE_METHOD_AUTO
 ## # JSON (.json), save enemy_data_dict in "user://Data.json" with JSON formatting:
-## SLib.save_file("user://Data.json", enemy_data_dict)
+## SLib.save_file("user://Data.json", enemy_data_dict, SLib.SAVE_METHOD_JSON) # Last param is optional
 ## # ResourceSave (.tres, .tscn , .res, .scn), save panel style in "res://theme/custom_panel.tres":
-## SLib.save_file("res://theme/custom_panel.tres", $Panel.theme_override_styles/panel)
-## # FileAccess (other extension), save player_data in "res://restore_point.save":
-## SLib.save_file("res://restore_point.save", player_data) 
+## SLib.save_file("res://theme/custom_panel.tres", $Panel.theme_override_styles/panel, SLib.SAVE_METHOD_RESOURCE) # Last param is optional
 ## [/codeblock]
-func save_file(location: String, value = null, config: String = "") -> Error:
-	var type = location.get_extension()
+func save_file(location: String, value = null, save_method: int = SAVE_METHOD_AUTO, config: String = "") -> Error:
+	var type: String
 	if not DirAccess.dir_exists_absolute(globalize_path(location).get_base_dir()):
 		DirAccess.make_dir_recursive_absolute(globalize_path(location).get_base_dir())
-	match type:
-		"ini":
+	match save_method:
+		SAVE_METHOD_AUTO:
+			type = location.get_extension()
+			match type:
+				"ini":
+					if config.split("/", false).size() != 2:
+						send_error(Errors["invalid-section-or-key"].format({"file": location}), "SLib.save_file")
+						return ERR_INVALID_PARAMETER
+					var section = config.split("/", false)[0]
+					var key = config.split("/", false)[1]
+					return _save_config_file(location, section, key, value)
+				"json":
+					return _save_json_file(location, value)
+				"tres", "res", "tscn", "scn":
+					return _save_resource_file(location, value)
+				_: return FAILED
+		SAVE_METHOD_CONFIG:
 			if config.split("/", false).size() != 2:
 				send_error(Errors["invalid-section-or-key"].format({"file": location}), "SLib.save_file")
 				return ERR_INVALID_PARAMETER
 			var section = config.split("/", false)[0]
 			var key = config.split("/", false)[1]
-			var config_file := ConfigFile.new()
-			var error := config_file.load(location)
-			config_file.set_value(section, key, value)
-			error = config_file.save(location)
-			if error:
-				send_error(Errors["save-error-config"].format({"file": location, "section": section, "key": key, "error": str(error)}), "SLib.save_file")
-			return error
-		"json":
-			var json_string := JSON.stringify(value)
-			var file_access := FileAccess.open(location, FileAccess.WRITE)
-			if not file_access:
-				send_error(Errors["save-error"].format({"file": location, "error": FileAccess.get_open_error()}), "SLib.save_file")
-				return file_access.get_open_error()
-			file_access.store_line(json_string)
-			file_access.close()
-			return file_access.get_open_error()
-		"tres", "res", "tscn", "scn":
-			var error := ResourceSaver.save(value, location)
-			if error:
-				send_error(Errors["save-error"].format({"file": location, "error": error}), "SLib.save_file")
-			return error
-		"csv":
-			var file = FileAccess.open(location, FileAccess.WRITE)
-			if value is PackedByteArray:
-				file.store_csv_line(value)
-			else:
-				file.store_string(value)
-			file.close()
-			return FileAccess.get_open_error()
-		_:
-			var file = FileAccess.open(location, FileAccess.WRITE)
-			match typeof(value):
-				TYPE_INT:
-					file.store_64(value)
-				TYPE_FLOAT:
-					file.store_float(value)
-				TYPE_STRING:
-					file.store_string(value)
-				TYPE_OBJECT:
-					file.store_var(value, true)
-				TYPE_PACKED_BYTE_ARRAY:
-					file.store_buffer(value)
-				_:
-					file.store_var(value)
-			file.close()
-			return FileAccess.get_open_error()
+			return _save_config_file(location, section, key, value)
+		SAVE_METHOD_JSON:
+			return _save_json_file(location, value)
+		SAVE_METHOD_RESOURCE:
+			return _save_resource_file(location, value)
+		_: return FAILED
 
 
-## This function returns the content stored in the file. It supports four methods: [FileAccess], [ConfigFile], [JSON], [ResourceSaver][br]
-## It can find correct method by file extesion:[br]● [code].ini[/code] for config files[br]● [code].json[/code] for json files[br]● [code].tres, .tscn, .res, .scn[/code] for resource files[br]● other extension for file access custom mode.[br]
-## For [FileAccess] method, this function need [param type] from [enum Variant.Type] to use correct function in [FileAccess] functions for store data from file.[br][br]
-## [b]Note:[/b] [param cofig] just for config files ([code]*.ini[/code]), use [code]"%section%/%key%"[/code] pattern for this parameter.[br]
-## [b]Note:[/b] You can save bytes with [PackedByteArray], this function use [method FileAccess.store_buffer] for this type.[br]
-## [b]Note:[/b] After update in [code]version 1.1.0 - Beta1[/code], if [param location] base directory isn't exists this function automaticly create it.[br]
+func _save_config_file(location: String, section: String, key: String, value: Variant) -> Error:
+	var config_file := ConfigFile.new()
+	var error := config_file.load(location)
+	if error:
+		send_error(Errors["load-error"].format({"file": location}), "SLib.save_file")
+	config_file.set_value(section, key, value)
+	error = config_file.save(location)
+	if error:
+		send_error(Errors["save-error-config"].format({"file": location, "section": section, "key": key, "error": str(error)}), "SLib.save_file")
+	return error
+
+
+func _save_json_file(location: String, value: Variant) -> Error:
+	var json_string := JSON.stringify(value)
+	var file_access := FileAccess.open(location, FileAccess.WRITE)
+	if not file_access:
+		send_error(Errors["save-error"].format({"file": location, "error": FileAccess.get_open_error()}), "SLib.save_file")
+		return file_access.get_open_error()
+	file_access.store_line(json_string)
+	file_access.close()
+	return file_access.get_open_error()
+
+
+func _save_resource_file(location: String, value: Variant) -> Error:
+	var error := ResourceSaver.save(value, location)
+	if error:
+		send_error(Errors["save-error"].format({"file": location, "error": error}), "SLib.save_file")
+	return error
+
+
+## This function returns the content stored in the file. It supports three methods: [ConfigFile], [JSON], [ResourceSaver][br]
+## It can find correct method by file extesion when [param save_method] is [constant SAVE_METHOD_AUTO]:[br]● [code].ini[/code] for config files[br]● [code].json[/code] for json files[br]● [code].tres, .tscn, .res, .scn[/code] for resource files[br]
+## For load other files you can use [FileAccess][br]
+## [b]Note:[/b] param [param cofig] just for config files ([code]*.ini[/code]), use [code]"section/key"[/code] pattern for this parameter.[br]
+## [b]Note:[/b] After update in [code]version 1.1.0[/code], if [param location] base directory isn't exists this function automaticly create it.[br]
 ## [b]Note:[/b] If the file doesn't exist, it will send an error to the console and return [param default_value].
-## [b]See also:[/b] [method save_file], [method backup_file], [FileAccess], [method ConfigFile.get_value], [method JSON.parse], [method @GDScript.load].[br]
-func load_file(location: String, type: Variant.Type = TYPE_NIL, default_value: Variant = null, config: String = ""):
+## [b]See also:[/b] [method save_file], [FileAccess], [method ConfigFile.get_value], [method JSON.parse], [method @GDScript.load].[br]
+func load_file(location: String, default_value: Variant = null, save_method: int = SAVE_METHOD_AUTO, config: String = "") -> Variant:
 	var extension = location.get_extension()
 	if not DirAccess.dir_exists_absolute(globalize_path(location).get_base_dir()):
 		send_error(Errors["load-nonexistent-dir"], "SLib.load_file")
@@ -257,63 +264,63 @@ func load_file(location: String, type: Variant.Type = TYPE_NIL, default_value: V
 	if not FileAccess.file_exists(location):
 		send_error(Errors["load-nonexistent"], "SLib.load_file")
 		return default_value
-	match extension:
-		"ini":
+	match save_method:
+		SAVE_METHOD_AUTO:
+			match extension:
+				"ini":
+					if config.split("/", false).size() != 2:
+						send_error(Errors["invalid-section-or-key"].format({"file": location}), "SLib.load_file")
+						return
+					var section = config.split("/", false)[0]
+					var key = config.split("/", false)[1]
+					return _load_config_file(location, section, key, default_value)
+				"json":
+					return _load_json_file(location, default_value)
+				"tres", "res", "tscn", "scn":
+					return load(location)
+		SAVE_METHOD_CONFIG:
 			if config.split("/", false).size() != 2:
 				send_error(Errors["invalid-section-or-key"].format({"file": location}), "SLib.load_file")
 				return
 			var section = config.split("/", false)[0]
 			var key = config.split("/", false)[1]
-			var config_file := ConfigFile.new()
-			var error := config_file.load(location)
-			if error:
-				send_error(Errors["load-error-config"].format({"file": location, "section": section, "key": key, "error": str(error)}), "SLib.load_file")
-				return default_value
-			return config_file.get_value(section, key, default_value)
-		"json":
-			var file_access := FileAccess.open(location, FileAccess.READ)
-			var json_string := file_access.get_line()
-			file_access.close()
-			var json := JSON.new()
-			var error := json.parse(json_string)
-			if error:
-				send_error(Errors["json-pars-error"].format({"message": str(json.get_error_message()), "string": json_string, "line": json.get_error_line()}), "SLib.load_file")
-				return default_value
-			return json.data
-		"tres", "res", "tscn", "scn":
+			return _load_config_file(location, section, key, default_value)
+		SAVE_METHOD_JSON:
+			return _load_json_file(location, default_value)
+		SAVE_METHOD_RESOURCE:
 			return load(location)
-		_:
-			var file = FileAccess.open(location,FileAccess.READ)
-			if file == null:
-				send_error(Errors["load-error"].format({"file": location}))
-				return default_value
-			var data
-			match type:
-				TYPE_INT:
-					data = file.get_64()
-				TYPE_STRING:
-					data = file.get_as_text()
-				TYPE_PACKED_BYTE_ARRAY:
-					data = file.get_buffer(file.get_length())
-				TYPE_FLOAT:
-					data = file.get_float()
-				TYPE_OBJECT:
-					data = file.get_var(true)
-				_:
-					data = file.get_var()
-			file.close()
-			if typeof(data) != type: return default_value
-			return data
 	return default_value
 
 
+func _load_config_file(location: String, section: String, key: String, default_value: Variant) -> Variant:
+	var config_file := ConfigFile.new()
+	var error := config_file.load(location)
+	if error:
+		send_error(Errors["load-error-config"].format({"file": location, "section": section, "key": key, "error": str(error)}), "SLib.load_file")
+		return default_value
+	return config_file.get_value(section, key, default_value)
+
+
+func _load_json_file(location: String, default_value: Variant) -> Variant:
+	var file_access := FileAccess.open(location, FileAccess.READ)
+	var json_string := file_access.get_line()
+	file_access.close()
+	var json := JSON.new()
+	var error := json.parse(json_string)
+	if error:
+		send_error(Errors["json-pars-error"].format({"message": str(json.get_error_message()), "string": json_string, "line": json.get_error_line()}), "SLib.load_file")
+		return default_value
+	return json.data
+
+
+## @deprecated: This function is out-dated and will be removed in next version!
 ## Backup function create a new file with [code]%main_file_name%-%suffix%[/code] name in main file location.[br]
 ## if you doesn't select a custom [param suffix], [code]Project Settings > SLib > Defaults[BackupSuffix][/code] will append to file name. [br][br]
 ## [b]Tip:[/b] This function use [method load_file] and [method save_file] for more stability, please see documentations about these functions.[br]
 ## [b]See also:[/b] [method save_file] and [method load_file].
-func backup_file(location: String, type: Variant.Type = TYPE_NIL, suffix: String = _defaults["BackupSuffix"], config: String = "") -> Error:
-	var load = load_file(location, type, null, config)
-	return save_file("{location}-{suffix}.{extension}".format({"location": location.get_basename(), "suffix": suffix, "extension": location.get_extension()}), load, config)
+func backup_file(location: String, suffix: String = _defaults["BackupSuffix"], save_method: int = SAVE_METHOD_AUTO, config: String = "") -> Error:
+	var load = load_file(location, null, save_method, config)
+	return save_file("{location}-{suffix}.{extension}".format({"location": location.get_basename(), "suffix": suffix, "extension": location.get_extension()}), load, save_method, config)
 #endregion
 
 #endregion
@@ -377,10 +384,11 @@ enum Animations {
 }
 
 
+## @experimental
 ## This function provides multiple animations with tweens.[br]You can see valid [param animation] and [param setting] values in [enum Animations].
 ## [br][br][b]Example usage:[/b]
 ## [codeblock]
-## # Automaticly play fade in animations for loot_box object in 3.0 seconds
+## # Automaticly play fade in animation for loot_box object in 3.0 seconds
 ## SLib.play_animation(SLib.Animations.FADE_IN, loot_box, {"duration": 3.0})
 ## [/codeblock]
 func play_animation(animation: Animations, object: Node, setting: Dictionary = {}) -> Tween:
@@ -645,6 +653,7 @@ func send_warning(warning: String = _defaults["Warning"], from: String = "Debugg
 	push_warning(from + ": " + warning)
 
 
+## @deprecated
 ## Save log parameter in log file (Overwrite older log), log file save in [code]user://App.log[/code] as default.
 ## [br][br]
 ## NOTE:
@@ -653,10 +662,11 @@ func save_log(custom_log: String) -> Error:
 	return save_file(_file_locations["Log"], custom_log)
 
 
+## @deprecated
 ## Return saved log.[br][br]
 ## [b]See also:[/b] [method save_log].
 func get_log() -> String:
-	return load_file(_file_locations["Log"], TYPE_STRING)
+	return load_file(_file_locations["Log"])
 #endregion
 
 #region 3D TOOLS
