@@ -117,6 +117,7 @@ enum {
 	SAVE_METHOD_JSON,
 	SAVE_METHOD_RESOURCE,
 }
+#endregion
 
 #region INITALIZING
 func _enter_tree():
