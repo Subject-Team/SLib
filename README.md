@@ -62,6 +62,9 @@ SLib is a Godot library designed to simplify and enhance your development experi
 
 ## [Fast Getting Started](https://github.com/Subject-Team/SLib/wiki#fast-getting-started) & [Defalut Getting Started](https://github.com/Subject-Team/SLib/wiki#default-getting-started)
 
+## They use SLib
+### [Text Forge](https://github.com/mkh-user/Text-Forge) - Open source, lightweight, and highly modular code editor
+
 ## Click on the desired topic:
 
 ### [Fast Getting Started](https://github.com/Subject-Team/SLib/wiki#fast-getting-started)
