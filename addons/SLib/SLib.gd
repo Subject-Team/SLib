@@ -1,5 +1,5 @@
 extends Node
-class_name SLibDocs
+class_name SubjectLibrary
 # NOTE: Press F1 and search for SLib to see documentation & informations!
 
 
