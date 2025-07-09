@@ -20,7 +20,7 @@ class_name SLibDocs
 ## ● Debugging system: [method send_error], [method send_warning][br]
 ## ● Project Setting management: [method get_project_setting], [method set_project_setting][br]
 ## ● Bad word filter: [method is_word_ok][br]
-## ● Array tools: [method merge_unique], [method patterned_sort], [method stringify_array][br]
+## ● Array tools: [method merge_unique], [method patterned_sort][br]
 ## ● Dictionary tools: [method reverse_dict][br]
 ## ● OS tools: [method os_open], [method send_alert][br]
 ## ● Timer tools: [method wait][br]
@@ -479,16 +479,6 @@ func reverse_dict(dict: Dictionary) -> Dictionary:
 #endregion
 
 #region STRING TOOLS
-## Converts [Array] to [String] with [param seperator] between array arguments
-func stringify_array(arguments: Array, seperator: String = "") -> String:
-	var string = ""
-	for i in arguments.size():
-		string = string + str(arguments[i])
-		if i < arguments.size():
-			string = string + seperator
-	return string
-
-
 ## Filtering bad words, If word in profanity list return [code]false[/code].[br][br]
 ## [b]Note:[/b] Visit [url=https://github.com/subject-team/slib]library repository[/url] to see the list.
 func is_word_ok(word: String) -> bool:
